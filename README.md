@@ -11,4 +11,6 @@ Dependency
 
 Installation
 ------------
-do `bash setup.sh` from project root directory.
+1. Do `bash setup.sh` from project root directory.
+2. Append `export BOOKSHARE_SECRET_KEY='<your key>'` to the `activate` script.
+3. Do `./manage.py syncdb`.
