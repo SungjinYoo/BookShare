@@ -7,8 +7,8 @@ from os.path import join, abspath, dirname
 from django.core.exceptions import ImproperlyConfigured
 from path import path
 
-BASE_DIR = path(os.path.dirname(__file__)) / ".."
-PROJECT_ROOT = BASE_DIR / ".."
+# here is settings directory
+PROJECT_ROOT = path(os.path.dirname(__file__)) / ".."
 
 def get_env_variable(var_name):
     """ Get the environment variable or return exception """
@@ -46,8 +46,9 @@ THIRD_PARTY_APPS = [
 ]
 
 BOOKSHARE_APPS = [
-    'users',
-    'books',
+    'bookshare.apps.core',
+    'bookshare.apps.users',
+    'bookshare.apps.books',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BOOKSHARE_APPS

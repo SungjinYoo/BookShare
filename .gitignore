@@ -51,5 +51,8 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-BENV
 
+
+BENV
+bookshare/bookshare/db.sqlite3
+bookshare/bookshare.sqlite
