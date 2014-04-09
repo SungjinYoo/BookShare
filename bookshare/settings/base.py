@@ -1,14 +1,13 @@
 # Django settings for BookShare project.
 
 import os
-import re
-from os.path import join, abspath, dirname
+from os.path import dirname
 
 from django.core.exceptions import ImproperlyConfigured
 from path import path
 
 # here is settings directory
-PROJECT_ROOT = path(os.path.dirname(__file__)) / ".."
+PROJECT_ROOT = path(dirname(__file__)) / ".."
 
 def get_env_variable(var_name):
     """ Get the environment variable or return exception """
