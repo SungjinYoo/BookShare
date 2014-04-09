@@ -1,20 +1,18 @@
 
+halt_when() {
+    if [ $? != 0 ]; then
+        echo $@ 1>&2;
+        exit $?
+    fi
+}
+
 source `which virtualenvwrapper.sh`
-if [ $? != 0 ]; then
-  printf "importing virtualenvwrapper failed."
-  exit $?
-fi
+halt_when "importing virtualenvwrapper failed."
 
 rmvirtualenv bookstore # ignore failure
 
 mkvirtualenv -p `which python2.7` bookshare
-if [ $? != 0 ]; then
-  printf "creating virtualenv failed."
-  exit $?
-fi
+halt_when "creating virtualenv failed."
 
 pip install -r requirements/base.txt
-if [ $? != 0 ]; then
-  printf "installing dependency failed."
-  exit $?
-fi
+halt_when "installing dependency failed."
