@@ -3,12 +3,13 @@
 import os
 import re
 from os.path import join, abspath, dirname
-from django.core.exceptions import ImproperlyConfigured
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-here = lambda *x: join(abspath(dirname(__file__)), *x)
-PROJECT_ROOT = here("..", "..")
-root = lambda *x: join(abspath(PROJECT_ROOT), *x)
+from django.core.exceptions import ImproperlyConfigured
+from path import path
+
+BASE_DIR = path(os.path.dirname(__file__)) / ".."
+PROJECT_ROOT = BASE_DIR / ".."
+
 def get_env_variable(var_name):
     """ Get the environment variable or return exception """
     try:
@@ -68,7 +69,7 @@ WSGI_APPLICATION = 'bookshare.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': root('bookshare.sql'),
+        'NAME': PROJECT_ROOT / 'bookshare.sqlite',
     }
 }
 
@@ -80,8 +81,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    root('static'),
+    PROJECT_ROOT / 'static',
 )
 TEMPLATE_DIRS = (
-    root('templates'),
+    PROJECT_ROOT / 'templates',
 )
