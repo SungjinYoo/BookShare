@@ -9,3 +9,8 @@
 pip-log.txt
 static/
 media/
+# Sphinx documentation
+docs/_build/
+BENV
+bookshare/bookshare/db.sqlite3
+bookshare/bookshare.sqlite
