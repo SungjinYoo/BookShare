@@ -6,4 +6,3 @@ class BookShareModel(models.Model):
     pub_date = models.DateTimeField(_('Published Date'), default=timezone.now, auto_now_add=True)
     class Meta:
         abstract = True
-
