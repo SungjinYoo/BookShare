@@ -40,20 +40,3 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-
-class BookInstance(models.Model):
-    AVAILIABLE = 'available'
-    RENTED = 'rented'
-
-    BOOKINSTANCE_STATUS = (
-        (AVAILIABLE, u'대여 가능'),
-        (RENTED, u'대여 중'),
-    )
-
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-    book = models.ForeignKey(Book)
-    imported_at = models.DateTimeField(auto_now_add=True)
-    changed_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(_(u'대여 상태'), max_length=10,
-                           choices=BOOKINSTANCE_STATUS,
-                           default=AVAILIABLE)
