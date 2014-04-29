@@ -1,7 +1,7 @@
 #encoding=utf8
 
 from django.contrib.auth import get_user_model
-from django.db import models
+from django.db import models, transaction
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -14,7 +14,24 @@ class BookShareModel(models.Model):
     class Meta:
         abstract = True
 
-class Stock(models.Model):
+
+class ConditionMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    A = "A"
+    B = "B"
+    C = "C"
+
+    CONDITIONS = (
+        (A, "A"),
+        (B, "B"),
+        (C, "C"),
+    )
+
+    condition = models.CharField(_(u'보관상태'), max_length=2, choices=CONDITIONS)
+
+class Stock(ConditionMixin, models.Model):
     AVAILABLE = u'available'
     RENTED = u'rented'
     
@@ -30,3 +47,61 @@ class Stock(models.Model):
     status = models.CharField(_(u'상태'), max_length=10,
                            choices=STATUS,
                            default=AVAILABLE)
+
+    def __unicode__(self):
+        return u"{} - {}".format(self.book, self.owner)
+
+class StockHistory(ConditionMixin, models.Model):
+    RENT = u'rent'
+    RETURN = u'return'
+    DELIVER = u'deliver'
+    RECLAIM = u'reclaim'
+    
+    ACTION = (
+        (RENT, u'대여'),
+        (RETURN, u'반납'),
+        (DELIVER, u'위탁'),
+        (RECLAIM, u'반환'),
+    )
+
+    actor = models.ForeignKey(User)
+    stock = models.ForeignKey(Stock)
+    added_at = models.DateTimeField(auto_now_add=True)
+    action = models.CharField(_(u'행동'), max_length=10,
+                           choices=ACTION)
+
+
+class RentRequest(models.Model):
+    PENDING = u'pending'
+    DONE = u'done'
+    
+    STATUS = (
+        (PENDING, u'대기중'),
+        (DONE, u'완료'),
+    )
+
+    actor = models.ForeignKey(User)
+    stock = models.ForeignKey(Stock)
+    added_at = models.DateTimeField(auto_now_add=True)
+    changed_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(_(u'상태'), max_length=10,
+                           choices=STATUS,
+                           default=PENDING)
+
+def rent_request(actor, stock):
+    RentRequest.objects.create(actor=actor, stock=stock).save()
+
+@transaction.atomic
+def process_rent_request(request):
+    request.status = RentRequest.DONE
+    request.save()
+
+    request.stock.status = Stock.RENTED
+    request.stock.save()
+
+    StockHistory.objects.create(actor=request.actor,
+                                stock=request.stock,
+                                action=StockHistory.RENT,
+                                condition=request.stock.condition).save()
+
+
