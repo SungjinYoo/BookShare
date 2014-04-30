@@ -31,13 +31,36 @@ class ConditionMixin(models.Model):
 
     condition = models.CharField(_(u'보관상태'), max_length=2, choices=CONDITIONS)
 
-class Stock(ConditionMixin, models.Model):
+
+class ReclaimRequest(models.Model):
+    PENDING = u'pending'
+    DONE = u'done'
+    CANCELED = u'canceled'
+    
+    STATUS = (
+        (PENDING, u'대기중'),
+        (DONE, u'완료'),
+        (CANCELED, u'취소')
+    )
+
+    actor = models.ForeignKey(User)
+    stock = models.ForeignKey(Stock)
+    added_at = models.DateTimeField(auto_now_add=True)
+    changed_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(_(u'상태'), max_length=10,
+                           choices=STATUS,
+                           default=PENDING)
+
+
+class Stock(ConditionMixin):
     AVAILABLE = u'available'
     RENTED = u'rented'
+    RECLAIMED = u'reclaimed'
     
     STATUS = (
         (AVAILABLE, u'대여 가능'),
         (RENTED, u'대여중'),
+        (RECLAIMED, u'반환 완료'),
     )
 
     owner = models.ForeignKey(User)
@@ -51,7 +74,8 @@ class Stock(ConditionMixin, models.Model):
     def __unicode__(self):
         return u"{} - {}".format(self.book, self.owner)
 
-class StockHistory(ConditionMixin, models.Model):
+
+class StockHistory(ConditionMixin):
     RENT = u'rent'
     RETURN = u'return'
     DELIVER = u'deliver'
@@ -67,17 +91,18 @@ class StockHistory(ConditionMixin, models.Model):
     actor = models.ForeignKey(User)
     stock = models.ForeignKey(Stock)
     added_at = models.DateTimeField(auto_now_add=True)
-    action = models.CharField(_(u'행동'), max_length=10,
-                           choices=ACTION)
+    action = models.CharField(_(u'행동'), max_length=10, choices=ACTION)
 
 
 class RentRequest(models.Model):
     PENDING = u'pending'
     DONE = u'done'
+    CANCELED = u'canceled'
     
     STATUS = (
         (PENDING, u'대기중'),
         (DONE, u'완료'),
+        (CANCELED, u'취소')
     )
 
     actor = models.ForeignKey(User)
@@ -88,11 +113,40 @@ class RentRequest(models.Model):
                            choices=STATUS,
                            default=PENDING)
 
-def rent_request(actor, stock):
+
+class ReclaimRequest(models.Model):
+    PENDING = u'pending'
+    DONE = u'done'
+    CANCELED = u'canceled'
+    
+    STATUS = (
+        (PENDING, u'대기중'),
+        (DONE, u'완료'),
+        (CANCELED, u'취소')
+    )
+
+    actor = models.ForeignKey(User)
+    stock = models.ForeignKey(Stock)
+    added_at = models.DateTimeField(auto_now_add=True)
+    changed_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(_(u'상태'), max_length=10,
+                           choices=STATUS,
+                           default=PENDING)
+
+
+def request_rent(actor, stock):
+    ### precondition
+    # stock.status == Stock.AVAILABLE
+    
     RentRequest.objects.create(actor=actor, stock=stock).save()
 
 @transaction.atomic
 def process_rent_request(request):
+    ### precondition
+    # request.stock.status == Stock.AVAILABLE 
+    # request.status == RentRequest.PENDING
+    # request.actor.point >= request.stock.book.point
+
     request.status = RentRequest.DONE
     request.save()
 
@@ -104,4 +158,51 @@ def process_rent_request(request):
                                 action=StockHistory.RENT,
                                 condition=request.stock.condition).save()
 
+    # take point from request.actor, depending on stock.book
+
+@transaction.atomic
+def return_stock(actor, stock, condition):
+    ### precondition
+    # stock.status == Stock.RENTED
+
+    stock.status = Stock.AVAILABLE
+    stock.save()
+    StockHistory.objects.create(actor=actor,
+                                stock=stock,
+                                action=StockHistory.RETURN,
+                                condition=condition).save()
+
+@transaction.atomic
+def deliver_stock(actor, book, condition):
+    s = Stock.objects.create(owner=actor, book=book)
+    s.save()
+    StockHistory.objects.create(actor=actor,
+                                stock=s,
+                                action=StockHistory.DELIVER,
+                                condition=condition).save()
+
+    # give point to request.actor depending on book
+
+def request_reclaim(actor, stock):
+    ### precondition
+    # request.stock.status == Stock.AVAILABLE
+
+    ReclaimRequest.objects.create(actor=actor, stock=stock).save()
+
+@transaction.atomic
+def process_reclaim_request(request):
+    ### precondition
+    # request.stock.status == Stock.AVAILABLE
+    # request.status == ReclaimRequest.PENDING
+
+    request.status = ReclaimRequest.DONE
+    request.save()
+
+    request.stock.status = Stock.RECLAIMED
+    request.stock.save()
+
+    StockHistory.objects.create(actor=request.actor,
+                                stock=request.stock,
+                                action=StockHistory.RECLAIM,
+                                condition=request.stock.condition).save()
 
