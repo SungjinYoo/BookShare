@@ -32,26 +32,6 @@ class ConditionMixin(models.Model):
     condition = models.CharField(_(u'보관상태'), max_length=2, choices=CONDITIONS)
 
 
-class ReclaimRequest(models.Model):
-    PENDING = u'pending'
-    DONE = u'done'
-    CANCELED = u'canceled'
-    
-    STATUS = (
-        (PENDING, u'대기중'),
-        (DONE, u'완료'),
-        (CANCELED, u'취소')
-    )
-
-    actor = models.ForeignKey(User)
-    stock = models.ForeignKey(Stock)
-    added_at = models.DateTimeField(auto_now_add=True)
-    changed_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(_(u'상태'), max_length=10,
-                           choices=STATUS,
-                           default=PENDING)
-
-
 class Stock(ConditionMixin):
     AVAILABLE = u'available'
     RENTED = u'rented'
