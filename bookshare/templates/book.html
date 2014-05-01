@@ -7,8 +7,7 @@
         <li>{{ condition }}: {{ books|length }}</li>
     {% endfor %}
 </ul>
+<a href="{% url 'core:request_rent' %}">Request Rent</a>
 {% else %}
 <p>out of stock</p>
 {% endif %}
-
-<a href="{% url 'core:request_rent' %}">Request Rent</a>
