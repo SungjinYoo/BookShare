@@ -1,0 +1,5 @@
+<form method="POST" action="{% url 'core:deliver_stock'%}">
+{{ form }}
+{% csrf_token %}
+<input type="submit" value="send" />
+</form>

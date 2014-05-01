@@ -1,5 +1,7 @@
 #encoding=utf8
 
+import itertools
+
 from django.db import models
 from django.conf import settings
 from django.core.validators import RegexValidator
@@ -40,3 +42,6 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def group_stock_by_condition(self):
+        return [(k, list(v)) for k, v in itertools.groupby(self.stock_set.available().order_by('condition').all(), lambda stock: stock.condition)]

@@ -1,0 +1,14 @@
+<h1>{{ book.title }}</h1>
+<h2>Availiable Stocks by condition</h2>
+
+{% if book.group_stock_by_condition %}
+<ul>
+    {% for condition, books in book.group_stock_by_condition %}
+        <li>{{ condition }}: {{ books|length }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>out of stock</p>
+{% endif %}
+
+<a href="{% url 'core:request_rent' %}">Request Rent</a>

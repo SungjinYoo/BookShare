@@ -1,0 +1,5 @@
+<form method="POST" action="{% url 'core:process_rent_req'%}">
+{{ form }}
+{% csrf_token %}
+<input type="submit" value="send" />
+</form>

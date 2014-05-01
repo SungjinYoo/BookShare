@@ -30,6 +30,12 @@ class ConditionMixin(models.Model):
     condition = models.CharField(_(u'보관상태'), max_length=2, choices=CONDITIONS)
 
 
+class StockAvailableManager(models.Manager):
+    def available(self, *args, **kwargs):
+        qs = self.get_query_set().filter(*args, **kwargs)
+        return qs.filter(status=Stock.AVAILABLE)
+
+
 class Stock(ConditionMixin):
     AVAILABLE = u'available'
     RENTED = u'rented'
@@ -49,9 +55,10 @@ class Stock(ConditionMixin):
                            choices=STATUS,
                            default=AVAILABLE)
 
-    def __unicode__(self):
-        return u"{} - {}".format(self.book, self.owner)
+    objects = StockAvailableManager()
 
+    def __unicode__(self):
+        return u"{} [{}] - {}".format(self.book, self.id, self.owner)
 
 class StockHistory(ConditionMixin):
     RENT = u'rent'
@@ -72,6 +79,12 @@ class StockHistory(ConditionMixin):
     action = models.CharField(_(u'행동'), max_length=10, choices=ACTION)
 
 
+class RentRequestPendingManager(models.Manager):
+    def pending(self, *args, **kwargs):
+        qs = self.get_query_set().filter(*args, **kwargs)
+        return qs.filter(status=RentRequest.PENDING)
+
+
 class RentRequest(models.Model):
     PENDING = u'pending'
     DONE = u'done'
@@ -90,6 +103,8 @@ class RentRequest(models.Model):
     status = models.CharField(_(u'상태'), max_length=10,
                            choices=STATUS,
                            default=PENDING)
+
+    objects = RentRequestPendingManager()
 
 
 class ReclaimRequest(models.Model):
@@ -152,7 +167,7 @@ def return_stock(actor, stock, condition):
 
 @transaction.atomic
 def deliver_stock(actor, book, condition):
-    s = Stock.objects.create(owner=actor, book=book)
+    s = Stock.objects.create(owner=actor, book=book, condition=condition)
     s.save()
     StockHistory.objects.create(actor=actor,
                                 stock=s,
