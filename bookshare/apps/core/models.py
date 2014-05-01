@@ -1,13 +1,11 @@
 #encoding=utf8
 
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db import models, transaction
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from bookshare.apps.books.models import Book
-
-User = get_user_model()
 
 class BookShareModel(models.Model):
     pub_date = models.DateTimeField(_('Published Date'), default=timezone.now, auto_now_add=True)
@@ -43,7 +41,7 @@ class Stock(ConditionMixin):
         (RECLAIMED, u'반환 완료'),
     )
 
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     book = models.ForeignKey(Book)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
@@ -68,7 +66,7 @@ class StockHistory(ConditionMixin):
         (RECLAIM, u'반환'),
     )
 
-    actor = models.ForeignKey(User)
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL)
     stock = models.ForeignKey(Stock)
     added_at = models.DateTimeField(auto_now_add=True)
     action = models.CharField(_(u'행동'), max_length=10, choices=ACTION)
@@ -85,7 +83,7 @@ class RentRequest(models.Model):
         (CANCELED, u'취소')
     )
 
-    actor = models.ForeignKey(User)
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL)
     stock = models.ForeignKey(Stock)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
@@ -105,7 +103,7 @@ class ReclaimRequest(models.Model):
         (CANCELED, u'취소')
     )
 
-    actor = models.ForeignKey(User)
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL)
     stock = models.ForeignKey(Stock)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
