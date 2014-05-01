@@ -1,4 +1,9 @@
 <h1>{{ book.title }}</h1>
+<h2>Information</h2>
+<dl>
+    <dt>ISBN</dt><dd>{{ book.isbn }}</dd>
+</dl>
+
 <h2>Availiable Stocks by condition</h2>
 
 {% if book.group_stock_by_condition %}
