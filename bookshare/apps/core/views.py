@@ -50,4 +50,4 @@ def process_rent_request(request):
 
 def console_index(request):
     if request.method == "GET":
-        return render(request, "admin/index.html")
+        return render(request, "console/index.html")

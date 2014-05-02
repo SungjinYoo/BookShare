@@ -7,7 +7,18 @@
     <dt>ISBN</dt><dd>{{ book.isbn }}</dd>
 </dl>
 
-<h2>Availiable Stocks by condition</h2>
+<h3>Courses</h3>
+{% if book.courses.all %}
+<ul>
+    {% for course in book.courses.all %}
+    <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>no course</p>
+{% endif %}
+
+<h3>Availiable Stocks by condition</h3>
 
 {% if book.group_stock_by_condition %}
 <ul>
