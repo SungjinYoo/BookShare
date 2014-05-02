@@ -46,3 +46,8 @@ def process_rent_request(request):
         if form.is_valid():
             models.process_rent_request(form.cleaned_data["request"])
             return redirect('books:index')
+
+
+def console_index(request):
+    if request.method == "GET":
+        return render(request, "admin/index.html")

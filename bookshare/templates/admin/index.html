@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Admin Console</h1>
+<h2>Actions</h2>
+<ul>
+    <li><a href="{% url 'core:deliver_stock' %}">Deliver a stock</a></li>
+    <li><a href="{% url 'core:process_rent_req' %}">Process a rent request</a></li>
+</ul>
+{% endblock %}

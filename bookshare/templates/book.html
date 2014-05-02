@@ -1,5 +1,8 @@
-<h1>{{ book.title }}</h1>
-<h2>Information</h2>
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ book.title }}</h2>
+<h3>Information</h3>
 <dl>
     <dt>ISBN</dt><dd>{{ book.isbn }}</dd>
 </dl>
@@ -16,3 +19,6 @@
 {% else %}
 <p>out of stock</p>
 {% endif %}
+
+<a href="{% url 'books:index' %}">list</a>
+{% endblock %}
