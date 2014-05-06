@@ -16,7 +16,7 @@ def request_rent(request):
     if request.method == "POST":
         form = forms.RentRequestForm(request.POST)
         if form.is_valid():
-            models.request_rent(form.cleaned_data["actor"], form.cleaned_data["stock"])
+            models.request_rent(form.cleaned_data["actor"], form.cleaned_data["book"])
             return redirect('books:index')
 
 def deliver_stock(request):

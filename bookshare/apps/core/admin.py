@@ -7,7 +7,7 @@ class StockAdmin(admin.ModelAdmin):
     list_filter = ('status', 'owner', )
 
 class RentRequestAdmin(admin.ModelAdmin):
-    list_display = ('stock', 'actor', 'status', 'changed_at')
+    list_display = ('book', 'actor', 'status', 'changed_at')
     list_filter = ('status', 'actor', )
 
 class StockHistoryAdmin(admin.ModelAdmin):

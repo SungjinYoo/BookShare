@@ -18,15 +18,12 @@
 <p>no course</p>
 {% endif %}
 
-<h3>Availiable Stocks by condition</h3>
+<h3>Stock</h3>
 
-{% if book.group_stock_by_condition %}
-<ul>
-    {% for condition, books in book.group_stock_by_condition %}
-        <li>{{ condition }}: {{ books|length }}</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'core:request_rent' %}">Request Rent</a>
+{% if book.available_stock %}
+<p>
+    Available! <a href="{% url 'core:request_rent' %}">Request Rent</a>
+</p>
 {% else %}
 <p>out of stock</p>
 {% endif %}

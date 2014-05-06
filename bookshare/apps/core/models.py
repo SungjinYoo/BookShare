@@ -97,7 +97,7 @@ class RentRequest(models.Model):
     )
 
     actor = models.ForeignKey(settings.AUTH_USER_MODEL)
-    stock = models.ForeignKey(Stock)
+    book = models.ForeignKey(Book)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
     status = models.CharField(_(u'상태'), max_length=10,
@@ -105,6 +105,9 @@ class RentRequest(models.Model):
                            default=PENDING)
 
     objects = RentRequestPendingManager()
+
+    def __unicode__(self):
+        return u"{} - {}".format(self.book, self.actor)
 
 
 class ReclaimRequest(models.Model):
@@ -127,11 +130,11 @@ class ReclaimRequest(models.Model):
                            default=PENDING)
 
 
-def request_rent(actor, stock):
+def request_rent(actor, book):
     ### precondition
     # stock.status == Stock.AVAILABLE
     
-    RentRequest.objects.create(actor=actor, stock=stock).save()
+    RentRequest.objects.create(actor=actor, book=book).save()
 
 @transaction.atomic
 def process_rent_request(request):
@@ -143,13 +146,15 @@ def process_rent_request(request):
     request.status = RentRequest.DONE
     request.save()
 
-    request.stock.status = Stock.RENTED
-    request.stock.save()
+    stock = request.book.available_stock()[0]
+
+    stock.status = Stock.RENTED
+    stock.save()
 
     StockHistory.objects.create(actor=request.actor,
-                                stock=request.stock,
+                                stock=stock,
                                 action=StockHistory.RENT,
-                                condition=request.stock.condition).save()
+                                condition=stock.condition).save()
 
     # take point from request.actor, depending on stock.book
 

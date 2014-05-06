@@ -43,5 +43,5 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-    def group_stock_by_condition(self):
-        return [(k, list(v)) for k, v in itertools.groupby(self.stock_set.available().order_by('condition').all(), lambda stock: stock.condition)]
+    def available_stock(self):
+        return self.stock_set.available().order_by('condition').all()

@@ -7,7 +7,7 @@ from bookshare.apps import books
 
 class RentRequestForm(forms.Form):
     actor = forms.ModelChoiceField(queryset=get_user_model().objects.all())
-    stock = forms.ModelChoiceField(queryset=models.Stock.objects.available())
+    book = forms.ModelChoiceField(queryset=books.models.Book.objects.all())
 
 class StockDeliverForm(forms.Form):
     actor = forms.ModelChoiceField(queryset=get_user_model().objects.all())
