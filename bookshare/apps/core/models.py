@@ -131,17 +131,13 @@ class ReclaimRequest(models.Model):
 
 
 def request_rent(actor, book):
-    ### precondition
-    # stock.status == Stock.AVAILABLE
-    
     RentRequest.objects.create(actor=actor, book=book).save()
 
 @transaction.atomic
 def process_rent_request(request):
     ### precondition
-    # request.stock.status == Stock.AVAILABLE 
     # request.status == RentRequest.PENDING
-    # request.actor.point >= request.stock.book.point
+    # request.actor.point >= request.book.point
 
     request.status = RentRequest.DONE
     request.save()
