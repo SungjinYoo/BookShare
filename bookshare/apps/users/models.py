@@ -38,7 +38,7 @@ class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
         (FEMALE, u'여')
     )
 
-    username = models.CharField(_(u'아이디'), 
+    user_id = models.CharField(_(u'아이디'), 
                                max_length=15, 
                                help_text=_(u'사용자 아이디'),
                                unique=True,
@@ -71,7 +71,8 @@ class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
     age = models.IntegerField(_(u'나이'), blank=True, null=True)
     objects = UserManager()
     REQUIRED_FIELDS = ['name']
-
+    USERNAME_FIELD = 'user_id'
+    
     class Meta:
         verbose_name = _(u'사용자')
         verbose_name_plural = _(u'사용자')

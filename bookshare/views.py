@@ -5,13 +5,13 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from apps.users.models import User
 from django.contrib.auth.decorators import login_required
 from django import forms
 
 
 class UserValidationForm(forms.Form):
-    username = forms.CharField(max_length=15)
+    user_id = forms.CharField(max_length=15)
     password = forms.CharField(max_length=128, min_length=4)
 
 def index(request):
@@ -31,18 +31,20 @@ class SignInView(TemplateView):
     def post(self, request, *args, **kwargs):
         form = UserValidationForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            user_id = form.cleaned_data['user_id']
             password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
+            user = authenticate(user_id=user_id, password=password)
             if user is not None:
                 if user.check_password(password):
                     login(request, user)
                     return HttpResponseRedirect('/')
+        else:
+            error_msg = u"형식에 맞지 않는 값을 입력하셨습니다."
         return render(request, self.template_name, {'error_msg':self.error_msg})
 
 
 class SignUpValidationForm(forms.Form):
-    username = forms.CharField(max_length=15)
+    user_id = forms.CharField(max_length=15)
     password = forms.CharField(max_length=128, min_length=4)
     email = forms.EmailField(max_length=255)
 
@@ -56,7 +58,7 @@ class SignUpView(TemplateView):
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            user_id = form.cleaned_data['user_id']
             password = form.cleaned_data['password']
             password_confirm = form.cleaned_data['password']
             email = form.cleaned_data['email']            
@@ -65,8 +67,8 @@ class SignUpView(TemplateView):
                 error_msg = u"비밀번호가 서로 다릅니다."                
                 return render(request, self.template_name, {'error_msg':self.error_msg})
 
-            User.objects.create_user(username=username, email=email, password=password)
-            user = authenticate(username=username, password=password)
+            User.objects.create_user(user_id=user_id, email=email, password=password)
+            user = authenticate(user_id=user_id, password=password)
             if user is not None:
                 if user.check_password(password):
                     login(request, user)

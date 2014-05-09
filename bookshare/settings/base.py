@@ -86,3 +86,5 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     PROJECT_ROOT / 'templates',
 )
+
+AUTH_USER_MODEL = 'users.User'
