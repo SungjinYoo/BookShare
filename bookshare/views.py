@@ -41,35 +41,38 @@ class SignInView(TemplateView):
         return render(request, self.template_name, {'error_msg':self.error_msg})
 
 
-class SignUpValidateForm(forms.Form):
+class SignUpValidationForm(forms.Form):
     username = forms.CharField(max_length=15)
     password = forms.CharField(max_length=128, min_length=4)
     email = forms.EmailField(max_length=255)
 
-        
 class SignUpView(TemplateView):
     template_name = "bookshare/signup.html"
     error_msg = u"알수없는 오류가 발생하였습니다."
+    
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
-        form = SignUpValidateForm(request.POST)
-
+        form = SignUpValidationForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            email = form.clean_data['email']            
+            password_confirm = form.cleaned_data['password']
+            email = form.cleaned_data['email']            
 
-            print username, password, email
             if password != password_confirm:
                 error_msg = u"비밀번호가 서로 다릅니다."                
                 return render(request, self.template_name, {'error_msg':self.error_msg})
-                
+
             User.objects.create_user(username=username, email=email, password=password)
-            return render(request, self.template_name)
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.check_password(password):
+                    login(request, user)
+                    return HttpResponseRedirect('/')
         else:
-            error_msg = u"형식에 맞지 않는 값을 입력하셨습니다."            
+            error_msg = u"잘못 입력하신 값이 있습니다."                            
         return render(request, self.template_name, {'error_msg':self.error_msg})
 
 
