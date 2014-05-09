@@ -1,13 +1,17 @@
 from django.conf.urls import patterns, include, url
 
+from bookshare.views import MyPageView
+
 from django.contrib import admin
+
+from bookshare.views import SignInView, SignUpView
 admin.autodiscover()
 
-urlpatterns = (
-    # Examples:
-    # url(r'^$', 'bookshare.views.home', name='home'),
-    url(r'^', include('bookshare.apps.books.urls', namespace="books")),
-    url(r'^core/', include('bookshare.apps.core.urls', namespace="core")),
-
-    url(r'^admin/', include(admin.site.urls)),
+urlpatterns = patterns('',
+                       url(r'^$', 'bookshare.views.index'),
+                       url(r'^signin/$', SignInView.as_view()),
+                       url(r'^signup/$', SignUpView.as_view()),
+                       url(r'^signout/$', 'bookshare.views.signout'),
+                       url(r'^me/$', MyPageView.as_view()),
+                       url(r'^admin/', include(admin.site.urls)),
 )

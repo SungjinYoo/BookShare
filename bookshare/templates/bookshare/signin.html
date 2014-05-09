@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block content %}
+
+<div class="signin-screen">
+  <div class="signin-form">
+    <form action="/signin/" method="post">
+      <div class="form-group">
+	<input type="text" class="form-control signin-field" value="" placeholder="Enter your name" id="signin-name" name="username">
+	<label class="input-field-icon fui-user" for="username"></label>
+      </div>
+      <div class="form-group">
+	<input type="password" class="form-control signin-field" value="" placeholder="Password" id="signin-password" name="password">
+	<label class="input-field-icon fui-lock" for="password"></label>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block signin-button">Sign In</button>
+      <a class="signin-link btn btn-sm btn-block" href="/signup">Have not signed yet?</a>
+      <a class="signin-link btn btn-sm btn-block" href="/find">Lost your password?</a>
+			{{error_msg}}
+      {% csrf_token %}
+    </form>
+  </div>
+</div>
+
+{% endblock%}

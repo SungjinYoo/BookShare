@@ -1,10 +1,74 @@
-<h1>BookShare</h1>
 
-<div>
-{% block content %}
-{% endblock %}
-</div>
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div>
-<a href="{% url 'core:console_index' %}">switch to admin console</a>
-</div>
+    <!-- loading bootstrap -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    
+    <!-- loading flat ui -->
+    <link rel="stylesheet" href="/static/css/flat-ui.css">
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block css %}{% endblock %}
+
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+
+    <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/flatui-radio.js"></script>
+    <script type="text/javascript" src="/static/js/flatui-checkbox.js"></script>
+    <script type="text/javascript" src="/static/js/application.js"></script>
+    {% block script %}{% endblock %}
+
+    <script type="text/javascript">
+      $('body').ready(function(){
+      {% block onload_script %}{% endblock %}
+      });
+    </script>
+    
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <!-- navigation -->
+    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+	  <span class="sr-only">Toggle navigation</span>
+	</button>
+	<a class="navbar-brand" href="#">BookShare</a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse-01">
+	<ul class="nav navbar-nav">      
+	  <li class="active"><a href="#somemenu1">Somemenu1</a></li>
+	  <li><a href="#somemenu2">Somemenu2</a></li>
+	</ul>       
+        <form class="navbar-form navbar-right" action="#" role="search">
+	  <div class="form-group">
+	    <div class="input-group">
+	      <input class="form-control" id="navbarInput-01" type="search" placeholder="Search">
+	      <span class="input-group-btn">
+		<button type="submit" class="btn"><span class="fui-search"></span></button>
+	      </span>            
+	    </div>
+	  </div>             
+	</form>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+    
+
+
+    <div id="content-wrapper">
+      <div id="nav">
+	{% block nav %}{% endblock %}
+      </div>
+      <div id="content">
+	{% block content %}{% endblock %}
+      </div>
+    </div>
+
+  </body>
+</html>
+
