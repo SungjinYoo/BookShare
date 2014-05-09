@@ -12,9 +12,6 @@ class UserManager(BaseUserManager):
         Creates and saves a User with the given email and password.
         """
         now = timezone.now()
-        if not email:
-            raise ValueError('The given email must be set')
-        email = UserManager.normalize_email(email)
         user = self.model(user_id=user_id,
                           is_staff=False, is_active=True, is_superuser=False,
                           last_login=now, date_joined=now, **extra_fields)
@@ -32,7 +29,7 @@ class UserManager(BaseUserManager):
         return u
 
 
-class BookShareAbstractUser(AbstractBaseUser):
+class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
     MALE = 'M'
     FEMALE = 'F'
 
@@ -41,7 +38,7 @@ class BookShareAbstractUser(AbstractBaseUser):
         (FEMALE, u'여')
     )
 
-    user_id = models.CharField(_(u'아이디'), 
+    username = models.CharField(_(u'아이디'), 
                                max_length=15, 
                                help_text=_(u'사용자 아이디'),
                                unique=True,
@@ -53,7 +50,6 @@ class BookShareAbstractUser(AbstractBaseUser):
     
     email = models.EmailField(_('Email (ID)'),
                               max_length=255,
-                              db_index=True,
                               unique=True)
     
     is_staff = models.BooleanField(_('staff status'),
@@ -74,7 +70,6 @@ class BookShareAbstractUser(AbstractBaseUser):
                            default='M')
     age = models.IntegerField(_(u'나이'), blank=True, null=True)
     objects = UserManager()
-    USERNAME_FIELD = 'user_id'
     REQUIRED_FIELDS = ['name']
 
     class Meta:
