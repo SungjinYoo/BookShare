@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}마이페이지{% endblock %}
+
+{% block content %}
+<div class="">
+  <span id="student-no">20042102312</span>님 하염
+  <span id="sharing-point">3</span>점
+  비번바꾸기/탈퇴
+
+  <div class="">
+    <div class="float-left">
+      <ul class="내가 맡긴 책">
+	<li>맡긴 책이에염 뿌우 (반납 / 기부)</li>
+      </ul>
+    </div>
+    <div class="float-right">
+      <ul class="내가 빌린 책">
+	<li>빌린 책이에염 뿌우 (상태){마우스 오버시 대여일}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+로그인 된 유저정보
+{{ data }}
+
+변경할 수 있는 사항들은 변경 가능하게 인풋창으로 띄워주도록 하지 뭐
+비번, 이메일(ID로 사용하지 않을경우) 등
+
+
+
+{% endblock %}

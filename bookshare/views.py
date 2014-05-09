@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
+from django.views.generic import View
 from django.views.generic.base import TemplateView
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -71,3 +73,21 @@ class SignUpView(TemplateView):
         return render(request, self.template_name, {'error_msg':self.error_msg})
 
 
+class MyPageView(View):
+    # need login required
+    def get(self, request):
+        data = dict(
+            user = request.user,
+        )
+
+        return render(request, 'bookshare/mypage.html', data)
+
+    def post(self, request):
+        return HttpResponseForbidden()
+
+
+def how_it_works(request):
+    if request.method == 'GET' :
+        return render(request, 'how_it_works.html')
+    else :
+        return HttpResponseForbidden()
