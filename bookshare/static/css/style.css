@@ -1,0 +1,53 @@
+.horizontal-radio{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+
+#content-wrapper{
+    min-width: 400px;
+    width: 100%;
+}
+
+
+/* signin */
+.signin-screen{
+    background-color: #edeff1;
+    max-width: 500px;
+    padding: 20px;
+    margin: auto;
+    border-radius: 6px;
+}
+
+.signin-form{
+    max-width: 400px;
+    margin: auto;
+}
+
+.input-field-icon{
+    position: absolute;
+    right: 15px;
+    top: 3px;
+}
+
+.signin-button{
+    margin-bottom: 10px;
+}
+
+.signin-link{
+    text-align: center;
+}
+
+.signin-link > button
+{
+    margin-bottom: 4px;
+}
+
+/* signup */
+.signup-screen{
+    background-color: #edeff1;
+    max-width: 500px;
+    padding: 20px;
+    margin: auto;
+    border-radius: 6px;
+}

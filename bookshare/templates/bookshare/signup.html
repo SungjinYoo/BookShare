@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}회원가입{% endblock %}
+
+{% block content %} 
+<div class="signup-screen">
+  <div class="signup-form">
+    <form action="/users/signup" method="post">
+      <div class="form-group">
+	<input type="text" class="form-control signup-field" value="" placeholder="Enter your name" id="signup-name" name="username">
+	<label class="input-field-icon fui-user" for="username"></label>
+      </div>
+      <div class="form-group">
+	<input type="password" class="form-control signup-field" value="" placeholder="Password" id="signup-password" name="password">
+	<label class="input-field-icon fui-lock" for="password"></label>
+      </div>
+      <div class="form-group">
+	<input type="password" class="form-control signup-field" value="" placeholder="Password Confirm" id="signup-password-confirm">
+	<label class="input-field-icon fui-lock" for="password-confirm"></label>
+      </div>
+      <div class="form-group">
+	<input type="text" class="form-control signup-field" value="" placeholder="Email" id="signup-email" name="email">
+	<label class="input-field-icon fui-mail" for="email"></label>
+	<label class="checkbox" for="mailing">
+          <input type="checkbox" value="" id="mailing" data-toggle="checkbox" name="mailing">
+	  Join Mailing
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-lg btn-block signup-button">Signup</button>
+      {% csrf_token %}
+    </form>
+  </div>
+</div>
+
+{% endblock%}
