@@ -45,3 +45,12 @@ class Book(models.Model):
 
     def available_stock(self):
         return self.stock_set.available().order_by('condition').all()
+
+    def any_availiable_stock(self):
+        try:
+            return list(self.available_stock()).pop()
+        except IndexError:
+            return None
+
+    def point(self):
+        return 1

@@ -135,12 +135,11 @@ def process_rent_request(request):
     ### precondition
     request.ensure_status(RentRequest.PENDING)
     request.actor.ensure_points(request.book.point())
+    assert request.book.any_availiable_stock()
 
     request.status = RentRequest.DONE
-    request.save()
 
-    stock = request.book.available_stock()[0]
-
+    stock = request.book.any_availiable_stock()
     stock.status = Stock.RENTED
     stock.save()
 
@@ -149,7 +148,9 @@ def process_rent_request(request):
                                 action=StockHistory.RENT,
                                 condition=stock.condition).save()
 
-    request.actor.lose_point(request.book.point())
+    request.actor.lose_points(request.book.point())
+    request.actor.save()
+    request.save()
 
 @transaction.atomic
 def return_stock(actor, stock, condition):
@@ -173,6 +174,7 @@ def deliver_stock(actor, book, condition):
                                 condition=condition).save()
 
     actor.get_points(book.point())
+    actor.save()
 
 def request_reclaim(actor, stock):
     ### precondition
