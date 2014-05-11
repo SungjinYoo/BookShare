@@ -92,6 +92,7 @@ class MyUserAdmin(UserAdmin):
          {'fields': ('sex', )}),
         ('Permissions', {'fields': ('is_active',)}),
         ('Important dates', {'fields': ('last_login', 'date_joined',)}),
+        ('Points', {'fields': ('points',)}),
     )
     add_fieldsets = (
         (_(u'새로운 유저 만들기'), {
