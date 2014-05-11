@@ -92,3 +92,17 @@ class User(BookShareAbstractUser):
         verbose_name = _(u'서비스 유저')
         verbose_name_plural = _(u'서비스 유저들')
         swappable = 'AUTH_USER_MODEL'
+
+    points = models.IntegerField(default=0)
+
+    def ensure_points(self, points):
+        assert self.points >= points, "insufficient points"
+
+    def get_points(self, points):
+        assert points > 0
+        self.points += points
+
+    def lose_points(self, points):
+        assert points > 0
+        self.ensure_points(points)
+        self.points -= points
