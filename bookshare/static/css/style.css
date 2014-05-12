@@ -51,3 +51,16 @@
     margin: auto;
     border-radius: 6px;
 }
+
+.book-detail h2 {
+    margin-top: 0;
+}
+
+.book-detail img.cover {
+    float: left;
+    margin-right: 15px;
+}
+
+.book-detail .courses li {
+    list-style: none;
+}
