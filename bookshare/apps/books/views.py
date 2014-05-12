@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.views.generic.detail import DetailView
 
-import models
+from models import Book
 
 # Create your views here.
 def index(request):
@@ -10,9 +11,6 @@ def index(request):
     return render(request, "index.html", context)
 
 
-from django.views.generic.detail import DetailView
-
-from models import Book
 
 class BookDetailView(DetailView):
     model = Book

@@ -1,31 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{{ object.title }}</h2>
-<h3>Information</h3>
-<dl>
-    <dt>ISBN</dt><dd>{{ object.isbn }}</dd>
-</dl>
+<div class="row">
+    <div class="col-md-8">
+        <h2>{{ object.title }}</h2>
+        <h3>Price</h3>
+        <p>{{ object.point }} point</p>
+        <h3>Stock</h3>
+        {% if object.available_stock %}
+        <p>Available!</p>
+        {% else %}
+        <p>out of stock</p>
+        {% endif %}
 
-<h3>Courses</h3>
-{% if object.courses.all %}
-<ul>
-    {% for course in object.courses.all %}
-    <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>no course</p>
-{% endif %}
-
-<h3>Stock</h3>
-
-{% if object.available_stock %}
-<p>
-    Available! <a href="{% url 'core:request_rent' %}">Request Rent</a>
-</p>
-{% else %}
-<p>out of stock</p>
-{% endif %}
+        <a href="{% url 'core:request_rent' %}" class="btn btn-primary{% if not object.has_any_stock %}.disabled{% endif %}">Request Rent</a>
+    </div>
+    <div class="col-md-4">
+        <h3>Courses</h3>
+        {% if object.courses.all %}
+        <ul>
+        {% for course in object.courses.all %}
+            <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
+        {% endfor %}
+        </ul>
+        {% else %}
+        <p>no course</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
