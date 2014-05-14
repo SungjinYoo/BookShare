@@ -24,14 +24,17 @@ def signout(request):
 class SignInView(TemplateView):
     template_name = "bookshare/signin.html"
     error_msg = u"없는 아이디 이거나 비밀번호가 잘못되었습니다."
+    default_next_url = "/"
+    template_next_var = "next"
 
     def get(self, request, *args, **kwargs):
-        context = {"next": self.kwargs.get("next", None)}
+        context = {}
+        context[self.template_next_var] = self.kwargs.get("next", self.default_next_url)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         form = UserValidationForm(request.POST)
-        next_url = form.data.get("next", "/")
+        next_url = form.data.get("next", self.default_next_url)
 
         if form.is_valid():
             user_id = form.cleaned_data['user_id']
@@ -44,8 +47,8 @@ class SignInView(TemplateView):
         else:
             error_msg = u"형식에 맞지 않는 값을 입력하셨습니다."
 
-        context = {'error_msg':self.error_msg}
-        context["next"] = next_url
+        context = {'error_msg': self.error_msg}
+        context[self.template_next_var] = next_url
         return render(request, self.template_name, context)
 
 
