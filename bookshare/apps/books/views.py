@@ -14,3 +14,6 @@ def index(request):
 
 class BookDetailView(DetailView):
     model = Book
+
+def rent_request(request, pk=None):
+    return render(request, "books/rent_request_complete.html")
