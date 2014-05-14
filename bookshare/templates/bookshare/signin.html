@@ -20,6 +20,7 @@
       <a class="signin-link btn btn-sm btn-block" href="/find">Lost your password?</a>
 			{{error_msg}}
       {% csrf_token %}
+      <input type="hidden" value="{{ next }}" name="next" />
     </form>
   </div>
 </div>

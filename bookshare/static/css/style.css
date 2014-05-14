@@ -1,3 +1,7 @@
+label input[type="submit"] {
+    display: none;
+}
+
 .horizontal-radio{
     display: inline-block;
     margin-right: 20px;
