@@ -7,18 +7,14 @@
             <img src="http://placehold.it/300x400" class="cover"/>
             <h2>{{ object.title }}</h2>
             <p>{{ object.point }} point</p>
-            {% if object.available_stock %}
-            <p>Available!</p>
+            {% if object.any_availiable_stock %}
+            <p>Available! <a href="{% url 'core:request_rent' %}" class="btn btn-sm btn-primary">Request Rent</a></p>
             {% else %}
             <p>out of stock</p>
             {% endif %}
         </div>
         <div class="col-md-4">
-            <p>
-            {% if object.has_any_stock %}
-            <a href="{% url 'core:request_rent' %}" class="btn btn-primary">Request Rent</a>
-            {% endif %}
-            </p>
+           
         </div>
     </div>
 

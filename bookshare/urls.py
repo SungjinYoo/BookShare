@@ -15,6 +15,6 @@ urlpatterns = patterns('',
    url(r'^me/$', MyPageView.as_view()),
    url(r'^admin/', include(admin.site.urls)),
    url(r'^test/', include(urls.urlpatterns, namespace="core")),
-   url(r'^books/(?P<pk>[0-9]+)$', BookDetailView.as_view(), name='article-detail'),
+   url(r'^books/(?P<pk>[0-9]+)$', BookDetailView.as_view(), name='book-detail'),
 )
 
