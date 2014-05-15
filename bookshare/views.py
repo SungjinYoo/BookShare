@@ -58,6 +58,7 @@ class SignUpView(TemplateView):
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
+            user_name = form.cleaned_data['']
             user_id = form.cleaned_data['user_id']
             password = form.cleaned_data['password']
             password_confirm = form.cleaned_data['password']
@@ -81,10 +82,14 @@ class SignUpView(TemplateView):
 class MyPageView(View):
     # need login required
     def get(self, request):
+        if request.user.is_anonymous() :
+            return render(request, 'bookshare/signin.html')
         data = dict(
-            user = request.user,
+            userid = request.user.user_id,
+            usersex = request.user.sex,
+            phonenum = request.user.phone_number,
+            useremail = request.user.email
         )
-
         return render(request, 'bookshare/mypage.html', data)
 
     def post(self, request):

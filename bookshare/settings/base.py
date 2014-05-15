@@ -17,7 +17,7 @@ def get_env_variable(var_name):
         error_msg = "Set the %s env variable" % var_name
         raise ImproperlyConfigured(error_msg)
 
-SECRET_KEY = get_env_variable('BOOKSHARE_SECRET_KEY')
+SECRET_KEY = 'wt)*w9u9vu+jffz)8qn9whq!y^rpuu*w2o1=nkwb3dqcq2=(2e'
 
 DEBUG = True
 TEMPLATE_DEBUG = True
