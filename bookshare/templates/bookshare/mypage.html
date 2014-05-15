@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 {% extends "base.html" %}
 
 {% block title %}마이페이지{% endblock %}
 
 {% block content %}
 <div class="signup-screen">
-  <div class="small-title" style="padding-top: 20px; margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';">개인정보</div>
+  <div class="small-title" style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';">개인정보</div>
   <div class="signup-form">
     <form action="/signup/" method="post">
       <div class="form-group">
@@ -47,7 +46,10 @@
       {% csrf_token %}
     </form>
   </div>
-  <div class="small-title;"style="padding-top: 20px; margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'">맡긴 책</div>
+</div>
+
+<div class="signup-screen" style="margin-top:15px;">  
+  <div class="small-title;"style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'">맡긴 책</div>
   <ul>
   {% for o in deposit_book %}
       <li style="overflow:hidden;">
@@ -57,7 +59,10 @@
       </li>
   {% endfor %}
   </ul>
-  <div class="small-title" style="padding-top: 20px; margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'">빌린 책</div>
+</div>
+
+<div class="signup-screen" style="margin-top:15px;">
+  <div class="small-title" style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'">빌린 책</div>
    <ul>
    {% for o in borrow_book %}
       <li style="overflow:hidden;">
