@@ -87,7 +87,9 @@ class MyPageView(View):
             userid = request.user.user_id,
             usersex = request.user.sex,
             phonenum = request.user.phone_number,
-            useremail = request.user.email
+            useremail = request.user.email,
+            deposit_book = ["하나", "둘", "셋"],
+            borrow_book = [["하나","20%","2014/06/01"],["둘","10%","2014/06/05"]]
         )
         return render(request, 'bookshare/mypage.html', data)
 

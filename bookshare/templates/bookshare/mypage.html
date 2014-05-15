@@ -1,9 +1,9 @@
+# -*- coding: utf-8 -*-
 {% extends "base.html" %}
 
 {% block title %}마이페이지{% endblock %}
 
 {% block content %}
-
 <div class="signup-screen">
   <div class="small-title" style="padding-top: 20px; margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';">개인정보</div>
   <div class="signup-form">
@@ -49,40 +49,29 @@
   </div>
   <div class="small-title;"style="padding-top: 20px; margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'">맡긴 책</div>
   <ul>
+  {% for o in deposit_book %}
       <li style="overflow:hidden;">
-          <p>하나</p>
+          <p>{{ o }}</p>
           <button style="float:right; width:40%; margin:0;" class="btn btn-primary btn-lg btn-block signup-button">반납</button>
           <button style="float:right; width:40%; margin:0; margin-right:10px" class="btn btn-primary btn-lg btn-block signup-button">기부</button>
       </li>
-      <li style="overflow:hidden;">
-          <p>둘</p>
-          <button style="float:right; width:40%; margin:0;" class="btn btn-primary btn-lg btn-block signup-button">반납</button>
-          <button style="float:right; width:40%; margin:0; margin-right:10px" class="btn btn-primary btn-lg btn-block signup-button">기부</button>
-      </li>
-      <li style="overflow:hidden;">
-          <p>셋</p>
-          <button style="float:right; width:40%; margin:0;" class="btn btn-primary btn-lg btn-block signup-button">반납</button>
-          <button style="float:right; width:40%; margin:0; margin-right:10px" class="btn btn-primary btn-lg btn-block signup-button">기부</button>
-      </li>
+  {% endfor %}
   </ul>
   <div class="small-title" style="padding-top: 20px; margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'">빌린 책</div>
    <ul>
+   {% for o in borrow_book %}
       <li style="overflow:hidden;">
-        <p>하나</p>
+        <p>{{ o.0 }}</p>
+        <div class="progress">
+            <div class="progress-bar" style="width: {{o.1}};"></div>
+        </div>
         <div class="tooltip fade bottom in" style="display: block;">
          	<div class="tooltip-arrow"></div>
-         	<div class="tooltip-inner">남은 기간 ~~ 입니다</div>
+         	<div class="tooltip-inner">{{ o.2 }}까지</div>
      	</div>
       	<button style="float:right; width:40%; margin:0;" class="btn btn-primary btn-lg btn-block signup-button">연장</button>
       </li>
-      <li style="overflow:hidden;">
-        <p>둘</p>
-        <button style="float:right; width:40%; margin:0;" class="btn btn-primary btn-lg btn-block signup-button">연장</button>
-      </li>
-      <li style="overflow:hidden;">
-        <p>셋</p>
-        <button style="float:right; width:40%; margin:0;" class="btn btn-primary btn-lg btn-block signup-button">연장</button>
-      </li>
+   {% endfor %}
   </ul>
 </div>
 
