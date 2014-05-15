@@ -64,3 +64,8 @@
 .book-detail .courses li {
     list-style: none;
 }
+
+.link-set {
+    margin-top:30px;
+    margin-bottom:15px;
+}
