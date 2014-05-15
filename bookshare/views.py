@@ -58,7 +58,6 @@ class SignUpView(TemplateView):
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
-            user_name = form.cleaned_data['']
             user_id = form.cleaned_data['user_id']
             password = form.cleaned_data['password']
             password_confirm = form.cleaned_data['password']
@@ -92,8 +91,26 @@ class MyPageView(View):
         )
         return render(request, 'bookshare/mypage.html', data)
 
-    def post(self, request):
-        return HttpResponseForbidden()
+    def post(self, request, *args, **kwargs):
+        form = SignUpValidationForm(request.POST)
+        if form.is_valid():
+            user_id = form.cleaned_data['user_id'];
+            password = form.cleaned_data['password']
+            password_confirm = form.cleaned_data['password']
+            email = form.cleaned_data['email']            
+
+            if password != password_confirm:
+                error_msg = u"비밀번호가 서로 다릅니다."                
+                return render(request, self.template_name, {'error_msg':self.error_msg})
+
+            user = authenticate(user_id=user_id, password=password)
+            if user is not None:
+                if user.check_password(password):
+                    # modefy user data
+                    # 
+                    # 
+                    # 
+                    return HttpResponseRedirect('/')
 
 
 def how_it_works(request):
