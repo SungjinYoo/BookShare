@@ -95,15 +95,16 @@ class MyPageView(View):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
             user_id = form.cleaned_data['user_id'];
+            password_before = form.cleaned_data['password-before'];
             password = form.cleaned_data['password']
-            password_confirm = form.cleaned_data['password']
+            password_confirm = form.cleaned_data['password-confirm']
             email = form.cleaned_data['email']            
 
             if password != password_confirm:
                 error_msg = u"비밀번호가 서로 다릅니다."                
                 return render(request, self.template_name, {'error_msg':self.error_msg})
 
-            user = authenticate(user_id=user_id, password=password)
+            user = authenticate(user_id=user_id, password=password_before)
             if user is not None:
                 if user.check_password(password):
                     # modefy user data
