@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from bookshare.views import MyPageView, SignInView, SignUpView
+from bookshare.views import MyPageView, SignInView, SignUpView, how_it_works
 from bookshare.apps.core import urls
 from bookshare.apps.books.views import BookDetailView
 
@@ -16,5 +16,6 @@ urlpatterns = patterns('',
    url(r'^admin/', include(admin.site.urls)),
    url(r'^test/', include(urls.urlpatterns, namespace="core")),
    url(r'^books/(?P<pk>[0-9]+)$', BookDetailView.as_view(), name='book-detail'),
+   url(r'^how-it-works$', how_it_works, name="how-it-works"),
 )
 
