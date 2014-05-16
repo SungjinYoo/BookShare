@@ -1,5 +1,10 @@
-header {
-    min-height: 15em;
+section.feature {
+    margin-bottom: 2em;
+}
+
+
+footer {
+    min-height: 7em;
 }
 
 .horizontal-radio{
