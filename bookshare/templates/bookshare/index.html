@@ -3,39 +3,32 @@
 {% block title %}MainPage{% endblock %}
 
 {% block content %}
-<div id="myCarousel" class="carousel slide" data-interval="false">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class=""></li>
-    <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-  </ol>
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item">
-      <img src="/static/img/book.jpg" alt="">
-      <div class="carousel-caption">
-        <h3>Thumbnail label</h3>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec.</p>
-      </div>
+<header>
+<h2 class="text-center">BookShare</h2>
+<p class="lead text-center">Share your book, and get another for free.</p>
+<div class="row">
+    <div class="col-md-12 text-center link-set">
+        <a href="#" class="btn btn-inverse btn-lg">Learn More</a>
+        <a href="#" class="btn btn-primary btn-lg">Get Started</a>
     </div>
-    <div class="item active">
-      <img src="/static/img/book.jpg" alt="">
-      <div class="carousel-caption">
-        <h3>Thumbnail label</h3>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec.</p>
-      </div>
-    </div>
-    <div class="item">
-      <img src="/static/img/book.jpg" alt="">
-      <div class="carousel-caption">
-        <h3>Thumbnail label</h3>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec.</p>
-      </div>
-    </div>
-  </div>
-  <!-- Controls -->
-  <a class="left carousel-control fui-arrow-left" href="#myCarousel" data-slide="prev"></a>
-  <a class="right carousel-control fui-arrow-right" href="#myCarousel" data-slide="next"></a>
 </div>
+</header>
+<section>
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="text-center">Feature</h3>
+            <p>blah blah blah</p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center">Feature</h3>
+            <p>blah blah blah</p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center">Feature</h3>
+            <p>blah blah blah</p>
+        </div>
+    </div>
+</section>
+
+
 {% endblock %}

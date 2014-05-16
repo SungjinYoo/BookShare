@@ -1,3 +1,7 @@
+header {
+    min-height: 15em;
+}
+
 .horizontal-radio{
     display: inline-block;
     margin-right: 20px;
