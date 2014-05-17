@@ -36,7 +36,10 @@ class Book(models.Model):
     courses = models.ManyToManyField(Course)
     title = models.CharField(max_length=80)
     isbn = models.CharField(validators=[isbn_validator], max_length=13)
-
+    
+    # set upload_to in initializer
+    image = models.ImageField(upload_to=settings.MEDIA_ROOT)
+    
     def __unicode__(self):
         return str(self).decode('utf-8')
 
