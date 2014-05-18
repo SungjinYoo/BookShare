@@ -10,3 +10,6 @@ class StockDeliverForm(forms.Form):
     book = forms.ModelChoiceField(queryset=books.models.Book.objects.all())
     condition = forms.ChoiceField(choices=models.Stock.CONDITIONS)
 
+class RentRequestProcessForm(forms.Form):
+    request = forms.ModelChoiceField(widget=forms.HiddenInput(),
+                                     queryset=models.RentRequest.objects.all())

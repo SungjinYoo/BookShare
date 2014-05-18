@@ -21,7 +21,9 @@
       <td>{{ rent.actor }}</td>
       <td>{{ rent.book.title }}</td>
       <td>{{ rent.added_at }}</td>
-      <td><a class="btn btn-sm btn-warning">승인</a></td>
+      <td>
+        <a href="{% url 'console:process_rent_req' rent.id %}" class="btn btn-sm btn-warning">승인</a>
+      </td>
     </tr>
     {% endfor %}
     {% else %}

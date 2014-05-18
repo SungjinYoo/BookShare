@@ -1,0 +1,5 @@
+<form method="post" action="{% url 'console:process_rent_req' rent_request.id %}">
+{% csrf_token %}
+{{ rent_request_form }}
+<label><button class="btn btn-sm btn-primary">Request Rent</button> <input type="submit" /></label>
+</form>
