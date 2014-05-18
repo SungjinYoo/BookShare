@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 from django.db.models import Q
-from django.shortcuts import render
 from django.views.generic import ListView
-=======
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, render
->>>>>>> rent_request
 from django.views.generic.detail import DetailView
 
 import forms
@@ -24,7 +20,6 @@ def index(request):
 class BookDetailView(DetailView):
     model = Book
 
-<<<<<<< HEAD
 class BookSearchView(ListView):
     template_name = 'books/book_search.html'
 
@@ -49,7 +44,6 @@ class BookSearchView(ListView):
             return Book.objects.all()
 
         
-=======
     def get_context_data(self, **kwargs):
         context = super(BookDetailView, self).get_context_data(**kwargs)
         context['rent_request_form'] = forms.RentRequestForm(initial={'book': context["object"].pk})
@@ -67,4 +61,3 @@ def rent_request(request):
                 next_url = reverse_lazy("book-detail", kwargs={"pk": request.POST.get("book", None)})
                 return redirect(reverse_lazy("signin_next", kwargs={"next": next_url}))
 
->>>>>>> rent_request
