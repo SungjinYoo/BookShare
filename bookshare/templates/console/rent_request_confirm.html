@@ -3,8 +3,6 @@
 {% block title %}대여요청 현황 보기{% endblock %}
 {% block content %}
 
-
-
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center">대여요청승인</h2>
@@ -28,7 +26,7 @@
                 {% csrf_token %}
                 {{ rent_request_form }}
                 <label><button class="btn btn-sm btn-primary">승인</button> <input type="submit" /></label>
-                <label><button class="btn btn-sm btn-primary">취소</button> </label>
+                <a href="javascript: history.go(-1);" class="btn btn-sm btn-default">취소</a>
             </form>
         </div>
     </div>
