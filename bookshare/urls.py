@@ -2,7 +2,11 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
+<<<<<<< HEAD
 from bookshare.views import MyPageView, MyRentRequestListView, MyRentListView, MyDonateListView, SignInView, SignUpView
+=======
+from bookshare.views import MyPageView, SignInView, SignUpView, how_it_works
+>>>>>>> branding
 from bookshare.apps.core import urls
 <<<<<<< HEAD
 from bookshare.apps.books.views import BookDetailView, BookSearchView
@@ -27,5 +31,6 @@ urlpatterns = patterns('',
    url(r'^books/(?P<pk>[0-9]+)$', BookDetailView.as_view(), name='book-detail'),
    url(r'^books/search/$', BookSearchView.as_view()),
    url(r'^books/rent\-request$', rent_request, name='book-rent-request'),
+   url(r'^how-it-works$', how_it_works, name="how-it-works"),
 )
 

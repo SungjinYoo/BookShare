@@ -2,6 +2,15 @@ label input[type="submit"] {
     display: none;
 }
 
+section.feature {
+    margin-bottom: 2em;
+}
+
+
+footer {
+    min-height: 7em;
+}
+
 .horizontal-radio{
     display: inline-block;
     margin-right: 20px;
