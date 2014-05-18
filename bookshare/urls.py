@@ -26,6 +26,6 @@ urlpatterns = patterns('',
    url(r'^books/search/$', BookSearchView.as_view()),
    url(r'^books/rent\-request$', rent_request, name='book-rent-request'),
    url(r'^how-it-works$', how_it_works, name="how-it-works"),
-   url(r'^console/', include(console_urls.urlpatterns, namespace="console")),
+   url(r'^console', include(console_urls.urlpatterns, namespace="console")),
 )
 
