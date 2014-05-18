@@ -1,9 +1,12 @@
 from django.db.models import Q
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, View
 from django.views.generic.detail import DetailView
 
 from models import Book
+
+from bookshare.apps.core.models import request_rent
 
 # Create your views here.
 def index(request):
@@ -24,7 +27,7 @@ class BookSearchView(ListView):
         title = self.request.GET.get('title', '')
         department = self.request.GET.get('department', '')
 
-        query = None
+        query = Q()
         
         if title :
             print 'title'
@@ -40,4 +43,11 @@ class BookSearchView(ListView):
             # just empty list? or all the books?
             return Book.objects.all()
 
-        
+class BookRentView(View):
+    def get(self):
+        return HttpResponseForbidden()
+
+    def post(self):
+        print self.request.POST
+        #request_rent(self.request.user, None)
+        return HttpResponse()

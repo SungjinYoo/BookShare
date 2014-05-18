@@ -134,7 +134,7 @@ class MyDonateListView(ListView):
     
     # need login required
     def get_queryset(self):
-        return []
+        return self.request.user.stock_set.all()
 
 
 

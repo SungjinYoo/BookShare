@@ -1,3 +1,9 @@
+/* common */
+.cursor {
+    cursor:pointer;
+}
+
+
 .horizontal-radio{
     display: inline-block;
     margin-right: 20px;
@@ -64,3 +70,5 @@
 .book-detail .courses li {
     list-style: none;
 }
+
+/* book_search */
