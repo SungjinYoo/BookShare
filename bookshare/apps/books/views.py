@@ -20,6 +20,11 @@ def index(request):
 class BookDetailView(DetailView):
     model = Book
 
+    def get_context_data(self, **kwargs):
+        context = super(BookDetailView, self).get_context_data(**kwargs)
+        context['rent_request_form'] = forms.RentRequestForm(initial={'book': context["object"].pk})
+        return context
+
 class BookSearchView(ListView):
     template_name = 'books/book_search.html'
 
@@ -42,12 +47,6 @@ class BookSearchView(ListView):
         else :
             # just empty list? or all the books?
             return Book.objects.all()
-
-        
-    def get_context_data(self, **kwargs):
-        context = super(BookDetailView, self).get_context_data(**kwargs)
-        context['rent_request_form'] = forms.RentRequestForm(initial={'book': context["object"].pk})
-        return context
 
 def rent_request(request):
     if request.method == "POST":
