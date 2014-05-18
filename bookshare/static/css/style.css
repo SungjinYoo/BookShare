@@ -3,6 +3,18 @@
     cursor:pointer;
 }
 
+label input[type="submit"] {
+    display: none;
+}
+
+section.feature {
+    margin-bottom: 2em;
+}
+
+
+footer {
+    min-height: 7em;
+}
 
 .horizontal-radio{
     display: inline-block;
@@ -72,3 +84,8 @@
 }
 
 /* book_search */
+.link-set {
+    margin-top:30px;
+    margin-bottom:15px;
+}
+

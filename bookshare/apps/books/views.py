@@ -1,9 +1,11 @@
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseForbidden
-from django.shortcuts import render
+
 from django.views.generic import ListView, View
 from django.views.generic.detail import DetailView
+from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import redirect, render
 
+import forms
 from models import Book
 
 from bookshare.apps.core.models import request_rent
@@ -15,10 +17,13 @@ def index(request):
     }
     return render(request, "index.html", context)
 
-
-
 class BookDetailView(DetailView):
     model = Book
+
+    def get_context_data(self, **kwargs):
+        context = super(BookDetailView, self).get_context_data(**kwargs)
+        context['rent_request_form'] = forms.RentRequestForm(initial={'book': context["object"].pk})
+        return context
 
 class BookSearchView(ListView):
     template_name = 'books/book_search.html'
@@ -43,11 +48,14 @@ class BookSearchView(ListView):
             # just empty list? or all the books?
             return Book.objects.all()
 
-class BookRentView(View):
-    def get(self):
-        return HttpResponseForbidden()
+def rent_request(request):
+    if request.method == "POST":
+        form = forms.RentRequestForm(request.POST)
 
-    def post(self):
-        print self.request.POST
-        #request_rent(self.request.user, None)
-        return HttpResponse()
+        if form.is_valid():
+            if request.user.is_authenticated():
+                request_rent(request.user, form.cleaned_data["book"])
+                return render(request, "books/rent_request_complete.html")
+            else:
+                next_url = reverse_lazy("book-detail", kwargs={"pk": request.POST.get("book", None)})
+                return redirect(reverse_lazy("signin_next", kwargs={"next": next_url}))
