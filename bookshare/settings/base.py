@@ -48,6 +48,7 @@ BOOKSHARE_APPS = [
     'bookshare.apps.core',
     'bookshare.apps.users',
     'bookshare.apps.books',
+    'bookshare.apps.console',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BOOKSHARE_APPS
