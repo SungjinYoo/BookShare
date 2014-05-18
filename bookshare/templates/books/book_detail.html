@@ -2,37 +2,37 @@
 
 {% block content %}
 <div class="book-detail">
-    <div class="row">
-            <img src="http://placehold.it/300x400" class="cover"/>
-            <h2>{{ object.title }}</h2>
-            <p>{{ object.point }} point</p>
-            {% if object.any_availiable_stock %}
-            <form method="post" action="{% url 'book-rent-request' %}">
-            {% csrf_token %}
-            {{ rent_request_form }}
-            <p>Available! <label><button class="btn btn-sm btn-primary">Request Rent</button> <input type="submit" /></label></p>
-
-            </form>
-            {% else %}
-            <p>out of stock</p>
-            {% endif %}
-        </div>
-        <div class="col-md-4">
-           
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <img src="http://placehold.it/300x400" class="cover"/>
+      <h2>{{ object.title }}</h2>
+      <p>{{ object.point }} point</p>
+      {% if object.any_availiable_stock %}
+      <form method="post" action="{% url 'book-rent-request' %}">
+	{% csrf_token %}
+	{{ rent_request_form }}
+	<p>Available! <label><button class="btn btn-sm btn-primary">Request Rent</button> <input type="submit" /></label></p>
+      </form>
+      {% else %}
+      <p>out of stock</p>
+      {% endif %}
     </div>
-
-    <h3>Courses</h3>
-    <div class="courses">
-    {% if object.courses.all %}
-    {% for course in object.courses.all %}
-        <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
-    {% endfor %}
-    </ul>
-    {% else %}
-    <p>no course</p>
-    {% endif %}
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Courses</h3>
+      <div class="courses">
+	<ul>
+	  {% if object.courses.all %}
+	  {% for course in object.courses.all %}
+	  <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
+	  {% endfor %}
+	</ul>
+	{% else %}
+	<p>no course</p>
+	{% endif %}
+      </div>
     </div>
+  </div>
 </div>
-
 {% endblock %}

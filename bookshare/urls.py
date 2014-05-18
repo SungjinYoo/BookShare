@@ -22,9 +22,6 @@ urlpatterns = patterns('',
    url(r'^admin/', include(admin.site.urls)),
    url(r'^test/', include(urls.urlpatterns, namespace="core")),
    url(r'^books/', include('bookshare.apps.books.urls')),
-   url(r'^books/(?P<pk>[0-9]+)$', BookDetailView.as_view(), name='book-detail'),
-   url(r'^books/search/$', BookSearchView.as_view()),
-   url(r'^books/rent\-request$', rent_request, name='book-rent-request'),
    url(r'^how-it-works$', how_it_works, name="how-it-works"),
 )
 
