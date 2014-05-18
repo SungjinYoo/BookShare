@@ -8,7 +8,12 @@
             <h2>{{ object.title }}</h2>
             <p>{{ object.point }} point</p>
             {% if object.any_availiable_stock %}
-            <p>Available! <a href="{% url 'core:request_rent' %}" class="btn btn-sm btn-primary">Request Rent</a></p>
+            <form method="post" action="{% url 'book-rent-request' %}">
+            {% csrf_token %}
+            {{ rent_request_form }}
+            <p>Available! <label><button class="btn btn-sm btn-primary">Request Rent</button> <input type="submit" /></label></p>
+
+            </form>
             {% else %}
             <p>out of stock</p>
             {% endif %}
