@@ -8,7 +8,7 @@
   <div class="signup-form">
     <form action="/signup/" method="post">
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ userid }}" placeholder="Enter your name" id="signup-name" name="user_id" readonly="readonly">
+	<input type="text" class="form-control signup-field" value="{{ user.user_id }}" placeholder="Enter your name" id="signup-name" name="user_id" readonly="readonly">
 	<label class="input-field-icon fui-lock" for="username"></label>
       </div>
       <div class="form-group">
@@ -26,18 +26,18 @@
       
       
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{usersex}}" placeholder="sex" id="signup-sex" name="sex" readonly="readonly">
+	<input type="text" class="form-control signup-field" value="{{ user.sex }}" placeholder="sex" id="signup-sex" name="sex" readonly="readonly">
 	<label class="input-field-icon fui-lock" for="sex"></label>
       </div>
       
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{phonenum}}" placeholder="phone number" id="signup-phonenum" name="phone-number">
+	<input type="text" class="form-control signup-field" value="{{ user.phone_number }}" placeholder="phone number" id="signup-phonenum" name="phone-number">
 	<label class="input-field-icon fui-user" for="phone-number"></label>
       </div>
       
       
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ useremail }}" placeholder="Email" id="signup-email" name="email">
+	<input type="text" class="form-control signup-field" value="{{ user.email }}" placeholder="Email" id="signup-email" name="email">
 	<label class="input-field-icon fui-user" for="email"></label>
       </div>
 

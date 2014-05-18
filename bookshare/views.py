@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirec
 from django.contrib.auth import authenticate, login, logout
 from apps.users.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django import forms
 
 
@@ -88,20 +89,17 @@ class SignUpView(TemplateView):
 
 
 class MyPageView(View):
-    # need login required
+    @method_decorator(login_required)
     def get(self, request):
         if request.user.is_anonymous() :
             return render(request, 'bookshare/signin.html')
-        data = dict(
-            userid = request.user.user_id,
-            usersex = request.user.sex,
-            phonenum = request.user.phone_number,
-            useremail = request.user.email,
-            deposit_book = ["하나", "둘", "셋"],
-            borrow_book = [["하나","20%","2014/06/01"],["둘","10%","2014/06/05"]]
+        context = dict(
+            user = request.user,
         )
-        return render(request, 'bookshare/mypage.html', data)
 
+        return render(request, 'bookshare/mypage.html', context)
+
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
