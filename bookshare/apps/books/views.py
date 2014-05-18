@@ -23,8 +23,21 @@ class BookSearchView(ListView):
     def get_queryset(self):
         title = self.request.GET.get('title', '')
         department = self.request.GET.get('department', '')
-        # need pagination?
-        return Book.objects.filter(Q(title__icontains=title) |
-                                   Q(courses__department__icontains=department))
+
+        query = None
+        
+        if title :
+            print 'title'
+            query |= Q(title__icontains=title)
+        if department :
+            print 'department'
+            query |= Q(courses__department__icontains=department)
+
+        # need pagination?        
+        if query :
+            return Book.objects.filter(query)
+        else :
+            # just empty list? or all the books?
+            return Book.objects.all()
 
         

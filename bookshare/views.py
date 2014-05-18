@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import ListView, View
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 
@@ -115,9 +115,32 @@ class MyPageView(View):
                     # 
                     return HttpResponseRedirect('/')
 
+class MyRentRequestListView(ListView):
+    template_name = 'bookshare/my_rent_requests.html'
+    
+    # need login required
+    def get_queryset(self):
+        return self.request.user.rentrequest_set.pending()
+
+class MyRentListView(ListView):
+    template_name = 'bookshare/my_rents.html'
+
+    # need login required
+    def get_queryset(self):
+        return self.request.user.stock_set.rented()
+
+class MyDonateListView(ListView):
+    template_name = 'bookshare/my_donates.html'
+    
+    # need login required
+    def get_queryset(self):
+        return []
+
+
 
 def how_it_works(request):
     if request.method == 'GET' :
         return render(request, 'how_it_works.html')
     else :
         return HttpResponseForbidden()
+

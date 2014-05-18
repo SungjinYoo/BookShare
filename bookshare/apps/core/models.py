@@ -30,11 +30,14 @@ class ConditionMixin(models.Model):
     condition = models.CharField(_(u'보관상태'), max_length=2, choices=CONDITIONS)
 
 
-class StockAvailableManager(models.Manager):
+class StockManager(models.Manager):
     def available(self, *args, **kwargs):
         qs = self.get_query_set().filter(*args, **kwargs)
         return qs.filter(status=Stock.AVAILABLE)
 
+    def rented(self, *args, **kwargs):
+        qs = self.get_query_set().filter(*args, **kwargs)
+        return qs.filter(status=Stock.RENTED)
 
 class Stock(ConditionMixin):
     AVAILABLE = u'available'
@@ -55,7 +58,7 @@ class Stock(ConditionMixin):
                            choices=STATUS,
                            default=AVAILABLE)
 
-    objects = StockAvailableManager()
+    objects = StockManager()
 
     def __unicode__(self):
         return u"{} [{}] - {}".format(self.book, self.id, self.owner)
@@ -82,11 +85,18 @@ class StockHistory(ConditionMixin):
     action = models.CharField(_(u'행동'), max_length=10, choices=ACTION)
 
 
-class RequestPendingManager(models.Manager):
+class RequestManager(models.Manager):
     def pending(self, *args, **kwargs):
         qs = self.get_query_set().filter(*args, **kwargs)
         return qs.filter(status=RequestMixin.PENDING)
-
+    
+    def done(self, *args, **kwargs):
+        qs = self.get_query_set().filter(*args, **kwargs)
+        return qs.filter(status=RequestMixin.DONE)
+    
+    def canceled(self, *args, **kwargs):
+        qs = self.get_query_set().filter(*args, **kwargs)
+        return qs.filter(status=RequestMixin.CANCELED)
 
 class RequestMixin(models.Model):
     class Meta:
@@ -110,7 +120,7 @@ class RequestMixin(models.Model):
                            choices=STATUS,
                            default=PENDING)
 
-    objects = RequestPendingManager()
+    objects = RequestManager()
 
     def __unicode__(self):
         return u"{} - {}".format(self.book, self.actor)

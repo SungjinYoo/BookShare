@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}마이페이지{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-2">
+    <ul class="nav nav-list">
+      <li class="nav-header">개인정보</li>
+      <li class="active">
+        <a href="/me">
+	  개인정보 변경
+        </a>
+      </li>
+      <li class="divider"></li>
+      <li class="nav-header">서비스 정보</li>
+      <li>
+        <a href="/my/rent-requests">
+	  신청현황보기
+          <span class="badge pull-right">1</span>
+        </a>
+      </li>
+      <li>
+        <a href="/my/rents">
+	  대여현황보기
+          <span class="badge pull-right">2</span>
+        </a>
+      </li>
+      <li>
+        <a href="/my/donates">
+	  기부한 책 보기
+          <span class="badge pull-right">1</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-10">
+    {% block inner-content %}
+    {% endblock %}
+  </div>
+</div>
+
+{% endblock %}

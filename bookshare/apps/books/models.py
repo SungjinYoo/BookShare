@@ -55,5 +55,17 @@ class Book(models.Model):
         except IndexError:
             return None
 
+    def rented_stock(self):
+        return self.stock_set.rented().all()
+
+    def rent_request(self):
+        return self.rentrequest_set.pending().all()
+
+    def done_request(self):
+        return self.rentrequest_set.done().all()
+    
+    def canceled_request(self):
+        return self.rentrequest_set.canceled().all()
+
     def point(self):
         return 1
