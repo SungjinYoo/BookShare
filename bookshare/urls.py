@@ -2,17 +2,10 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-<<<<<<< HEAD
-from bookshare.views import MyPageView, MyRentRequestListView, MyRentListView, MyDonateListView, SignInView, SignUpView
-=======
-from bookshare.views import MyPageView, SignInView, SignUpView, how_it_works
->>>>>>> branding
+from bookshare.views import (MyPageView, MyRentRequestListView, MyRentListView,
+                             MyDonateListView, SignInView, SignUpView, how_it_works)
 from bookshare.apps.core import urls
-<<<<<<< HEAD
-from bookshare.apps.books.views import BookDetailView, BookSearchView
-=======
-from bookshare.apps.books.views import BookDetailView, rent_request
->>>>>>> rent_request
+from bookshare.apps.books.views import BookDetailView, BookSearchView, rent_request
 
 admin.autodiscover()
 
