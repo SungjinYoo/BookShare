@@ -42,7 +42,7 @@ def process_rent_request(request, rent_request):
 
 class RentRequestListView(ListView):
     template_name = 'console/rent_request.html'
-    model = models.RentRequest
+    queryset = models.RentRequest.objects.pending
 
 class BookListView(ListView):
     template_name = 'console/deliver_stock.html'
