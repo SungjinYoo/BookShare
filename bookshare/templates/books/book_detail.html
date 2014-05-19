@@ -3,7 +3,7 @@
 {% block content %}
 <div class="book-detail">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 col-md-offset-2">
             <img src="http://placehold.it/300x400" class="cover"/>
             <h2>{{ object.title }}</h2>
             <p>{{ object.point }} point</p>
@@ -13,21 +13,22 @@
             <p>out of stock</p>
             {% endif %}
         </div>
-        <div class="col-md-4">
-           
-        </div>
     </div>
-
-    <h3>Courses</h3>
-    <div class="courses">
-    {% if object.courses.all %}
-    {% for course in object.courses.all %}
-        <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
-    {% endfor %}
-    </ul>
-    {% else %}
-    <p>no course</p>
-    {% endif %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h3>Courses</h3>
+            <div class="courses">
+                {% if object.courses.all %}
+                {% for course in object.courses.all %}
+                <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
+                {% endfor %}
+                </ul>
+                {% else %}
+                <p>no course</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
 
