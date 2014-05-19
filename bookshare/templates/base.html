@@ -35,17 +35,17 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
        <span class="sr-only">Toggle navigation</span>
      </button>
-     <a class="navbar-brand" href="/">BookShare</a>
+     <a class="navbar-brand" href="/">책두레</a>
    </div>
    <div class="collapse navbar-collapse" id="navbar-collapse-01">
      <ul class="nav navbar-nav">      
-       <li><a href="{% url 'how-it-works' %}">How It Works</a></li>
-       <li><a href="{% url 'mypage' %}">My Page</a></li>
+       <li><a href="{% url 'how-it-works' %}">이용안내</a></li>
+       <li><a href="{% url 'mypage' %}">마이페이지</a></li>
      </ul>       
      <form class="navbar-form navbar-right" action="/books/search/" role="search">
        <div class="form-group">
          <div class="input-group">
-           <input class="form-control" id="navbarInput-01" type="search" placeholder="Search">
+           <input class="form-control" id="navbarInput-01" type="search" placeholder="교과서 찾기">
            <span class="input-group-btn">
             <button type="submit" class="btn"><span class="fui-search"></span></button>
           </span>            
