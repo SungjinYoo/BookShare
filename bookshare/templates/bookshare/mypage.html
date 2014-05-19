@@ -1,14 +1,14 @@
-{% extends "base.html" %}
+{% extends "bookshare/mypage_base.html" %}
 
 {% block title %}마이페이지{% endblock %}
 
-{% block content %}
+{% block inner-content %}
 <div class="signup-screen">
   <div class="small-title" style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';">개인정보</div>
   <div class="signup-form">
     <form action="/signup/" method="post">
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ userid }}" placeholder="Enter your name" id="signup-name" name="user_id" readonly="readonly">
+	<input type="text" class="form-control signup-field" value="{{ user.user_id }}" placeholder="Enter your name" id="signup-name" name="user_id" readonly="readonly">
 	<label class="input-field-icon fui-lock" for="username"></label>
       </div>
       <div class="form-group">
@@ -26,85 +26,25 @@
       
       
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{usersex}}" placeholder="sex" id="signup-sex" name="sex" readonly="readonly">
+	<input type="text" class="form-control signup-field" value="{{ user.sex }}" placeholder="sex" id="signup-sex" name="sex" readonly="readonly">
 	<label class="input-field-icon fui-lock" for="sex"></label>
       </div>
       
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{phonenum}}" placeholder="phone number" id="signup-phonenum" name="phone-number">
+	<input type="text" class="form-control signup-field" value="{{ user.phone_number }}" placeholder="phone number" id="signup-phonenum" name="phone-number">
 	<label class="input-field-icon fui-user" for="phone-number"></label>
       </div>
       
       
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ useremail }}" placeholder="Email" id="signup-email" name="email">
+	<input type="text" class="form-control signup-field" value="{{ user.email }}" placeholder="Email" id="signup-email" name="email">
 	<label class="input-field-icon fui-user" for="email"></label>
       </div>
 
       <button class="btn btn-primary btn-lg btn-block signup-button">Change</button>
-			{{error_msg}}
+      {{error_msg}}
       {% csrf_token %}
     </form>
   </div>
 </div>
-
-<div class="signup-screen" style="margin-top:15px;">  
-  <div class="small-title;"style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'">맡긴 책</div>
-  <ul>
-  {% for o in deposit_book %}
-      <li style="overflow:hidden;">
-          <p>{{ o }}</p>
-          <button style="float:right; width:40%; margin:0;" class="btn btn-primary btn-lg btn-block signup-button">반납</button>
-          <button style="float:right; width:40%; margin:0; margin-right:10px" class="btn btn-primary btn-lg btn-block signup-button">기부</button>
-      </li>
-  {% endfor %}
-  </ul>
-</div>
-
-<div class="signup-screen" style="margin-top:15px;">
-  <div class="small-title" style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'">빌린 책</div>
-   <ul>
-   {% for o in borrow_book %}
-      <li style="overflow:hidden;">
-        <p>{{ o.0 }}</p>
-        <div class="progress">
-            <div class="progress-bar" style="width: {{o.1}};"></div>
-        </div>
-        <div class="tooltip fade bottom in" style="display: block;">
-         	<div class="tooltip-arrow"></div>
-         	<div class="tooltip-inner">{{ o.2 }}까지</div>
-     	</div>
-      	<button style="float:right; width:40%; margin:0;" class="btn btn-primary btn-lg btn-block signup-button">연장</button>
-      </li>
-   {% endfor %}
-  </ul>
-</div>
-
-
-<div class="">
-  <span id="student-no">20042102312</span>님 하염
-  <span id="sharing-point">3</span>점
-  비번바꾸기/탈퇴
-
-  <div class="">
-    <div class="float-left">
-      <ul class="내가 맡긴 책">
-	<li>맡긴 책이에염 뿌우 (반납 / 기부)</li>
-      </ul>
-    </div>
-    <div class="float-right">
-      <ul class="내가 빌린 책">
-	<li>빌린 책이에염 뿌우 (상태){마우스 오버시 대여일}</li>
-      </ul>
-    </div>
-  </div>
-</div>
-로그인 된 유저정보 : {{ useremail }}</br>
-</br>
-
-변경할 수 있는 사항들은 변경 가능하게 인풋창으로 띄워주도록 하지 뭐
-비번, 이메일(ID로 사용하지 않을경우) 등
-
-
-
 {% endblock %}

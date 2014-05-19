@@ -36,7 +36,10 @@ class Book(models.Model):
     courses = models.ManyToManyField(Course)
     title = models.CharField(max_length=80)
     isbn = models.CharField(validators=[isbn_validator], max_length=13)
-
+    
+    # set upload_to in initializer
+    image = models.ImageField(upload_to=settings.MEDIA_ROOT)
+    
     def __unicode__(self):
         return str(self).decode('utf-8')
 
@@ -51,6 +54,18 @@ class Book(models.Model):
             return list(self.available_stock()).pop()
         except IndexError:
             return None
+
+    def rented_stock(self):
+        return self.stock_set.rented().all()
+
+    def rent_request(self):
+        return self.rentrequest_set.pending().all()
+
+    def done_request(self):
+        return self.rentrequest_set.done().all()
+    
+    def canceled_request(self):
+        return self.rentrequest_set.canceled().all()
 
     def point(self):
         return 1

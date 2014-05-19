@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block onload_script %}
+$('#search-list').find('tr').click(function(){
+var pk = $(this).attr('id');
+location.href="/books/" + pk +"/";
+});
+{% endblock %}
+
+{% block content %}
+<div class="book-list">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Book Search List</h4>
+      <table id="search-list" class="table table-striped table-bordered">
+	<thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Used In</th>
+            <th>Status</th>
+          </tr>
+	</thead>
+	<tbody>
+	  {% if object_list %} 
+	  {% for book in object_list %}
+          <tr id="{{ book.pk }}" class="cursor">
+            <td>{% if book.image %}<img src="{{ book.image.url}}" />{% else %}<img src="src-to-default-image" />{% endif %}</td>
+            <td>{{ book.title }}</td>
+            <td>{% for course in book.courses.all %}{{ course.department }} {% endfor %}</td>
+            <td>{% if book.any_availiable_stock %}대출 가능{% else %}대출 불가{% endif %}</td>
+          </tr>
+	  {% endfor %}
+	  {% else %}
+	  <tr>
+	    <td colspan=4>No result</td>
+	  </tr>
+	  {% endif %}
+	</tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

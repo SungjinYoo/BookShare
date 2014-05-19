@@ -48,6 +48,7 @@ BOOKSHARE_APPS = [
     'bookshare.apps.core',
     'bookshare.apps.users',
     'bookshare.apps.books',
+    'bookshare.apps.console',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BOOKSHARE_APPS
@@ -79,12 +80,21 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+LOGIN_URL = '/signin/'
+LOGOUT_URL = '/signout/'
+
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (
     PROJECT_ROOT / 'static',
 )
+
 TEMPLATE_DIRS = (
     PROJECT_ROOT / 'templates',
 )
 
 AUTH_USER_MODEL = 'users.User'
+
+MEDIA_ROOT = (
+    PROJECT_ROOT / 'media',
+)

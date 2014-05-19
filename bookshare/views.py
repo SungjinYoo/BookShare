@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import ListView, View
 from django.views.generic.base import TemplateView
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 
 from django.contrib.auth import authenticate, login, logout
 from apps.users.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django import forms
 
 
@@ -24,12 +25,19 @@ def signout(request):
 class SignInView(TemplateView):
     template_name = "bookshare/signin.html"
     error_msg = u"없는 아이디 이거나 비밀번호가 잘못되었습니다."
+    default_next_url = "/"
+    template_next_var = "next"
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        context = dict(
+            next = request.GET.get('next', self.default_next_url),
+        )
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         form = UserValidationForm(request.POST)
+        next_url = form.data.get("next", self.default_next_url)
+
         if form.is_valid():
             user_id = form.cleaned_data['user_id']
             password = form.cleaned_data['password']
@@ -37,10 +45,13 @@ class SignInView(TemplateView):
             if user is not None:
                 if user.check_password(password):
                     login(request, user)
-                    return HttpResponseRedirect('/')
+                    return HttpResponseRedirect(next_url)
         else:
             error_msg = u"형식에 맞지 않는 값을 입력하셨습니다."
-        return render(request, self.template_name, {'error_msg':self.error_msg})
+
+        context = {'error_msg': self.error_msg}
+        context[self.template_next_var] = next_url
+        return render(request, self.template_name, context)
 
 
 class SignUpValidationForm(forms.Form):
@@ -79,20 +90,15 @@ class SignUpView(TemplateView):
 
 
 class MyPageView(View):
-    # need login required
+    @method_decorator(login_required)
     def get(self, request):
-        if request.user.is_anonymous() :
-            return render(request, 'bookshare/signin.html')
-        data = dict(
-            userid = request.user.user_id,
-            usersex = request.user.sex,
-            phonenum = request.user.phone_number,
-            useremail = request.user.email,
-            deposit_book = ["하나", "둘", "셋"],
-            borrow_book = [["하나","20%","2014/06/01"],["둘","10%","2014/06/05"]]
+        context = dict(
+            user = request.user,
         )
-        return render(request, 'bookshare/mypage.html', data)
 
+        return render(request, 'bookshare/mypage.html', context)
+
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
@@ -116,8 +122,42 @@ class MyPageView(View):
                     return HttpResponseRedirect('/')
 
 
+class MyRentRequestListView(ListView):
+    template_name = 'bookshare/my_rent_requests.html'
+    
+    @method_decorator(login_required)
+    def get(self, request):
+        return render(request, self.template_name)
+
+    @method_decorator(login_required)
+    def get_queryset(self):
+        return self.request.user.rentrequest_set.pending()
+
+class MyRentListView(ListView):
+    template_name = 'bookshare/my_rents.html'
+
+    @method_decorator(login_required)
+    def get(self, request):
+        return render(request, self.template_name)
+    
+    def get_queryset(self):
+        return self.request.user.stock_set.rented()
+
+class MyDonateListView(ListView):
+    template_name = 'bookshare/my_donates.html'
+
+    @method_decorator(login_required)
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def get_queryset(self):
+        return self.request.user.stock_set.all()
+
+
+
 def how_it_works(request):
     if request.method == 'GET' :
         return render(request, 'how_it_works.html')
     else :
         return HttpResponseForbidden()
+
