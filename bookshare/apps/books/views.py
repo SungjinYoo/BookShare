@@ -1,14 +1,14 @@
 from django.db.models import Q
-from django.views.generic import ListView
+
+from django.views.generic import ListView, View
+from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, render
-from django.views.generic.detail import DetailView
 
 import forms
 from models import Book
 
 from bookshare.apps.core.models import request_rent
-
 
 # Create your views here.
 def index(request):
@@ -32,7 +32,7 @@ class BookSearchView(ListView):
         title = self.request.GET.get('title', '')
         department = self.request.GET.get('department', '')
 
-        query = None
+        query = Q()
         
         if title :
             print 'title'
@@ -59,4 +59,3 @@ def rent_request(request):
             else:
                 next_url = reverse_lazy("book-detail", kwargs={"pk": request.POST.get("book", None)})
                 return redirect(reverse_lazy("signin_next", kwargs={"next": next_url}))
-

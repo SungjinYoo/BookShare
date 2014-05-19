@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, include, url
+from bookshare.apps.books.views import BookSearchView, BookDetailView
 import views
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'bookshare.views.home', name='home'),
-    url(r'^$', views.index, name='index'),
-    url(r'^book/([0-9]+)$', views.book, name='book'),
+   url(r'^(?P<pk>[0-9]+)/$', BookDetailView.as_view(), name='book-detail'),
+   url(r'^search/$', BookSearchView.as_view()),
+   url(r'^rent\-request$', views.rent_request, name='book-rent-request'),
 )

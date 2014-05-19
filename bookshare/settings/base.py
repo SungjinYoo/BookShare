@@ -80,10 +80,15 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+LOGIN_URL = '/signin/'
+LOGOUT_URL = '/signout/'
+
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (
     PROJECT_ROOT / 'static',
 )
+
 TEMPLATE_DIRS = (
     PROJECT_ROOT / 'templates',
 )
