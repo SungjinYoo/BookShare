@@ -1,14 +1,15 @@
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.db.models import Q
-
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, View
 from django.views.generic.detail import DetailView
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import redirect, render
 
 import forms
 from models import Book
 
 from bookshare.apps.core.models import request_rent
+from bookshare.settings.base import LOGIN_URL
 
 # Create your views here.
 def index(request):
@@ -35,10 +36,8 @@ class BookSearchView(ListView):
         query = Q()
         
         if title :
-            print 'title'
             query |= Q(title__icontains=title)
         if department :
-            print 'department'
             query |= Q(courses__department__icontains=department)
 
         # need pagination?        
@@ -48,14 +47,18 @@ class BookSearchView(ListView):
             # just empty list? or all the books?
             return Book.objects.all()
 
+
+#login required is in the code explicitly
 def rent_request(request):
+    if not request.user.is_authenticated():
+        return redirect(LOGIN_URL)
+
     if request.method == "POST":
         form = forms.RentRequestForm(request.POST)
 
         if form.is_valid():
-            if request.user.is_authenticated():
-                request_rent(request.user, form.cleaned_data["book"])
-                return render(request, "books/rent_request_complete.html")
-            else:
-                next_url = reverse_lazy("book-detail", kwargs={"pk": request.POST.get("book", None)})
-                return redirect(reverse_lazy("signin_next", kwargs={"next": next_url}))
+            request_rent(request.user, form.cleaned_data["book"])
+            return render(request, "books/rent_request_complete.html")
+
+    else :
+        return HttpResponseForbidden()
