@@ -29,8 +29,9 @@ class SignInView(TemplateView):
     template_next_var = "next"
 
     def get(self, request, *args, **kwargs):
-        context = {}
-        context[self.template_next_var] = self.kwargs.get("next", self.default_next_url)
+        context = dict(
+            next = request.GET.get('next', self.default_next_url),
+        )
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -91,8 +92,6 @@ class SignUpView(TemplateView):
 class MyPageView(View):
     @method_decorator(login_required)
     def get(self, request):
-        if request.user.is_anonymous() :
-            return render(request, 'bookshare/signin.html')
         context = dict(
             user = request.user,
         )
@@ -122,24 +121,35 @@ class MyPageView(View):
                     # 
                     return HttpResponseRedirect('/')
 
+
 class MyRentRequestListView(ListView):
     template_name = 'bookshare/my_rent_requests.html'
     
-    # need login required
+    @method_decorator(login_required)
+    def get(self, request):
+        return render(request, self.template_name)
+
+    @method_decorator(login_required)
     def get_queryset(self):
         return self.request.user.rentrequest_set.pending()
 
 class MyRentListView(ListView):
     template_name = 'bookshare/my_rents.html'
 
-    # need login required
+    @method_decorator(login_required)
+    def get(self, request):
+        return render(request, self.template_name)
+    
     def get_queryset(self):
         return self.request.user.stock_set.rented()
 
 class MyDonateListView(ListView):
     template_name = 'bookshare/my_donates.html'
-    
-    # need login required
+
+    @method_decorator(login_required)
+    def get(self, request):
+        return render(request, self.template_name)
+
     def get_queryset(self):
         return self.request.user.stock_set.all()
 

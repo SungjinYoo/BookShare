@@ -11,9 +11,14 @@ from bookshare.apps.books.views import BookDetailView, BookSearchView, rent_requ
 admin.autodiscover()
 
 urlpatterns = patterns('',
+#<<<<<<< HEAD
    url(r'^$', 'bookshare.views.index', name="index"),
    url(r'^signin$', SignInView.as_view(), name="signin"),
    url(r'^signin(?P<next>.+)$', SignInView.as_view(), name="signin_next"),
+#=======
+   url(r'^$', 'bookshare.views.index'),
+   url(r'^signin/$', SignInView.as_view(), name="signin"),
+#>>>>>>> books
    url(r'^signup/$', SignUpView.as_view()),
    url(r'^signout/$', 'bookshare.views.signout'),
    url(r'^me/$', MyPageView.as_view()),
