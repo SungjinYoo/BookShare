@@ -11,9 +11,12 @@ section.feature {
     margin-bottom: 2em;
 }
 
+html, body {
+    height:100%;
+}
 
 footer {
-    min-height: 7em;
+    height:80px;
 }
 
 .horizontal-radio{
@@ -25,6 +28,13 @@ footer {
 #content-wrapper{
     min-width: 400px;
     width: 100%;
+    min-height:calc(100% - 83px);
+    margin-bottom:-80px;
+}
+#content-wrapper:after{
+    content:"";
+    display:block;
+    height:80px;
 }
 
 
