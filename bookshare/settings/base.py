@@ -3,6 +3,7 @@
 import os
 from os.path import dirname
 
+from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from path import path
 
@@ -60,6 +61,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.contrib.auth.context_processors.auth',
 )
 
 ROOT_URLCONF = 'bookshare.urls'

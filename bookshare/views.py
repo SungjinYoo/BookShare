@@ -90,16 +90,9 @@ class LoginRequiredViewMixin(View):
         return super(LoginRequiredViewMixin, self).dispatch(request, *args, **kwargs)
 
 
-class MyPageView(View):
-    @method_decorator(login_required)
-    def get(self, request):
-        context = dict(
-            user = request.user,
-        )
+class MyPageView(LoginRequiredViewMixin, TemplateView):
+    template_name = 'bookshare/mypage.html'
 
-        return render(request, 'bookshare/mypage.html', context)
-
-    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
