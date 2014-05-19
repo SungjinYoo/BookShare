@@ -28,11 +28,10 @@ class SignInView(TemplateView):
     default_next_url = "/"
     template_next_var = "next"
 
-    def get(self, request, *args, **kwargs):
-        context = dict(
-            next = request.GET.get('next', self.default_next_url),
-        )
-        return render(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super(SignInView, self).get_context_data(**kwargs)
+        context['next'] = self.request.GET.get('next', self.default_next_url)
+        return context
 
     def post(self, request, *args, **kwargs):
         form = UserValidationForm(request.POST)
@@ -62,9 +61,6 @@ class SignUpValidationForm(forms.Form):
 class SignUpView(TemplateView):
     template_name = "bookshare/signup.html"
     error_msg = u"알수없는 오류가 발생하였습니다."
-    
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
@@ -87,6 +83,11 @@ class SignUpView(TemplateView):
         else:
             error_msg = u"잘못 입력하신 값이 있습니다."                            
         return render(request, self.template_name, {'error_msg':self.error_msg})
+
+class LoginRequiredViewMixin(View):
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginRequiredViewMixin, self).dispatch(request, *args, **kwargs)
 
 
 class MyPageView(View):
@@ -122,37 +123,23 @@ class MyPageView(View):
                     return HttpResponseRedirect('/')
 
 
-class MyRentRequestListView(ListView):
+class MyRentRequestListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_rent_requests.html'
-    
-    @method_decorator(login_required)
-    def get(self, request):
-        return render(request, self.template_name)
 
-    @method_decorator(login_required)
     def get_queryset(self):
         return self.request.user.rentrequest_set.pending()
 
-class MyRentListView(ListView):
+class MyRentListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_rents.html'
 
-    @method_decorator(login_required)
-    def get(self, request):
-        return render(request, self.template_name)
-    
     def get_queryset(self):
         return self.request.user.stock_set.rented()
 
-class MyDonateListView(ListView):
+class MyDonateListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_donates.html'
-
-    @method_decorator(login_required)
-    def get(self, request):
-        return render(request, self.template_name)
 
     def get_queryset(self):
         return self.request.user.stock_set.all()
-
 
 
 def how_it_works(request):
