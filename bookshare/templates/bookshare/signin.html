@@ -6,7 +6,7 @@
 
 <div class="signin-screen">
   <div class="signin-form">
-    <form action="/signin/" method="post">
+    <form action="{% url 'signin' %}" method="post">
       <div class="form-group">
 	<input type="text" class="form-control signin-field" value="" placeholder="Enter your name" id="signin-name" name="user_id">
 	<label class="input-field-icon fui-user" for="username"></label>
@@ -20,6 +20,7 @@
       <a class="signin-link btn btn-sm btn-block" href="/find">Lost your password?</a>
 			{{error_msg}}
       {% csrf_token %}
+      <input type="hidden" value="{{ next }}" name="next" />
     </form>
   </div>
 </div>
