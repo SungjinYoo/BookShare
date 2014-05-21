@@ -113,7 +113,6 @@ class RequestMixin(models.Model):
     )
 
     actor = models.ForeignKey(settings.AUTH_USER_MODEL)
-    book = models.ForeignKey(Book)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
     status = models.CharField(_(u'상태'), max_length=10,
@@ -130,11 +129,11 @@ class RequestMixin(models.Model):
 
 
 class RentRequest(RequestMixin):
-    pass
+    book = models.ForeignKey(Book)
 
 
 class ReclaimRequest(RequestMixin):
-    pass
+    stock = models.ForeignKey(Stock)
 
 
 def request_rent(actor, book):
@@ -188,13 +187,15 @@ def deliver_stock(actor, book, condition):
 
 def request_reclaim(actor, stock):
     ### precondition
-    request.stock.ensure_status(Stock.AVAILABLE)
+    stock.ensure_status(Stock.AVAILABLE)
+    assert stock in actor.stock_set.all()
 
     ReclaimRequest.objects.create(actor=actor, stock=stock).save()
 
 @transaction.atomic
 def process_reclaim_request(request):
     ### precondition
+    assert request.stock.owner == request.actor
     request.status.ensure_status(ReclaimRequest.PENDING)
 
     request.status = ReclaimRequest.DONE
