@@ -17,7 +17,7 @@
     <tr>
       <td>{% if book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}책제목</td>
-      <td>{{ rent.added_at }}대여일자 add custom tag</td>
+      <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" | date: "SHORT_DATETIME_FORMAT" }}대여일자 add custom tag</td>
       <td>반납예정일</td>
       <td><a class="btn btn-sm btn-danger">반납신청</a></td>
     </tr>
@@ -26,8 +26,8 @@
     <tr>
       <td>{% if book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
-      <td>{{ rent.added_at }}</td>
-      <td>{{ rend.added_at }}</td>
+      <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
+      <td>{{ rend.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
       <td><a class="btn btn-lg btn-danger">철회</a></td>
     </tr>
     {% endfor %}

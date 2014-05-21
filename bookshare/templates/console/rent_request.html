@@ -25,7 +25,7 @@
                     <td>{{ rent.actor.points }} 포인트</td>
                     <td>{{ rent.book.title }}</td>
                     <td>{{ rent.book.point }} 포인트</td>
-                    <td>{{ rent.added_at }}</td>
+                    <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
                     <td>
                         <a href="{% url 'console:process_rent_req' rent.id %}" class="btn btn-sm btn-warning">승인</a>
                     </td>
