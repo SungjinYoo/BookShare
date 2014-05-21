@@ -132,6 +132,8 @@ class RequestMixin(models.Model):
 class RentRequest(RequestMixin):
     pass
 
+class ReturnRequest(RequestMixin):
+    pass
 
 class ReclaimRequest(RequestMixin):
     pass
@@ -139,6 +141,13 @@ class ReclaimRequest(RequestMixin):
 
 def request_rent(actor, book):
     RentRequest.objects.create(actor=actor, book=book).save()
+
+def request_cancel_rent(actor, rent_request):
+    if rent_request.actor == actor :
+        rent_request.delete()
+
+def request_return(actor, stock):
+    ReturnRequest.objects.create(actor=actor, stock=stock).save()
 
 @transaction.atomic
 def process_rent_request(request):

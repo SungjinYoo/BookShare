@@ -11,12 +11,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>{% if book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
-      <td>{{ rent.book.title }}책제목</td>
-      <td>{{ rent.added_at }}기부일자</td>
-      <td><a class="btn btn-sm btn-danger">회수신청</a></td>
-    </tr>
     {% if object_list %} 
     {% for rent in object_list %}
     <tr>

@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django import forms
 
+from bookshare.apps.books.forms import CancelRentRequestForm, ReturnRequestForm
 
 class UserValidationForm(forms.Form):
     user_id = forms.CharField(max_length=15)
@@ -56,6 +57,7 @@ class SignInView(TemplateView):
 class SignUpValidationForm(forms.Form):
     user_id = forms.CharField(max_length=15)
     password = forms.CharField(max_length=128, min_length=4)
+    password_confirm = forms.CharField(max_length=128, min_length=4)
     email = forms.EmailField(max_length=255)
 
 class SignUpView(TemplateView):
@@ -64,14 +66,15 @@ class SignUpView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
+        print form
         if form.is_valid():
             user_id = form.cleaned_data['user_id']
             password = form.cleaned_data['password']
-            password_confirm = form.cleaned_data['password']
+            password_confirm = form.cleaned_data['password_confirm']
             email = form.cleaned_data['email']            
 
             if password != password_confirm:
-                error_msg = u"비밀번호가 서로 다릅니다."                
+                self.error_msg = u"비밀번호가 서로 다릅니다."                
                 return render(request, self.template_name, {'error_msg':self.error_msg})
 
             User.objects.create_user(user_id=user_id, email=email, password=password)
@@ -81,7 +84,7 @@ class SignUpView(TemplateView):
                     login(request, user)
                     return HttpResponseRedirect('/')
         else:
-            error_msg = u"잘못 입력하신 값이 있습니다."                            
+            self.error_msg = u"잘못 입력하신 값이 있습니다."                            
         return render(request, self.template_name, {'error_msg':self.error_msg})
 
 class LoginRequiredViewMixin(View):
@@ -115,18 +118,40 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
 
 class MyRentRequestListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_rent_requests.html'
+    
+    @method_decorator(login_required)
+    def get(self, request):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(object_list=self.object_list)
+        context['cancel_rent_request_form'] = CancelRentRequestForm()
 
+        return render(request, self.template_name, context)
+            
     def get_queryset(self):
-        return self.request.user.rentrequest_set.pending()
+        return self.request.user.rentrequest_set.all()
 
 class MyRentListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_rents.html'
 
+    @method_decorator(login_required)
+    def get(self, request):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(object_list=self.object_list)
+        context['return_request_form'] = ReturnRequestForm()
+        return render(request, self.template_name, context)
+    
     def get_queryset(self):
         return self.request.user.stock_set.rented()
 
 class MyDonateListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_donates.html'
+
+    @method_decorator(login_required)
+    def get(self, request):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(object_list=self.object_list)
+
+        return render(request, self.template_name, context)
 
     def get_queryset(self):
         return self.request.user.stock_set.all()
