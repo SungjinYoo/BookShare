@@ -135,7 +135,7 @@ class ReturnRequest(RequestMixin):
     stock = models.ForeignKey(Stock)
 
 class ReclaimRequest(RequestMixin):
-    sotck = models.ForeignKey(Stock)
+    stock = models.ForeignKey(Stock)
 
 def request_rent(actor, book):
     RentRequest.objects.create(actor=actor, book=book).save()
