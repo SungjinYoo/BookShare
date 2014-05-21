@@ -162,6 +162,11 @@ p {
     list-style: none;
 }
 
+.book-detail img {
+	width:300px;
+	height:400px;
+}
+
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     color:#777777;
 }
@@ -172,7 +177,10 @@ p {
     margin-bottom:15px;
 }
 
-
+#search-list img {
+	width:180px;
+	height:260px;
+}
 
 
 /* table */
@@ -202,3 +210,8 @@ p {
     margin-bottom:10px;
 }
 
+/* my page */
+.mypage-table img{
+	width:180px;
+	height:260px;
+}

@@ -1,6 +1,6 @@
 {% extends "bookshare/mypage_base.html" %}
 
-{% block onload_script %} 
+{% block onload_script %}
 $("#rent-request-table").find("a.btn-cancel-rent-request").click(function(){
 var pk = $(this).attr("id");
 $("#id_rent_request").val(pk);
@@ -16,7 +16,7 @@ $("#cancel-rent-request-form").submit();
   {{ cancel_rent_request_form }}
 </form>
 
-<table id="rent-request-table" class="table table-striped table-bordered">
+<table id="rent-request-table" class="table table-striped table-bordered mypage-table">
   <thead>
     <tr>
       <th>Image</th>
@@ -26,13 +26,19 @@ $("#cancel-rent-request-form").submit();
     </tr>
   </thead>
   <tbody>
-    {% if object_list %} 
+    {% if object_list %}
     {% for rent in object_list %}
     <tr>
-      <td>{% if book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
+      <td>{% if rent.book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
       <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
-      <td><a id="{{ rent.pk }}" class="btn btn-lg btn-danger btn-cancel-rent-request">철회</a></td>
+
+
+			{% if rent.status == "pending" %}
+			<td><a id="{{ rent.pk }}" class="btn btn-lg btn-danger btn-cancel-rent-request">철회</a></td>
+			{% else %}
+      <td><button class="btn btn-lg btn-success">대여완료</button></td>
+			{% endif %}
     </tr>
     {% endfor %}
     {% else %}

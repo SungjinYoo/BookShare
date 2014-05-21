@@ -4,7 +4,7 @@
 <div class="book-detail">
   <div class="row">
     <div class="col-md-12">
-      <img src="http://placehold.it/300x400" class="cover"/>
+      {% if object.image.url %}<img src="{{ object.image.url }}" class="cover"/>{% else %}<img src="http://placehold.it/300x400" class="cover"/>{% endif %}
       <h2>{{ object.title }}</h2>
       <p>{{ object.point }} 포인트</p>
       {% if object.any_availiable_stock %}

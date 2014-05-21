@@ -38,7 +38,7 @@ class Book(models.Model):
     isbn = models.CharField(validators=[isbn_validator], max_length=13)
     
     # set upload_to in initializer
-    image = models.ImageField(upload_to=settings.MEDIA_ROOT)
+    image = models.ImageField(upload_to='images/books/')
     
     def __unicode__(self):
         return self.title

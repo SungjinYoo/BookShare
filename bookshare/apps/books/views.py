@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, View
 from django.views.generic.detail import DetailView
+from django.http import HttpResponse, HttpResponseForbidden
 
 import forms
 from models import Book
