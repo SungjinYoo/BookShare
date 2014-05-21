@@ -187,7 +187,8 @@ def deliver_stock(actor, book, condition):
 
 def request_reclaim(actor, stock):
     ### precondition
-    request.stock.ensure_status(Stock.AVAILABLE)
+    stock.ensure_status(Stock.AVAILABLE)
+    assert stock in request.actor.stock_set.all()
 
     ReclaimRequest.objects.create(actor=actor, stock=stock).save()
 
