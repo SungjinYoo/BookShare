@@ -41,9 +41,6 @@ class Book(models.Model):
     image = models.ImageField(upload_to=settings.MEDIA_ROOT)
     
     def __unicode__(self):
-        return str(self).decode('utf-8')
-
-    def __str__(self):
         return self.title
 
     def available_stock(self):
