@@ -3,38 +3,36 @@
 {% block title %}마이페이지{% endblock %}
 
 {% block inner-content %}
-<div class="signup-screen">
-  <div class="small-title" style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';">개인정보</div>
-  <div class="signup-form">
-
-      <div class="form-group">
-	<p class="form-control signup-field">
-	{{ user.name }}
-	</p>
-      </div>
-
-
-      <div class="form-group">
-	<p class="form-control signup-field">
-	{{ user.user_id }}
-	</p>
-      </div>
-      
-      
-      <div class="form-group">
-	<p class="form-control signup-field">
-	{{ user.sex }}
-	</p>
-      </div>
-            
-      <div class="form-group">
-	<p class="form-control signup-field">
-	{{ user.email }}
-	</p>
-      </div>
-
-      {{error_msg}}
-      {% csrf_token %}
-  </div>
+<div>
+    <h2 class="small-title">개인정보</h2>
+    <div class="table">
+        <table class="table table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <td class="table-head">아이디(ID)</td>
+                    <td>{{ user.user_id }}</td>
+                </tr>
+                <tr>
+                    <td class="table-head">이름(Name)</td>
+                    <td>{{ user.name }}</td>
+                </tr>
+                <tr>
+                    <td class="table-head">성별(Gender)</td>
+                    <td>{{ user.sex }}</td>
+                </tr>
+                <tr>
+                    <td class="table-head">이메일(Email)</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td class="table-head">잔여 포인트</td>
+                    <td>{{ user.points }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        {{error_msg}}
+        {% csrf_token %}
+    </div>
 </div>
 {% endblock %}
