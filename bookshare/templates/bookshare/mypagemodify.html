@@ -7,35 +7,37 @@
   <div class="small-title" style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';">개인정보 수정</div>
   <div class="signup-form">
     <form action="/me/modify" method="post">
+      
       <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ user.user_id }}" placeholder="Enter your name" id="signup-name" name="user_id" readonly="readonly">
-	<label class="input-field-icon fui-lock" for="username"></label>
+	<input type="text" class="form-control signup-field" value="{{ user.user_id }}" id="signup-id" name="user_id" readonly="readonly">
+	<label class="input-field-icon fui-lock" for="user_id"></label>
       </div>
+      
       <div class="form-group">
-	<input type="password" class="form-control signup-field" value="" placeholder="Password Origin" id="password-before" name="password_before">
-	<label class="input-field-icon fui-user" for="password-before"></label>
+	<input type="text" class="form-control signup-field" value="{{ user.name }}" id="signup-name" name="user_name" readonly="readonly">
+	<label class="input-field-icon fui-lock" for="user_name"></label>
       </div>
+    
       <div class="form-group">
-	<input type="password" class="form-control signup-field" value="" placeholder="Password New" id="signup-password" name="password">
+	<input type="password" class="form-control signup-field" value="" placeholder="Password Origin" id="password-before" name="password">
 	<label class="input-field-icon fui-user" for="password"></label>
       </div>
+      
       <div class="form-group">
-	<input type="password" class="form-control signup-field" value="" placeholder="Password Confirm" id="signup-password-confirm" name="password_confirm" >
-	<label class="input-field-icon fui-user" for="password-confirm"></label>
+	<input type="password" class="form-control signup-field" value="" placeholder="Password New" id="signup-password" name="password_modify">
+	<label class="input-field-icon fui-user" for="password_modify"></label>
       </div>
-      
-      
+
+      <div class="form-group">
+	<input type="password" class="form-control signup-field" value="" placeholder="Password Confirm" id="signup-password-confirm" name="password_modify_confirm" >
+	<label class="input-field-icon fui-user" for="password_modify_confirm"></label>
+      </div>
+            
       <div class="form-group">
 	<input type="text" class="form-control signup-field" value="{{ user.sex }}" placeholder="sex" id="signup-sex" name="sex" readonly="readonly">
 	<label class="input-field-icon fui-lock" for="sex"></label>
       </div>
-      
-      <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ user.phone_number }}" placeholder="phone number" id="signup-phonenum" name="phone_number">
-	<label class="input-field-icon fui-user" for="phone-number"></label>
-      </div>
-      
-      
+            
       <div class="form-group">
 	<input type="text" class="form-control signup-field" value="{{ user.email }}" placeholder="Email" id="signup-email" name="email">
 	<label class="input-field-icon fui-user" for="email"></label>

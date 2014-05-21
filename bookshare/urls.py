@@ -13,6 +13,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
    url(r'^$', 'bookshare.views.index', name="index"),
    url(r'^signin/$', SignInView.as_view(), name="signin"),
+
    url(r'^signup/$', SignUpView.as_view(), name="signup"),
    url(r'^signout/$', 'bookshare.views.signout'),
    url(r'^me/$', MyPageView.as_view(), name="mypage"),
