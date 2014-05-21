@@ -8,7 +8,7 @@ from django.views.generic.detail import DetailView
 import forms
 from models import Book
 
-from bookshare.apps.core.models import request_rent
+from bookshare.apps.core.models import request_rent, request_cancel_rent, request_return, request_cancel_return
 from bookshare.settings.base import LOGIN_URL
 
 # Create your views here.
@@ -62,3 +62,48 @@ def rent_request(request):
 
     else :
         return HttpResponseForbidden()
+
+#login required is in the code explicitly
+def cancel_rent_request(request):
+    if not request.user.is_authenticated():
+        return redirect(LOGIN_URL)
+    
+    if request.method == "POST":
+        form = forms.CancelRentRequestForm(request.POST)
+        if form.is_valid():
+            request_cancel_rent(request.user, form.cleaned_data['rent_request'])
+            return redirect(reverse('my-rent-requests'))
+        else :
+            return HttpResponseForbidden()
+    else :
+        return HttpResponseForbidden()
+        
+def return_request(request):
+    if not request.user.is_authenticated():
+        return redirect(LOGIN_URL)
+    
+    if request.method == "POST":
+        form = forms.ReturnRequestForm(request.POST)
+        
+        if form.is_valid():
+            request_return(request.user, form.cleaned_data['stock'])
+            return redirect(reverse('my-rents'))
+        else:
+            return HttpResponseForbidden()
+
+    return HttpResponseForbidden()
+            
+def cancel_return_request(request):
+    if not request.user.is_authenticated():
+        return redirect(LOGIN_URL)
+    
+    if request.method == "POST":
+        form = forms.CancelReturnRequestForm(request.POST)
+        
+        if form.is_valid():
+            request_cancel_return(request.user, form.cleaned_data['return_request'])
+            return redirect(reverse('my-rents'))
+        else:
+            return HttpResponseForbidden()
+
+    return HttpResponseForbidden()
