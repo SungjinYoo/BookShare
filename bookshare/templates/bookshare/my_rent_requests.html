@@ -1,9 +1,9 @@
 {% extends "bookshare/mypage_base.html" %}
 
 {% block onload_script %} 
-$(".rent-request-table").find("a.btn-cancel-rent-request").click(function(){
+$("#rent-request-table").find("a.btn-cancel-rent-request").click(function(){
 var pk = $(this).attr("id");
-$("#id_rentrequest").val(pk);
+$("#id_rent_request").val(pk);
 $("#cancel-rent-request-form").submit();
 });
 {% endblock %}
@@ -11,12 +11,12 @@ $("#cancel-rent-request-form").submit();
 {% block title %}신청현황보기{% endblock %}
 
 {% block inner-content %}
-<form id="cancel-rent-request-form" method="post" action="{% url 'book-cancel-rent-request' %}">
+<form id="cancel-rent-request-form" method="post" action="{% url 'books:book-cancel-rent-request' %}">
   {% csrf_token %}
   {{ cancel_rent_request_form }}
 </form>
 
-<table class="table table-striped table-bordered rent-request-table">
+<table id="rent-request-table" class="table table-striped table-bordered">
   <thead>
     <tr>
       <th>Image</th>

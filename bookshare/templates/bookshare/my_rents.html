@@ -1,17 +1,21 @@
 {% extends "bookshare/mypage_base.html" %}
 
 {% block onload_script %}
-
+$("#rent-list-table").find("a.btn-request-return").click(function(){
+var pk = $(this).attr("id");
+$("#id_stock").val(pk);
+$("#request-return-form").submit();
+});
 {% endblock %}
 
 {% block title %}대여 현황 보기{% endblock %}
 
 {% block inner-content %} 
-<form id="request-return-form" method="post" action="{% url 'book-return-request' %}">
+<form id="request-return-form" method="post" action="{% url 'books:book-return-request' %}">
   {% csrf_token %}
   {{ return_request_form }}
 </form>
-<table class="table table-striped table-bordered">
+<table id="rent-list-table" class="table table-striped table-bordered">
   <thead>
     <tr>
       <th>Image</th>

@@ -6,8 +6,7 @@
     <tr>
       <th>Image</th>
       <th>Title</th>
-      <th>기부일</th>
-      <th>반납신청</th>
+      <th>기부일</th>
     </tr>
   </thead>
   <tbody>
@@ -17,12 +16,11 @@
       <td>{% if book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
       <td>{{ rent.added_at }}</td>
-      <td><a class="btn btn-lg btn-success">회수</a></td>
     </tr>
     {% endfor %}
     {% else %}
     <tr>
-      <td colspan=5>No result</td>
+      <td colspan=3>No result</td>
     </tr>
     {% endif %}
   </tbody>
