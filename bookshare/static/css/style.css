@@ -1,3 +1,7 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+
 /* common */
 .cursor {
     cursor:pointer;
@@ -13,10 +17,16 @@ section.feature {
 
 html, body {
     height:100%;
+    font-family: 'Nanum Gothic';﻿
 }
 
 footer {
     height:80px;
+}
+
+
+p {
+    font-family: 'Nanum Myeongjo';﻿
 }
 
 .horizontal-radio{
@@ -25,9 +35,23 @@ footer {
 }
 
 
+
+
+/* navigation bar */
+
+#navbar-wrapper {
+    width:960px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+
+
 #content-wrapper{
     min-width: 400px;
-    width: 100%;
+    width: 960px;
+    margin-left:auto;
+    margin-right:auto;
     min-height:calc(100% - 83px);
     margin-bottom:-80px;
 }
@@ -36,6 +60,23 @@ footer {
     display:block;
     height:80px;
 }
+
+
+
+
+/* main page */
+.mini-slogan {
+    font-size:20px;
+    margin:0px;
+}
+.main-slogan {
+    font-size:53px;
+    margin-top:0;
+}
+
+
+
+
 
 
 /* signin */
@@ -99,3 +140,16 @@ footer {
     margin-bottom:15px;
 }
 
+
+
+
+/* table padding */
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  padding: 9px 9px;
+  text-align:center;
+}
