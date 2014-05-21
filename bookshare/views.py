@@ -93,27 +93,24 @@ class LoginRequiredViewMixin(View):
 class MyPageView(LoginRequiredViewMixin, TemplateView):
     template_name = 'bookshare/mypage.html'
 
+class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
+    template_name = 'bookshare/mypagemodify.html'
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
-            user_id = form.cleaned_data['user_id'];
-            password_before = form.cleaned_data['password-before'];
+            user_id = form.cleaned_data['user_id']
             password = form.cleaned_data['password']
-            password_confirm = form.cleaned_data['password-confirm']
+            password_confirm = form.cleaned_data['password']
+            print(password_confirm)
             email = form.cleaned_data['email']            
-
+            print "wwwww"   
+                
             if password != password_confirm:
                 error_msg = u"비밀번호가 서로 다릅니다."                
                 return render(request, self.template_name, {'error_msg':self.error_msg})
 
-            user = authenticate(user_id=user_id, password=password_before)
-            if user is not None:
-                if user.check_password(password):
-                    # modefy user data
-                    # 
-                    # 
-                    # 
-                    return HttpResponseRedirect('/')
+        return render(request, self.template_name)
+    
 
 
 class MyRentRequestListView(ListView, LoginRequiredViewMixin):
