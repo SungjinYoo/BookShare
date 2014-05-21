@@ -194,6 +194,7 @@ def request_reclaim(actor, stock):
 @transaction.atomic
 def process_reclaim_request(request):
     ### precondition
+    assert request.stock.owner == request.actor
     request.status.ensure_status(ReclaimRequest.PENDING)
 
     request.status = ReclaimRequest.DONE
