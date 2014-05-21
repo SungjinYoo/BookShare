@@ -51,6 +51,7 @@ class Stock(ConditionMixin):
     )
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    renter = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="renting_stocks")
     book = models.ForeignKey(Book)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
@@ -149,6 +150,7 @@ def process_rent_request(request):
     request.status = RentRequest.DONE
 
     stock = request.book.any_availiable_stock()
+    stock.renter = request.actor
     stock.status = Stock.RENTED
     stock.save()
 
@@ -167,6 +169,7 @@ def return_stock(actor, stock, condition):
     stock.ensure_status(Stock.RENTED)
 
     stock.status = Stock.AVAILABLE
+    stock.renter = None
     stock.save()
     StockHistory.objects.create(actor=actor,
                                 stock=stock,
@@ -175,7 +178,7 @@ def return_stock(actor, stock, condition):
 
 @transaction.atomic
 def deliver_stock(actor, book, condition):
-    s = Stock.objects.create(owner=actor, book=book, condition=condition)
+    s = Stock.objects.create(owner=actor, book=book, condition=condition, renter=None)
     s.save()
     StockHistory.objects.create(actor=actor,
                                 stock=s,
