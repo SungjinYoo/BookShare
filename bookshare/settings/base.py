@@ -3,6 +3,7 @@
 import os
 from os.path import dirname
 
+from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from path import path
 
@@ -62,6 +63,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.contrib.auth.context_processors.auth',
+)
+
 ROOT_URLCONF = 'bookshare.urls'
 
 WSGI_APPLICATION = 'bookshare.wsgi.application'
@@ -95,6 +100,4 @@ TEMPLATE_DIRS = (
 
 AUTH_USER_MODEL = 'users.User'
 
-MEDIA_ROOT = (
-    PROJECT_ROOT / 'media',
-)
+MEDIA_ROOT = PROJECT_ROOT / 'media'
