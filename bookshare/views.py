@@ -146,12 +146,12 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
             
             if user is not None:
                 if not user.check_password(password):
-                    self.error_msg = u"비밀번호가 잘못되었습니다."
+                    self.error_msg = u"* 비밀번호가 잘못되었습니다."
             else:
-                self.error_msg = u"해당하는 유저가 없습니다."
+                self.error_msg = u"* 비밀번호가 잘못되었습니다."
                                 
             if password_modify != password_modify_confirm:
-                self.error_msg = u"비밀번호가 서로 다릅니다."
+                self.error_msg = u"* 비밀번호가 서로 다릅니다."
 
             if self.error_msg:
                 return render(request, self.template_name, {'error_msg':self.error_msg})
@@ -168,7 +168,7 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
             return render(request, self.template_name, data)
         
         else : 
-            self.error_msg = u"입력정보가 잘못 되었습니다."
+            self.error_msg = u"* 입력정보가 잘못 되었습니다."
         return render(request, self.template_name, {'error_msg':self.error_msg})
 
 class MyRentRequestListView(ListView, LoginRequiredViewMixin):

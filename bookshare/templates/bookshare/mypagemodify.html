@@ -4,7 +4,10 @@
 
 {% block inner-content %}
 <div class="signup-screen">
-  <div class="small-title" style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';">개인정보 수정</div>
+  <div class="small-title" style="overflow:hidden;">
+  	<div style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';float:left;">개인정보 수정</div>
+  	<div style="margin: 2px 0 20px; font: bold 13px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif'; float: right; color: rgb(231, 100, 100);">{{error_msg}}</div>
+  </div>
   <div class="signup-form">
     <form action="/me/modify" method="post">
       
@@ -24,12 +27,12 @@
       </div>
       
       <div class="form-group">
-	<input type="password" class="form-control signup-field" value="" placeholder="Password New" id="signup-password" name="password_modify">
+	<input type="password" class="form-control signup-field" value="" placeholder="Password New ( 4자 이상 적어주세요 )" id="signup-password" name="password_modify">
 	<label class="input-field-icon fui-user" for="password_modify"></label>
       </div>
 
       <div class="form-group">
-	<input type="password" class="form-control signup-field" value="" placeholder="Password Confirm" id="signup-password-confirm" name="password_modify_confirm" >
+	<input type="password" class="form-control signup-field" value="" placeholder="Password Confirm ( 패스워드를 한번 더 적어주세요 )" id="signup-password-confirm" name="password_modify_confirm" >
 	<label class="input-field-icon fui-user" for="password_modify_confirm"></label>
       </div>
             
@@ -43,8 +46,7 @@
 	<label class="input-field-icon fui-user" for="email"></label>
       </div>
 
-      <button class="btn btn-primary btn-lg btn-block signup-button">Change</button>
-      {{error_msg}}
+      <button class="btn btn-primary btn-lg btn-block signup-button">Change</button> 
       {% csrf_token %}
     </form>
   </div>
