@@ -132,21 +132,24 @@ class RentRequest(RequestMixin):
     book = models.ForeignKey(Book)
 
 class ReturnRequest(RequestMixin):
-    pass
-
-class ReclaimRequest(RequestMixin):
     stock = models.ForeignKey(Stock)
 
+class ReclaimRequest(RequestMixin):
+    sotck = models.ForeignKey(Stock)
 
 def request_rent(actor, book):
     RentRequest.objects.create(actor=actor, book=book).save()
 
 def request_cancel_rent(actor, rent_request):
-    if rent_request.actor == actor :
-        rent_request.delete()
+    assert rent_request.actor == actor
+    rent_request.delete()
 
 def request_return(actor, stock):
     ReturnRequest.objects.create(actor=actor, stock=stock).save()
+
+def request_cancel_return(actor, return_request):
+    assert return_request.actor == actor
+    return_request.delete()
 
 @transaction.atomic
 def process_rent_request(request):
