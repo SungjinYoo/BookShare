@@ -22,9 +22,9 @@
                 {% for rent in object_list %}
                 <tr>
                     <td>{{ rent.actor }}</td>
-                    <td class="text-center">{{ rent.actor.points }}</td>
+                    <td class="text-center">{{ rent.actor.points }} 포인트</td>
                     <td>{{ rent.book.title }}</td>
-                    <td class="text-center">{{ rent.book.point }}</td>
+                    <td class="text-center">{{ rent.book.point }} 포인트</td>
                     <td>{{ rent.added_at }}</td>
                     <td class="text-center">
                         <a href="{% url 'console:process_rent_req' rent.id %}" class="btn btn-sm btn-warning">승인</a>
