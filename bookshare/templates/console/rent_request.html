@@ -21,7 +21,7 @@
                 {% if object_list %}
                 {% for rent in object_list %}
                 <tr>
-                    <td>{{ rent.actor }}</td>
+                    <td>{{ rent.actor.name }}</td>
                     <td class="text-center">{{ rent.actor.points }} 포인트</td>
                     <td>{{ rent.book.title }}</td>
                     <td class="text-center">{{ rent.book.point }} 포인트</td>
