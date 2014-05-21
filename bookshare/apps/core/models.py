@@ -51,6 +51,7 @@ class Stock(ConditionMixin):
     )
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    renter = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="renting_stocks")
     book = models.ForeignKey(Book)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
@@ -113,7 +114,6 @@ class RequestMixin(models.Model):
     )
 
     actor = models.ForeignKey(settings.AUTH_USER_MODEL)
-    book = models.ForeignKey(Book)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
     status = models.CharField(_(u'상태'), max_length=10,
@@ -130,15 +130,27 @@ class RequestMixin(models.Model):
 
 
 class RentRequest(RequestMixin):
-    pass
+    book = models.ForeignKey(Book)
 
+class ReturnRequest(RequestMixin):
+    stock = models.ForeignKey(Stock)
 
 class ReclaimRequest(RequestMixin):
-    pass
-
+    stock = models.ForeignKey(Stock)
 
 def request_rent(actor, book):
     RentRequest.objects.create(actor=actor, book=book).save()
+
+def request_cancel_rent(actor, rent_request):
+    assert rent_request.actor == actor
+    rent_request.delete()
+
+def request_return(actor, stock):
+    ReturnRequest.objects.create(actor=actor, stock=stock).save()
+
+def request_cancel_return(actor, return_request):
+    assert return_request.actor == actor
+    return_request.delete()
 
 @transaction.atomic
 def process_rent_request(request):
@@ -150,6 +162,7 @@ def process_rent_request(request):
     request.status = RentRequest.DONE
 
     stock = request.book.any_availiable_stock()
+    stock.renter = request.actor
     stock.status = Stock.RENTED
     stock.save()
 
@@ -168,6 +181,7 @@ def return_stock(actor, stock, condition):
     stock.ensure_status(Stock.RENTED)
 
     stock.status = Stock.AVAILABLE
+    stock.renter = None
     stock.save()
     StockHistory.objects.create(actor=actor,
                                 stock=stock,
@@ -176,7 +190,7 @@ def return_stock(actor, stock, condition):
 
 @transaction.atomic
 def deliver_stock(actor, book, condition):
-    s = Stock.objects.create(owner=actor, book=book, condition=condition)
+    s = Stock.objects.create(owner=actor, book=book, condition=condition, renter=None)
     s.save()
     StockHistory.objects.create(actor=actor,
                                 stock=s,
@@ -188,13 +202,15 @@ def deliver_stock(actor, book, condition):
 
 def request_reclaim(actor, stock):
     ### precondition
-    request.stock.ensure_status(Stock.AVAILABLE)
+    stock.ensure_status(Stock.AVAILABLE)
+    assert stock in actor.stock_set.all()
 
     ReclaimRequest.objects.create(actor=actor, stock=stock).save()
 
 @transaction.atomic
 def process_reclaim_request(request):
     ### precondition
+    assert request.stock.owner == request.actor
     request.status.ensure_status(ReclaimRequest.PENDING)
 
     request.status = ReclaimRequest.DONE

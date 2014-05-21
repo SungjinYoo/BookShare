@@ -1,3 +1,7 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+
 /* common */
 .cursor {
     cursor:pointer;
@@ -13,10 +17,16 @@ section.feature {
 
 html, body {
     height:100%;
+    font-family: 'Nanum Gothic';﻿
 }
 
 footer {
-    height:80px;
+    height:60px;
+}
+
+
+p {
+    font-family: 'Nanum Myeongjo';﻿
 }
 
 .horizontal-radio{
@@ -25,16 +35,75 @@ footer {
 }
 
 
+
+
+/* navigation bar */
+#navbar-wrapper {
+    width:960px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.navbar {
+    border-radius:0px;
+}
+
+.navbar-inverse .navbar-form .form-group .input-group .form-control {
+    color:#FFFFFF;
+    border-color:#FFFFFF;
+    border-width:1px;
+    background-color:#34495e;
+}
+
+.navbar-inverse .navbar-form .input-group-btn .btn {
+    border-color:#FFFFFF;
+    border-width:1px;
+    border-left-width:0px;
+    background-color:#34495e;
+    color:#FFFFFF;
+}
+
+.navbar-inverse .navbar-form .form-control::-webkit-input-placeholder { /* WebKit browsers */
+    color:#DDDDDD;
+}
+.navbar-inverse .navbar-form .form-control:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:#FFFFFF;
+    opacity:  1;
+}
+.navbar-inverse .navbar-form .form-control::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:#FFFFFF;
+    opacity:  1;
+}
+.navbar-inverse .navbar-form .form-control:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:#FFFFFF;
+}
+
+/* contents */
 #content-wrapper{
     min-width: 400px;
-    width: 100%;
+    width: 960px;
+    margin-left:auto;
+    margin-right:auto;
     min-height:calc(100% - 83px);
-    margin-bottom:-80px;
+    margin-bottom:-60px;
 }
 #content-wrapper:after{
     content:"";
     display:block;
-    height:80px;
+    height:60px;
+}
+
+
+
+
+/* main page */
+.mini-slogan {
+    font-size:20px;
+    margin:0px;
+}
+.main-slogan {
+    font-size:53px;
+    margin-top:0px;
 }
 
 
@@ -93,9 +162,43 @@ footer {
     list-style: none;
 }
 
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    color:#777777;
+}
+
 /* book_search */
 .link-set {
     margin-top:30px;
     margin-bottom:15px;
+}
+
+
+
+
+/* table */
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    padding:9px;
+    text-align:center;
+}
+
+.table > tbody > tr > td.table-head {
+    width:20%;
+}
+.table > tbody > tr > td.table-head,
+.table > tbody > tr > td.table-head + td {
+    padding:9px 20px;
+    text-align:left;
+}
+
+
+
+.small-title {
+    font-size:20px;
+    margin-bottom:10px;
 }
 

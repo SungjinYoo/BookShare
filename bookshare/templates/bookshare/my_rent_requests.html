@@ -1,9 +1,22 @@
 {% extends "bookshare/mypage_base.html" %}
 
+{% block onload_script %} 
+$("#rent-request-table").find("a.btn-cancel-rent-request").click(function(){
+var pk = $(this).attr("id");
+$("#id_rent_request").val(pk);
+$("#cancel-rent-request-form").submit();
+});
+{% endblock %}
+
 {% block title %}신청현황보기{% endblock %}
 
 {% block inner-content %}
-<table class="table table-striped table-bordered">
+<form id="cancel-rent-request-form" method="post" action="{% url 'books:book-cancel-rent-request' %}">
+  {% csrf_token %}
+  {{ cancel_rent_request_form }}
+</form>
+
+<table id="rent-request-table" class="table table-striped table-bordered">
   <thead>
     <tr>
       <th>Image</th>
@@ -13,24 +26,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>{% if book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
-      <td>{{ rent.book.title }}책제목</td>
-      <td>{{ rent.added_at }}신청날짜</td>
-      <td><a class="btn btn-sm btn-danger">철회</a></td>
-    </tr>
     {% if object_list %} 
     {% for rent in object_list %}
     <tr>
       <td>{% if book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
-      <td>{{ rent.added_at }}</td>
-      <td><a class="btn btn-lg btn-danger">철회</a></td>
+      <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
+      <td><a id="{{ rent.pk }}" class="btn btn-lg btn-danger btn-cancel-rent-request">철회</a></td>
     </tr>
     {% endfor %}
     {% else %}
     <tr>
-      <td colspan=5>No result</td>
+      <td colspan=4>No result</td>
     </tr>
     {% endif %}
   </tbody>

@@ -11,21 +11,14 @@ from bookshare.apps.books.views import BookDetailView, BookSearchView, rent_requ
 admin.autodiscover()
 
 urlpatterns = patterns('',
-#<<<<<<< HEAD
    url(r'^$', 'bookshare.views.index', name="index"),
-   url(r'^signin$', SignInView.as_view(), name="signin"),
-   url(r'^signin(?P<next>.+)$', SignInView.as_view(), name="signin_next"),
-#=======
-   url(r'^$', 'bookshare.views.index'),
    url(r'^signin/$', SignInView.as_view(), name="signin"),
-#>>>>>>> books
+
    url(r'^signup/$', SignUpView.as_view(), name="signup"),
    url(r'^signout/$', 'bookshare.views.signout'),
-
    url(r'^me/$', MyPageView.as_view(), name="mypage"),
    url(r'^me/modify$', MyPageViewModify.as_view(), name="mypage-modify"),
-   
-   url(r'^my/rent-requests/$', MyRentRequestListView.as_view(), name="rent-requests"),
+   url(r'^my/rent\-requests/$', MyRentRequestListView.as_view(), name='my-rent-requests'),
    url(r'^my/rents/$', MyRentListView.as_view()),
    url(r'^my/donates/$', MyDonateListView.as_view()),
 

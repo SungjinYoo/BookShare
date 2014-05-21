@@ -3,38 +3,36 @@
 {% block title %}마이페이지{% endblock %}
 
 {% block inner-content %}
-<div class="signup-screen">
-  <div class="small-title" style="margin: 2px 0 20px; font: bold 23px/40px 'Helvetica Neue', 'Helvetica, Arial', 'sans-serif';">개인정보</div>
-  <div class="signup-form">
-      <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ user.user_id }}" placeholder="Enter your name" id="signup-name" name="user_id" readonly="readonly">
-	<label class="input-field-icon fui-lock" for="username"></label>
-      </div>
-      
-      
-      <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ user.sex }}" placeholder="sex" id="signup-sex" name="sex" readonly="readonly">
-	<label class="input-field-icon fui-lock" for="sex"></label>
-      </div>
-      
-      <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ user.phone_number }}" placeholder="phone number" id="signup-phonenum" name="phone-number">
-	<label class="input-field-icon fui-user" for="phone-number"></label>
-      </div>
-      
-      
-      <div class="form-group">
-	<input type="text" class="form-control signup-field" value="{{ user.email }}" placeholder="Email" id="signup-email" name="email">
-	<label class="input-field-icon fui-user" for="email"></label>
-      </div>
-
-      <div class="form-group">
-	<input type="text" class="form-control signup-field" value="2" placeholder="Email" id="signup-email" name="email" readonly="readonly">
-	<label class="input-field-icon fui-user" for="email"></label>
-      </div>
-
-      {{error_msg}}
-      {% csrf_token %}
-  </div>
+<div>
+    <h2 class="small-title">개인정보</h2>
+    <div class="table">
+        <table class="table table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <td class="table-head">아이디(ID)</td>
+                    <td>{{ user.user_id }}</td>
+                </tr>
+                <tr>
+                    <td class="table-head">이름(Name)</td>
+                    <td>{{ user.name }}</td>
+                </tr>
+                <tr>
+                    <td class="table-head">성별(Gender)</td>
+                    <td>{{ user.sex }}</td>
+                </tr>
+                <tr>
+                    <td class="table-head">이메일(Email)</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td class="table-head">잔여 포인트</td>
+                    <td>{{ user.points }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        {{error_msg}}
+        {% csrf_token %}
+    </div>
 </div>
 {% endblock %}
