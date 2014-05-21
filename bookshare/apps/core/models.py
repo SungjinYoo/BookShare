@@ -113,7 +113,6 @@ class RequestMixin(models.Model):
     )
 
     actor = models.ForeignKey(settings.AUTH_USER_MODEL)
-    book = models.ForeignKey(Book)
     added_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
     status = models.CharField(_(u'상태'), max_length=10,
@@ -130,11 +129,11 @@ class RequestMixin(models.Model):
 
 
 class RentRequest(RequestMixin):
-    pass
+    book = models.ForeignKey(Book)
 
 
 class ReclaimRequest(RequestMixin):
-    pass
+    stock = models.ForeignKey(Stock)
 
 
 def request_rent(actor, book):
