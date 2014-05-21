@@ -43,8 +43,39 @@ p {
     margin-left:auto;
     margin-right:auto;
 }
+
 .navbar {
     border-radius:0px;
+}
+
+.navbar-inverse .navbar-form .form-group .input-group .form-control {
+    color:#FFFFFF;
+    border-color:#FFFFFF;
+    border-width:1px;
+    background-color:#34495e;
+}
+
+.navbar-inverse .navbar-form .input-group-btn .btn {
+    border-color:#FFFFFF;
+    border-width:1px;
+    border-left-width:0px;
+    background-color:#34495e;
+    color:#FFFFFF;
+}
+
+.navbar-inverse .navbar-form .form-control::-webkit-input-placeholder { /* WebKit browsers */
+    color:#DDDDDD;
+}
+.navbar-inverse .navbar-form .form-control:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:#FFFFFF;
+    opacity:  1;
+}
+.navbar-inverse .navbar-form .form-control::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:#FFFFFF;
+    opacity:  1;
+}
+.navbar-inverse .navbar-form .form-control:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:#FFFFFF;
 }
 
 /* contents */
@@ -147,6 +178,6 @@ p {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  padding: 9px 9px;
-  text-align:center;
+    padding: 9px 9px;
+    text-align:center;
 }
