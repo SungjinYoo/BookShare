@@ -1,0 +1,37 @@
+{% extends "console/base.html" %}
+
+{% block onload_script %}
+$("a.btn-return").click(function(){
+var pk = this.getAttribute("pk");
+$("#id_stock_pk").val(pk);
+$("#return-request-form").submit();
+});
+{% endblock %}
+
+{% block content %}
+<h3>{{ user.name}}의 대여중인 목록</h3>
+<form id="return-request-form" method="get" action="{% url 'console:process_return_request' %}">
+  <input id="id_user_pk" type="hidden" value="{{ user.pk }}" name="user_pk">
+  <input id="id_stock_pk" type="hidden" value="" name="stock_pk">
+</form>
+<table class="table table-bordered table-striped">
+  <tr>
+    <th>책 이미지</th>
+    <th>제목</th>
+    <th>반납</th>
+  </tr>
+  {% if stock_list %}
+  {% for stock in stock_list %}
+  <tr>
+    <td><img src="{{ stock.book.image.url }}"></td>
+    <td>{{ stock.book.title }}</td>
+    <td><a pk="{{ stock.pk }}" class="btn btn-sm btn-success btn-return">반납</a></td>
+  </tr>
+  {% endfor %}
+  {% else %}
+  <tr>
+    <td colspan=3>No result</td>
+  </tr>
+  {% endif %}
+</table>
+{% endblock %}

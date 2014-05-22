@@ -1,8 +1,10 @@
 #-*- coding:utf-8 -*-
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from bookshare.apps.core import models
 from bookshare.apps.books import models as books_models
+from bookshare.apps.users import models as users_models
 import forms
 
 
@@ -41,6 +43,67 @@ def process_rent_request(request, rent_request):
             models.process_rent_request(form.cleaned_data["request"])
             return redirect('console:rent_request_list')
 
+
+def search_users(request):    
+    if request.method == "GET":
+        context = dict(
+            user_list = users_models.User.objects.all(),
+        )
+        return render(request, "console/search_users.html", context)
+
+    if request.method == "POST":
+        user_name = request.POST.get('user_name', '')
+
+        context = dict(
+            user_list = users_models.User.objects.filter(name__icontains=user_name)
+        )
+
+        return render(request, "console/search_users.html", context)
+
+    return HttpResponseForbidden()
+
+def user_stock_list(request):
+    if request.method == "GET":
+        user_pk = request.GET.get('user_pk', None)
+        if not user_pk :
+            return HttpResponseForbidden()
+        
+        user = users_models.User.objects.get(id=user_pk)
+        if not user:
+            return HttpResponseForbidden()
+
+            
+        context = dict(
+            user = user,
+        )
+    
+        return render(request, 'console/user_stock_list.html', context)
+
+def process_return_request(request):
+    if request.method == "GET":
+        user = users_models.User.objects.get(id=request.GET.get('user_pk'))
+        stock = models.Stock.objects.get(id=request.GET.get('stock_pk'))
+        
+        if not user or not stock :
+            return HttpResponseForbidden()
+
+        context = dict(
+            user = user,
+            stock = stock,
+            conditions = models.Stock.CONDITIONS,
+        )
+        
+        return render(request, 'console/return_confirm.html', context)
+
+    if request.method == "POST":
+        form = forms.ReturnProcessForm(request.POST)
+        
+        if form.is_valid():
+            models.return_stock(form.cleaned_data['user'],
+                                form.cleaned_data['stock'],
+                                form.cleaned_data['condition'])
+            return redirect(reverse('search_users'))
+        
 class RentRequestListView(ListView):
     template_name = 'console/rent_request.html'
     queryset = models.RentRequest.objects.pending

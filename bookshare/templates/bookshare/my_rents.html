@@ -22,7 +22,6 @@ $("#request-return-form").submit();
       <th>Title</th>
       <th>대여일</th>
       <th>대여한도일</th>
-      <th>반납신청</th>
     </tr>
   </thead>
   <tbody>
@@ -33,12 +32,11 @@ $("#request-return-form").submit();
       <td>{{ rent.book.title }}</td>
       <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
       <td>{{ rend.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
-      <td><a class="btn btn-lg btn-danger btn-request-return">반납신청</a></td>
     </tr>
     {% endfor %}
     {% else %}
     <tr>
-      <td colspan=5>No result</td>
+      <td colspan=4>No result</td>
     </tr>
     {% endif %}
   </tbody>
