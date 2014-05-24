@@ -1,7 +1,5 @@
 {% extends "bookshare/mypage_base.html" %}
-
 {% block title %}마이페이지{% endblock %}
-
 {% block inner-content %}
 <div>
     <h2 class="small-title">개인정보</h2>
@@ -30,9 +28,10 @@
                 </tr>
             </tbody>
         </table>
-        
+                
         {{error_msg}}
         {% csrf_token %}
+
     </div>
 </div>
 {% endblock %}

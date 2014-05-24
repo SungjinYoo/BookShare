@@ -57,7 +57,7 @@ class SignInView(TemplateView):
 
 class SignUpValidationForm(forms.Form):
     user_id = forms.CharField(max_length=15, min_length=4)
-    name = forms.CharField(max_length=15, min_length=4)
+    name = forms.CharField(max_length=15, min_length=1)
     password = forms.CharField(max_length=128, min_length=4)
     password_confirm = forms.CharField(max_length=128, min_length=4)
     email = forms.EmailField(max_length=255)
