@@ -23,7 +23,7 @@ $("#return-request-form").submit();
   {% if stock_list %}
   {% for stock in stock_list %}
   <tr>
-    <td><img src="{{ stock.book.image.url }}"></td>
+    <td><img class="book-cover" src="{{ stock.book.image.url }}"></td>
     <td>{{ stock.book.title }}</td>
     <td><a pk="{{ stock.pk }}" class="btn btn-sm btn-success btn-return">반납</a></td>
   </tr>

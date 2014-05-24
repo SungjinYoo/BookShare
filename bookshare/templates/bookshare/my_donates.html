@@ -1,7 +1,7 @@
 {% extends "bookshare/mypage_base.html" %}
 
 {% block inner-content %}
-<table class="table table-striped table-bordered mypage-table">
+<table class="table table-striped table-bordered">
   <thead>
     <tr>
       <th>표지</th>
@@ -13,7 +13,7 @@
     {% if object_list %}
     {% for rent in object_list %}
     <tr>
-      <td>{% if rent.book.image %}<img src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
+      <td>{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
       <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
     </tr>
