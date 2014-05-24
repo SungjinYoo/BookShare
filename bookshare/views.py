@@ -62,6 +62,28 @@ class SignUpValidationForm(forms.Form):
     password_confirm = forms.CharField(max_length=128, min_length=4)
     email = forms.EmailField(max_length=255)
 
+    def clean(self):
+        cleaned_data = super(SignUpValidationForm, self).clean()
+        user_id = cleaned_data.get("user_id")
+        name = cleaned_data.get("name")
+        password = cleaned_data.get("password")
+        password_confirm = cleaned_data.get('password_confirm')
+        email = cleaned_data.get('email')
+            
+        if not password:
+            self._errors["msg"] = '* 패스워드 길이가 잘못되었습니다.'
+        elif not user_id : 
+            self._errors["msg"] = '* 유저 아이디 길이가 잘못되었습니다.'
+        elif not name : 
+            self._errors["msg"] = '* 이름 길이는 1자이상 15자 이하가 되어야 합니다.'
+        elif not password_confirm : 
+            self._errors["msg"] = '* 확인 패스워드 길이가 잘못되었습니다.'
+        elif not email : 
+            self._errors["msg"] = '* 이메일 형식이 잘못되었습니다.'
+    
+        return cleaned_data
+
+
 class SignUpView(TemplateView):
     template_name = "bookshare/signup.html"
     error_msg = u"알수없는 오류가 발생하였습니다."
@@ -86,9 +108,7 @@ class SignUpView(TemplateView):
                 if user.check_password(password):
                     login(request, user)
                     return HttpResponseRedirect('/')
-        else:
-            self.error_msg = u"잘못 입력하신 값이 있습니다."                            
-        return render(request, self.template_name, {'error_msg':self.error_msg})
+        return render(request, self.template_name, {'errors':form.errors})
 
 class LoginRequiredViewMixin(View):
     @method_decorator(login_required)
@@ -117,6 +137,24 @@ class ModifyValidationForm(forms.Form):
     password_modify_confirm = forms.CharField(max_length=128, min_length=4);
     email = forms.EmailField(max_length=255)
     
+    def clean(self):
+        cleaned_data = super(ModifyValidationForm, self).clean()
+        password = cleaned_data.get("password")
+        password_modify = cleaned_data.get('password_modify')
+        password_modify_confirm = cleaned_data.get('password_modify_confirm')
+        email = cleaned_data.get('email')
+            
+        if not password:
+            self._errors["msg"] = '* 패스워드 길이가 잘못되었습니다.'
+        elif not password_modify : 
+            self._errors["msg"] = '* 새로운 패스워드 길이가 잘못되었습니다.'
+        elif not password_modify_confirm : 
+            self._errors["msg"] = '* 확인 패스워드 길이가 잘못되었습니다.'
+        elif not email : 
+            self._errors["msg"] = '* 이메일 형식이 잘못되었습니다.'
+    
+        return cleaned_data
+    
 class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
     template_name = 'bookshare/mypagemodify.html'
     error_msg = ""
@@ -134,7 +172,7 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = ModifyValidationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid():            
             user_id = form.cleaned_data['user_id']
             password = form.cleaned_data['password']
             password_modify = form.cleaned_data['password_modify']
@@ -142,7 +180,6 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
             email = form.cleaned_data['email']
                             
             user = authenticate(user_id=user_id, password=password)
-            print "0"
             
             if user is not None:
                 if not user.check_password(password):
@@ -165,11 +202,8 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
                     sex = request.user.sex,
                     email = request.user.email,
             )
-            return render(request, self.template_name, data)
-        
-        else : 
-            self.error_msg = u"* 입력정보가 잘못 되었습니다."
-        return render(request, self.template_name, {'error_msg':self.error_msg})
+            return render(request, self.template_name, data)            
+        return render(request, self.template_name, {'errors':form.errors})
 
 class MyRentRequestListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_rent_requests.html'

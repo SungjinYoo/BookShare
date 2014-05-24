@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+﻿@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 
@@ -220,4 +220,11 @@ p {
 .mypage-table img{
 	width:180px;
 	height:260px;
+}
+
+/* mypage modify */
+.error-msg-p{
+	text-align: right;
+	color: red;
+	font-size: 12px;
 }
