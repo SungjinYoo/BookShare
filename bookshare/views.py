@@ -196,7 +196,7 @@ class MyRentListView(ListView, LoginRequiredViewMixin):
         return render(request, self.template_name, context)
     
     def get_queryset(self):
-        return self.request.user.stock_set.rented()
+        return self.request.user.renting_stocks.rented().order_by('-changed_at')
 
 class MyDonateListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_donates.html'
@@ -209,7 +209,8 @@ class MyDonateListView(ListView, LoginRequiredViewMixin):
         return render(request, self.template_name, context)
 
     def get_queryset(self):
-        return self.request.user.stock_set.all()
+        # if not book is available(reclaimed, destroyed etc...) conditions must be changed
+        return self.request.user.stock_set.all().order_by('-added_at')
 
 
 def how_it_works(request):
