@@ -102,6 +102,7 @@ class RequestManager(models.Manager):
 class RequestMixin(models.Model):
     class Meta:
         abstract = True
+        ordering = ['-added_at']
 
     PENDING = u'pending'
     DONE = u'done'
@@ -138,20 +139,23 @@ class ReturnRequest(RequestMixin):
 class ReclaimRequest(RequestMixin):
     stock = models.ForeignKey(Stock)
 
-def request_rent(actor, book):
+def make_rent_request(actor, book):
     # check for user have multiple request for same book
     assert not RentRequest.objects.pending().filter(actor=actor, book=book)
 
     RentRequest.objects.create(actor=actor, book=book).save()
 
-def request_cancel_rent(actor, rent_request):
+def cancel_rent_request(actor, rent_request):
     assert rent_request.actor == actor
-    rent_request.delete()
+    assert rent_request.status == RentRequest.PENDING
 
-def request_return(actor, stock):
+    rent_request.status = RentRequest.CANCELED
+    rent_request.save()
+
+def make_return_request(actor, stock):
     ReturnRequest.objects.create(actor=actor, stock=stock).save()
 
-def request_cancel_return(actor, return_request):
+def cancel_return_request(actor, return_request):
     assert return_request.actor == actor
     return_request.delete()
 

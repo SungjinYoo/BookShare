@@ -6,11 +6,11 @@ from django.shortcuts import redirect, render
 from django.views.generic import ListView, View
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse, HttpResponseForbidden
-
 import forms
 from models import Book
 
-from bookshare.apps.core.models import request_rent, request_cancel_rent, request_return, request_cancel_return
+import bookshare.apps.core.models as core_models
+
 from bookshare.settings.base import LOGIN_URL
 
 # Create your views here.
@@ -59,7 +59,7 @@ def rent_request(request):
         form = forms.RentRequestForm(request.POST)
 
         if form.is_valid():
-            request_rent(request.user, form.cleaned_data["book"])
+            core_models.make_rent_request(request.user, form.cleaned_data["book"])
             return render(request, "books/rent_request_complete.html")
 
     else :
@@ -73,7 +73,7 @@ def cancel_rent_request(request):
     if request.method == "POST":
         form = forms.CancelRentRequestForm(request.POST)
         if form.is_valid():
-            request_cancel_rent(request.user, form.cleaned_data['rent_request'])
+            core_models.cancel_rent_request(request.user, form.cleaned_data['rent_request'])
             return redirect(reverse('my-rent-requests'))
         else :
             return HttpResponseForbidden()
@@ -88,7 +88,7 @@ def return_request(request):
         form = forms.ReturnRequestForm(request.POST)
         
         if form.is_valid():
-            request_return(request.user, form.cleaned_data['stock'])
+            core_models.make_return_request(request.user, form.cleaned_data['stock'])
             return redirect(reverse('my-rents'))
         else:
             return HttpResponseForbidden()
@@ -103,7 +103,7 @@ def cancel_return_request(request):
         form = forms.CancelReturnRequestForm(request.POST)
         
         if form.is_valid():
-            request_cancel_return(request.user, form.cleaned_data['return_request'])
+            core_models.cancel_return_request(request.user, form.cleaned_data['return_request'])
             return redirect(reverse('my-rents'))
         else:
             return HttpResponseForbidden()
