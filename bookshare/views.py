@@ -183,7 +183,7 @@ class MyRentRequestListView(ListView, LoginRequiredViewMixin):
         return render(request, self.template_name, context)
             
     def get_queryset(self):
-        return self.request.user.rentrequest_set.all()
+        return self.request.user.rentrequest_set.pending()
 
 class MyRentListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_rents.html'
