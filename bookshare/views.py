@@ -90,7 +90,6 @@ class SignUpView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
-        print form
         if form.is_valid():
             user_id = form.cleaned_data['user_id']
             name = form.cleaned_data['name']
