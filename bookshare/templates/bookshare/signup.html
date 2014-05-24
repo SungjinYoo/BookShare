@@ -5,7 +5,6 @@
 {% block content %} 
 <div class="signup-screen">
   <div class="signup-form">
-    <p class="error-msg-p">{{ errors.msg }}</p>
     <form action="/signup/" method="post">
       <div class="form-group{% if errors.user_id %} has-error{% endif %}">
 	<input type="text" class="form-control signup-field" value="" placeholder="Enter your id ( 최소  4자, 최대  15자 )" id="signup-id" name="user_id">
