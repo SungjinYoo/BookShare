@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.views.generic import ListView
 from bookshare.apps.core import models
 from bookshare.apps.books import models as books_models
@@ -102,7 +103,7 @@ def process_return_request(request):
             models.return_stock(form.cleaned_data['user'],
                                 form.cleaned_data['stock'],
                                 form.cleaned_data['condition'])
-            return redirect(reverse('search_users'))
+            return redirect(reverse('console:search_users'))
         
 class RentRequestListView(ListView):
     template_name = 'console/rent_request.html'

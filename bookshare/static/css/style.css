@@ -228,3 +228,7 @@ p {
 	color: red;
 	font-size: 12px;
 }
+.book-cover {
+    width: 180px;
+    height: 260px;
+}
