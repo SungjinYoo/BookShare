@@ -1,4 +1,5 @@
 
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
@@ -22,10 +23,12 @@ urlpatterns = patterns('',
    url(r'^my/rents/$', MyRentListView.as_view()),
    url(r'^my/donates/$', MyDonateListView.as_view()),
 
+
    url(r'^admin/', include(admin.site.urls)),
    url(r'^test/', include(urls.urlpatterns, namespace="core")),
    url(r'^books/', include('bookshare.apps.books.urls', namespace="books")),
    url(r'^how-it-works$', how_it_works, name="how-it-works"),
    url(r'^console', include(console_urls.urlpatterns, namespace="console")),
+   url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 )
 
