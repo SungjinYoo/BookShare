@@ -139,6 +139,9 @@ class ReclaimRequest(RequestMixin):
     stock = models.ForeignKey(Stock)
 
 def request_rent(actor, book):
+    # check for user have multiple request for same book
+    assert not RentRequest.objects.pending().filter(actor=actor, book=book)
+
     RentRequest.objects.create(actor=actor, book=book).save()
 
 def request_cancel_rent(actor, rent_request):
