@@ -20,18 +20,16 @@ $("#return-request-form").submit();
     <th>제목</th>
     <th>반납</th>
   </tr>
-  {% if stock_list %}
-  {% for stock in stock_list %}
+  {% for stock in user.renting_stocks.all %}
   <tr>
     <td><img class="book-cover" src="{{ stock.book.image.url }}"></td>
     <td>{{ stock.book.title }}</td>
     <td><a pk="{{ stock.pk }}" class="btn btn-sm btn-success btn-return">반납</a></td>
   </tr>
-  {% endfor %}
-  {% else %}
+  {% empty %}
   <tr>
     <td colspan=3>No result</td>
   </tr>
-  {% endif %}
+  {% endfor %}
 </table>
 {% endblock %}
