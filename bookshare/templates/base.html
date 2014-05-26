@@ -42,12 +42,12 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse-01">
                     <ul class="nav navbar-nav">
                         <li><a href="{% url 'how-it-works' %}">이용안내</a></li>
-                        {% if islogin == 'N' or user.islogin == 'N' or context.islogin == 'N' %}
-                        <li><a href="{% url 'signup' %}">회원가입</a></li>
-                        <li><a href="{% url 'signin' %}">로그인</a></li>
-                        {% else %}
+                        {% if user.is_authenticated %}
                         <li><a href="{% url 'mypage' %}">마이페이지</a></li>
                         <li><a href="{% url 'signout' %}">로그아웃</a></li>
+                        {% else %}
+                        <li><a href="{% url 'signup' %}">회원가입</a></li>
+                        <li><a href="{% url 'signin' %}">로그인</a></li>
                         {% endif %}
                     </ul>
                     <form class="navbar-form navbar-right" action="/books/search/" role="search">
