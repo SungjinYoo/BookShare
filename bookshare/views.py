@@ -16,12 +16,24 @@ class UserValidationForm(forms.Form):
     user_id = forms.CharField(max_length=15)
     password = forms.CharField(max_length=128, min_length=4)
 
+def isloginCheck(request) : 
+    if request.user.is_anonymous() :
+        return 'N'
+    return 'Y'
+    
+
 def index(request):
-    return render(request, 'bookshare/index.html')
+    return render(request, 'bookshare/index.html', {'islogin':isloginCheck(request)})
 
 def signout(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return render(request, 'bookshare/index.html', {'islogin':isloginCheck(request)})
+
+class SignOutView(TemplateView) :
+    def get(self, request):
+        return signout(request);
+    def post(self, request, *args, **kwargs):
+        return signout(request);
         
 class SignInView(TemplateView):
     template_name = "bookshare/signin.html"
@@ -34,6 +46,9 @@ class SignInView(TemplateView):
         context['next'] = self.request.GET.get('next', self.default_next_url)
         return context
 
+    def get(self, request):
+        return render(request, self.template_name, {'next':self.default_next_url, 'islogin':isloginCheck(request)})    
+    
     def post(self, request, *args, **kwargs):
         form = UserValidationForm(request.POST)
         next_url = form.data.get("next", self.default_next_url)
@@ -50,7 +65,7 @@ class SignInView(TemplateView):
         else:
             error_msg = u"형식에 맞지 않는 값을 입력하셨습니다."
 
-        context = {'error_msg': self.error_msg}
+        context = {'error_msg': self.error_msg, 'islogin':isloginCheck(request)}
         context[self.template_next_var] = next_url
         return render(request, self.template_name, context)
 
@@ -87,7 +102,8 @@ class SignUpValidationForm(forms.Form):
 class SignUpView(TemplateView):
     template_name = "bookshare/signup.html"
     error_msg = u"알수없는 오류가 발생하였습니다."
-
+    def get(self, request):
+        return render(request, self.template_name, {'islogin':isloginCheck(request)})
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
@@ -107,7 +123,7 @@ class SignUpView(TemplateView):
                 if user.check_password(password):
                     login(request, user)
                     return HttpResponseRedirect('/')
-        return render(request, self.template_name, {'errors':form.errors})
+        return render(request, self.template_name, {'errors':form.errors, 'islogin':isloginCheck(request)})
 
 class LoginRequiredViewMixin(View):
     @method_decorator(login_required)
@@ -124,6 +140,7 @@ class MyPageView(LoginRequiredViewMixin, TemplateView):
                 name = request.user.name,
                 sex = request.user.sex,
                 email = request.user.email,
+                islogin = isloginCheck(request)
         )
         return render(request, 'bookshare/mypage.html', data)
 
@@ -202,7 +219,7 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
                     email = request.user.email,
             )
             return render(request, self.template_name, data)            
-        return render(request, self.template_name, {'errors':form.errors})
+        return render(request, self.template_name, {'errors':form.errors, 'islogin':isloginCheck(request)})
 
 class MyRentRequestListView(ListView, LoginRequiredViewMixin):
     template_name = 'bookshare/my_rent_requests.html'
@@ -248,7 +265,7 @@ class MyDonateListView(ListView, LoginRequiredViewMixin):
 
 def how_it_works(request):
     if request.method == 'GET' :
-        return render(request, 'how_it_works.html')
+        return render(request, 'how_it_works.html',{'islogin':isloginCheck(request)})
     else :
         return HttpResponseForbidden()
 

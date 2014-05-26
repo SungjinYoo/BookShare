@@ -232,3 +232,8 @@ p {
     width: 180px;
     height: 260px;
 }
+.signin-error-msg{
+	font-size: 14px;
+color: red;
+text-align: center;
+}
