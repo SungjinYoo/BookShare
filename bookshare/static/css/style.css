@@ -261,10 +261,8 @@ div.image-wrapper .image{
     width: 100%;
 }
 
-div.image-wrapper .out-of-stock-image{
-    position: absolute;
-    width: 100%;
-    opacity: 0.5;
+div.image-wrapper .out-of-stock{
+    opacity: 0.3;
 }
 
 div.title-wrapper > p{
