@@ -252,11 +252,12 @@ border-right-0{
 
 .book-list-item {
     display: inline-block;
-    width: calc(25% - 40px);
+    width: calc(25% - 4px);
     margin: 4px;
     padding: 8px;
     border: 2px solid #1ABC9C;
     border-radius: 8px;
+    background-color: #ffffff;
 }
 
 div.image-wrapper .image{
