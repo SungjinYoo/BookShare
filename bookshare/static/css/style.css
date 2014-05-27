@@ -226,3 +226,31 @@ p {
     width: 180px;
     height: 260px;
 }
+
+.how-it-works .step {
+    font-size: 1.1em;
+}
+
+.how-it-works .step h3 {
+    font-size: 1.5em;
+    font-weight: normal;
+    margin-bottom: 1.2em;
+}
+
+.how-it-works .step p {
+    font-size: 1em;
+}
+
+.how-it-works .row {
+    margin-bottom: 2em;
+}
+
+.how-it-works .row.final {
+    padding: 5em;
+    height: 15em;
+}
+
+.how-it-works img {
+    width: 100%;
+    border-radius: 6px;
+}
