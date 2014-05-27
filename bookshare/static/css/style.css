@@ -321,6 +321,6 @@ div.course-wrapper .label{
 }
 
 .point-count{
-	float:left;
+	display:inline;
 	color:red;
 }
