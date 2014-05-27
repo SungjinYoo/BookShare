@@ -38,10 +38,6 @@ and (max-width : 320px) {
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) {
-	#content-wrapper {
-		min-width: initial;
-		width: initial;
-	}
 }
 
 /* iPads (landscape) ----------- */
@@ -49,10 +45,6 @@ and (max-device-width : 1024px) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
-	#content-wrapper {
-		min-width: initial;
-		width: initial;
-	}
 }
 
 /* iPads (portrait) ----------- */
@@ -60,10 +52,6 @@ and (orientation : landscape) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-	#content-wrapper {
-		min-width: initial;
-		width: initial;
-	}
 }
 
 
@@ -71,8 +59,4 @@ and (orientation : portrait) {
 @media
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
 only screen and (min-device-pixel-ratio : 1.5) {
-	#content-wrapper {
-		min-width: initial;
-		width: initial;
-	}
 }
