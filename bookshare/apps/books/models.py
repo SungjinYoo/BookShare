@@ -10,15 +10,15 @@ from django.utils.translation import ugettext_lazy as _
 isbn_validator = RegexValidator(regex='^\d{13}$', message='Length has to be 13', code='nomatch')
 
 class Course(models.Model):
-    SPRING = u'spring'
+    FIRST = u'first'
     SUMMER = u'summer'
-    FALL = u'fall'
+    SECOND = u'second'
     WINTER = u'winter'
 
     SEMESTERS = (
-        (SPRING, u'봄'),
+        (FIRST, u'1학기'),
         (SUMMER, u'여름'),
-        (FALL, u'가을'),
+        (SECOND, u'2학기'),
         (WINTER, u'겨울')
     )
 
@@ -26,8 +26,9 @@ class Course(models.Model):
     department = models.CharField(max_length=20)
     year = models.IntegerField()
     semester = models.CharField(_(u'학기'), max_length=10,
-                           choices=SEMESTERS,
-                           default=SPRING)
+                                choices=SEMESTERS,
+                                default=FIRST)
+    
 
     def __unicode__(self):
         return u"{} - {} {}".format(self.title, self.year, self.semester)

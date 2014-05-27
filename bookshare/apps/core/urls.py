@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'request_rent$', views.request_rent, name='request_rent'),
     url(r'process_rent_request$', views.process_rent_request, name='process_rent_req'),
     url(r'deliver_stock$', views.deliver_stock, name='deliver_stock'),
+    url(r'dummy$', views.make_dummy_data, name='dummy'),                       
 )
