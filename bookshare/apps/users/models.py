@@ -96,13 +96,13 @@ class User(BookShareAbstractUser):
     points = models.IntegerField(default=0)
 
     def ensure_points(self, points):
-        assert self.points >= points, "insufficient points"
+        assert self.points >= points, "포인트가 부족합니다"
 
     def get_points(self, points):
-        assert points > 0
+        assert points > 0, "포인트는 0 이하로 떨어질 수 없습니다"
         self.points += points
 
     def lose_points(self, points):
-        assert points > 0
+        assert points > 0, "포인트가 0 이하로 떨어질 수 없습니다"
         self.ensure_points(points)
         self.points -= points

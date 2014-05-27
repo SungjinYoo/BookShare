@@ -22,7 +22,7 @@ SECRET_KEY = get_env_variable('BOOKSHARE_SECRET_KEY')
 
 DEBUG = True
 TEMPLATE_DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 ADMINS = (
@@ -61,6 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'bookshare.middleware.AssertionErrorMiddleware'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (

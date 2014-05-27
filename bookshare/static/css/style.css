@@ -226,3 +226,21 @@ p {
     width: 180px;
     height: 260px;
 }
+
+
+/* error screen */
+.error-screen{
+    background-color: #edeff1;
+    width: 100%;
+    min-height: 200px;
+    padding: 20px;
+    border-radius: 6px;   
+    word-wrap:break-word;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.error-message{
+    display:inline-block;
+    vertical-align:middle;
+}

@@ -141,22 +141,23 @@ class ReclaimRequest(RequestMixin):
 
 def make_rent_request(actor, book):
     # check for user have multiple request for same book
-    assert not RentRequest.objects.pending().filter(actor=actor, book=book)
+    assert not RentRequest.objects.pending().filter(actor=actor, book=book), "같은 책에 대해서는 한 번만 대여 신청을 할 수 있습니다"
 
     RentRequest.objects.create(actor=actor, book=book).save()
 
 def cancel_rent_request(actor, rent_request):
-    assert rent_request.actor == actor
-    assert rent_request.status == RentRequest.PENDING
+    assert rent_request.actor == actor, "신청자가 일치하지 않습니다"
+    assert rent_request.status == RentRequest.PENDING, "이미 처리되었습니다"
 
     rent_request.status = RentRequest.CANCELED
     rent_request.save()
 
 def make_return_request(actor, stock):
+    assert not ReturnRequest.objects.pending().filter(actor=actor, stock=stock), "같은 책에 대해서는 한 번만 대여 신청을 할 수 있습니다"
     ReturnRequest.objects.create(actor=actor, stock=stock).save()
 
 def cancel_return_request(actor, return_request):
-    assert return_request.actor == actor
+    assert return_request.actor == actor, "신청자가 일치하지 않습니다"
     return_request.delete()
 
 @transaction.atomic
@@ -164,7 +165,7 @@ def process_rent_request(request):
     ### precondition
     request.ensure_status(RentRequest.PENDING)
     request.actor.ensure_points(request.book.point())
-    assert request.book.any_availiable_stock()
+    assert request.book.any_availiable_stock(), "대여 가능한 물품이 존재하지 않습니다"
 
     request.status = RentRequest.DONE
 
@@ -210,14 +211,14 @@ def deliver_stock(actor, book, condition):
 def request_reclaim(actor, stock):
     ### precondition
     stock.ensure_status(Stock.AVAILABLE)
-    assert stock in actor.stock_set.all()
+    assert stock in actor.stock_set.all(), "자신이 기부한 책이 아닙니다"
 
     ReclaimRequest.objects.create(actor=actor, stock=stock).save()
 
 @transaction.atomic
 def process_reclaim_request(request):
     ### precondition
-    assert request.stock.owner == request.actor
+    assert request.stock.owner == request.actor, "책의 주인이 일치하지 않습니다"
     request.status.ensure_status(ReclaimRequest.PENDING)
 
     request.status = ReclaimRequest.DONE
