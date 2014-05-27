@@ -47,6 +47,12 @@ and (max-device-width : 480px) {
 		float:initial;
 		margin-right : 0;
 	}
+	.rent-list-table-image{
+		display:none;
+	}
+	.rent-request-list-table-image{
+		display:none;
+	}
 }
 
 /* Smartphones (landscape) ----------- */

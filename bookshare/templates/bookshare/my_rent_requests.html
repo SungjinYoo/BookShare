@@ -19,7 +19,7 @@ $("#cancel-rent-request-form").submit();
 <table id="rent-request-table" class="table table-striped">
   <thead>
     <tr>
-      <th>표지</th>
+      <th class="rent-request-list-table-image">표지</th>
       <th>제목</th>
       <th>대여 신청일</th>
       <th>대여신청철회</th>
@@ -29,7 +29,7 @@ $("#cancel-rent-request-form").submit();
     {% if object_list %}
     {% for rent in object_list %}
     <tr>
-      <td>{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
+      <td class="rent-request-list-table-image">{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
       <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
       
