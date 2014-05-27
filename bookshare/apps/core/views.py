@@ -63,8 +63,8 @@ def make_dummy_data(request):
     computer_science = json.loads(r.content)['DS_SUUPGS03TTM01'][0]['list']
 
     for each in computer_science:
-        Course.objects.get_or_create(title=each['gwamokNm'], department=each['suupRoomNms'], year=each['suupYear'], semester='first')
+        Course.objects.get_or_create(title=each['gwamokNm'], department=each['gnjSosokNm'], year=each['suupYear'], semester='first')
         
-    return HttpResponse("insert successed")
+    return HttpResponse(computer_science)
     
 

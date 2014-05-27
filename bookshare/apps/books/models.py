@@ -22,7 +22,7 @@ class Course(models.Model):
         (WINTER, u'겨울')
     )
 
-    title = models.CharField(max_length=20)
+    title = models.CharField(max_length=20, unique=True)
     department = models.CharField(max_length=20)
     year = models.IntegerField()
     semester = models.CharField(_(u'학기'), max_length=10,
