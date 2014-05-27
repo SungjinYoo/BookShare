@@ -25,7 +25,7 @@ $("#user-stock-list-form").submit();
   </tr>
   {% if user_list %}
   {% for user in user_list %}
-  <tr class="user-info" pk="{{ user.pk }}">
+  <tr class="cursor user-info" pk="{{ user.pk }}">
     <td>{{ user.name }}</td>
     <td>{{ user.user_id }}</td>
     <td>{{ user.email }}</td>

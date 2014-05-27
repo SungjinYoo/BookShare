@@ -21,7 +21,7 @@ $("#return-request-form").submit();
     <th>반납</th>
   </tr>
   {% for stock in user.renting_stocks.all %}
-  <tr>
+  <tr class="cursor">
     <td><img class="book-cover" src="{{ stock.book.image.url }}"></td>
     <td>{{ stock.book.title }}</td>
     <td><a pk="{{ stock.pk }}" class="btn btn-sm btn-success btn-return">반납</a></td>
