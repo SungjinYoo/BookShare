@@ -3,6 +3,17 @@
 
 
 /* common */
+.ellipsis { 
+    width: 150px; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden; 
+}
+
+.display-block{
+    display: block;
+}
+
 .cursor {
     cursor:pointer;
 }
@@ -263,7 +274,7 @@ border-right-0{
 .book-list-item h4 {
     font-size: 0.85em;
     line-height: 1.2;
-    margin-bottom: 0;
+    margin-bottom: 6px;
 }
 
 div.image-wrapper .image{
