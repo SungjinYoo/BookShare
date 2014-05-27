@@ -15,10 +15,10 @@
 	<input type="password" class="form-control signin-field" value="" placeholder="Password" id="signin-password" name="password">
 	<label class="input-field-icon fui-lock" for="password"></label>
       </div>
+	  <p class="signin-error-msg">{{error_msg}}</p>
       <button class="btn btn-primary btn-lg btn-block signin-button">Sign In</button>
       <a class="signin-link btn btn-sm btn-block" href="/signup">Have not signed yet?</a>
       <a class="signin-link btn btn-sm btn-block" href="/find">Lost your password?</a>
-			{{error_msg}}
       {% csrf_token %}
       <input type="hidden" value="{{ next }}" name="next" />
     </form>

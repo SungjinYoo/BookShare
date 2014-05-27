@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+﻿@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 
@@ -222,11 +222,22 @@ p {
 	height:260px;
 }
 
+/* mypage modify */
+.error-msg-p{
+	text-align: right;
+	color: red;
+	font-size: 12px;
+}
 .book-cover {
     width: 180px;
     height: 260px;
 }
 
+.signin-error-msg{
+	font-size: 14px;
+color: red;
+text-align: center;
+}
 
 /* error screen */
 .error-screen{
@@ -244,3 +255,4 @@ p {
     display:inline-block;
     vertical-align:middle;
 }
+
