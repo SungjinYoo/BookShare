@@ -46,6 +46,7 @@ THIRD_PARTY_APPS = [
 ]
 
 BOOKSHARE_APPS = [
+    'bookshare',
     'bookshare.apps.core',
     'bookshare.apps.users',
     'bookshare.apps.books',
