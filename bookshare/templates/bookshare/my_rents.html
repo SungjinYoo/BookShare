@@ -15,7 +15,7 @@ $("#request-return-form").submit();
   {% csrf_token %}
   {{ return_request_form }}
 </form>
-<table id="rent-list-table" class="table table-striped table-bordered">
+<table id="rent-list-table" class="table table-striped">
   <thead>
     <tr>
       <th>표지</th>
@@ -25,7 +25,6 @@ $("#request-return-form").submit();
     </tr>
   </thead>
   <tbody>
-    {% if object_list %}
     {% for rent in object_list %}
     <tr>
       <td>{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
@@ -33,12 +32,11 @@ $("#request-return-form").submit();
       <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
       <td>{{ rend.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
     </tr>
-    {% endfor %}
-    {% else %}
+    {% empty %}
     <tr>
       <td colspan=4>No result</td>
     </tr>
-    {% endif %}
+    {% endfor %}
   </tbody>
 </table>
 {% endblock %}
