@@ -217,10 +217,10 @@ p {
 }
 
 /* my page */
-.mypage-table img{
-	width:180px;
-	height:260px;
+.table tbody tr td {
+    vertical-align: middle;
 }
+
 
 /* mypage modify */
 .error-msg-p{
@@ -238,4 +238,7 @@ p {
 color: red;
 text-align: center;
 }
+
+
+
 
