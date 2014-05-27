@@ -16,14 +16,13 @@ book_list_item.click(function(){
 
 if(book_list_item)
 {
-    var column_width = book_list_item.width();
-    
+    var column_width = book_list_item.outerWidth(true);
     var container = $("#book-list");
     
     imagesLoaded( container, function() {
 	msnry = new Masonry( container, 
 			     { 	
-				 columnWidth: 240,
+				 columnWidth: column_width,
 				 itemSelector: '.book-list-item'
 			     } 
 			   );

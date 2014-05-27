@@ -252,7 +252,7 @@ border-right-0{
 
 .book-list-item {
     display: inline-block;
-    width: calc(25% - 4px);
+    width: calc(25% - 10px);
     margin: 4px;
     padding: 8px;
     border: 2px solid #1ABC9C;
