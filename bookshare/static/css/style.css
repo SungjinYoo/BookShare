@@ -252,9 +252,11 @@ border-right-0{
 
 .book-list-item {
     display: inline-block;
-    width: calc(236px - 4px);
+    width: calc(25% - 40px);
     margin: 4px;
-    border: 2px;
+    padding: 8px;
+    border: 2px solid #1ABC9C;
+    border-radius: 8px;
 }
 
 div.image-wrapper .image{
@@ -265,7 +267,16 @@ div.image-wrapper .out-of-stock{
     opacity: 0.3;
 }
 
+div.title-wrapper {
+    padding: 4px 0px 4px 0px;
+}
+
 div.title-wrapper > p{
+    text-align: center;
     font-size: 14px;
     margin: 0px;
+}
+
+div.course-wrapper .label{
+    font-size: 12px;
 }
