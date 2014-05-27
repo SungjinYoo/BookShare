@@ -313,3 +313,7 @@ div.course-wrapper .label{
     width: 100%;
     border-radius: 6px;
 }
+
+.point-count{
+	color:red;
+}

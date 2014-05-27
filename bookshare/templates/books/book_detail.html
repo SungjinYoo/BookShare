@@ -6,7 +6,7 @@
     <div class="col-md-12">
       {% if object.image.url %}<img src="{{ object.image.url }}" class="cover"/>{% else %}<img src="http://placehold.it/300x400" class="cover"/>{% endif %}
       <h2>{{ object.title }}</h2>
-      <p>{{ object.point }} 포인트</p>
+      <p><p class="point-count">{{ object.point }}</p> 포인트 소모</p>
       {% if object.any_availiable_stock %}
       <form method="post" action="{% url 'books:book-rent-request' %}">
 	{% csrf_token %}
