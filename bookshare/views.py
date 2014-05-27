@@ -12,6 +12,8 @@ from django import forms
 
 from bookshare.apps.books.forms import CancelRentRequestForm, ReturnRequestForm
 
+
+
 class UserValidationForm(forms.Form):
     user_id = forms.CharField(max_length=15)
     password = forms.CharField(max_length=128, min_length=4)
