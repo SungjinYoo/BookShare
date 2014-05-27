@@ -34,6 +34,10 @@ p {
     margin-right: 20px;
 }
 
+border-right-0{
+    border-right: 0px;
+}
+
 
 
 
@@ -238,8 +242,31 @@ p {
     color: red;
     text-align: center;
 }
+
+
+/* book-list */
+#book-list{
+    position:relative;
 }
 
+.book-list-item {
+    display: inline-block;
+    width: calc(236px - 4px);
+    margin: 4px;
+    border: 2px;
+}
 
+div.image-wrapper .image{
+    width: 100%;
+}
 
+div.image-wrapper .out-of-stock-image{
+    position: absolute;
+    width: 100%;
+    opacity: 0.5;
+}
 
+div.title-wrapper > p{
+    font-size: 14px;
+    margin: 0px;
+}
