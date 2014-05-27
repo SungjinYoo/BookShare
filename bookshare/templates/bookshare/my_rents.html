@@ -18,7 +18,7 @@ $("#request-return-form").submit();
 <table id="rent-list-table" class="table table-striped">
   <thead>
     <tr>
-      <th>표지</th>
+      <th class="rent-list-table-image">표지</th>
       <th>제목</th>
       <th>대여일</th>
       <th>대여한도일</th>
@@ -27,7 +27,7 @@ $("#request-return-form").submit();
   <tbody>
     {% for rent in object_list %}
     <tr>
-      <td>{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
+      <td class="rent-list-table-image">{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
       <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
       <td>{{ rend.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>

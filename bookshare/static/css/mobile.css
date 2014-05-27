@@ -22,6 +22,37 @@ and (max-device-width : 480px) {
 	.feature{
 		display:none;
 	}
+	
+	.book-detail img.cover{
+		margin-bottom: 20px;
+	}
+	
+	div.col-md-12{
+		text-align:center;
+	}
+	
+	.col-md-class{
+		font-size:25px;
+	}
+	
+	.book-detail .courses li{
+		list-style: initial;
+	}
+	
+	.book-detail h2{
+		font-size:40px
+	}
+	
+	.book-detail img.cover{
+		float:initial;
+		margin-right : 0;
+	}
+	.rent-list-table-image{
+		display:none;
+	}
+	.rent-request-list-table-image{
+		display:none;
+	}
 }
 
 /* Smartphones (landscape) ----------- */
