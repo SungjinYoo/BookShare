@@ -1,5 +1,7 @@
 {% extends "bookshare/mypage_base.html" %}
 
+{% load templatetags %}
+
 {% block inner-content %}
 <table class="table table-striped">
   <thead>
@@ -14,7 +16,7 @@
     <tr>
       <td>{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
-      <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
+      <td>{{ rent.added_at|full_date }}</td>
     </tr>
     {% empty %}
     <tr>

@@ -1,5 +1,7 @@
 {% extends "bookshare/mypage_base.html" %}
 
+{% load templatetags %}
+
 {% block onload_script %}
 $("#rent-list-table").find("a.btn-request-return").click(function(){
 var pk = $(this).attr("id");
@@ -21,7 +23,6 @@ $("#request-return-form").submit();
       <th class="rent-list-table-image">표지</th>
       <th>제목</th>
       <th>대여일</th>
-      <th>대여한도일</th>
     </tr>
   </thead>
   <tbody>
@@ -30,12 +31,11 @@ $("#request-return-form").submit();
       <td class="rent-list-table-image">{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
       {{ rent.book.id }}
-      <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
-      <td>{{ rend.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
+      <td>{{ rent.added_at|full_date }}</td>
     </tr>
     {% empty %}
     <tr>
-      <td colspan=4>No result</td>
+      <td colspan=3>No result</td>
     </tr>
     {% endfor %}
   </tbody>
