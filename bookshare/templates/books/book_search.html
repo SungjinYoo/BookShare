@@ -20,12 +20,15 @@ if(book_list_item)
     var container = $("#book-list");
     
     imagesLoaded( container, function() {
-	msnry = new Masonry( container, 
+	msnry = new Masonry( container[0], 
 			     { 	
 				 columnWidth: column_width,
 				 itemSelector: '.book-list-item'
 			     } 
 			   );
+    });
+    $(window).resize(function () {
+	container.masonry('bindResize');
     });
 }
 {% endblock %}
@@ -40,20 +43,15 @@ if(book_list_item)
 	<div class="image-wrapper">
 	  <img class="image {% if not book.any_availiable_stock %}out-of-stock{% endif %}" src="{% if book.image %}{{ book.image.url}}{% else %}src-to-default{% endif %}" />
 	</div>
-	<div class="title-wrapper">
-	  <p>{{ book.title }}</p>
-	</div>
+	<h4>{{ book.title }} {% if book.any_availiable_stock %}
+	  <span class="label label-success">대출 가능</span>
+	  {% else %}
+	  <span class="label label-danger">재고 없음</span>
+	  {% endif %}</h4>
 	<div class="course-wrapper">
 	  {% for course in book.courses.all %}
 	  <span class="label label-default">{{ course.title }} - {{ course.year }} {{ course.semester }}</span>
 	  {% endfor %}
-	</div>
-	<div class="status-wrapper">
-	  {% if book.any_availiable_stock %}
-	  <span class="label label-success">대출 가능</span>
-	  {% else %}
-	  <span class="label label-danger">재고 없음</span>
-	  {% endif %}
 	</div>
       </div>
       {% endfor %}
