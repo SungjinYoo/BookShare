@@ -1,5 +1,7 @@
 {% extends "bookshare/mypage_base.html" %}
 
+{% load templatetags %}
+
 {% block onload_script %}
 $("#rent-request-table").find("a.btn-cancel-rent-request").click(function(){
 var pk = $(this).attr("id");
@@ -31,7 +33,7 @@ $("#cancel-rent-request-form").submit();
     <tr>
       <td class="rent-request-list-table-image">{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
-      <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
+      <td>{{ rent.added_at|full_date }}</td>
       
       
       {% if rent.status == "pending" %}

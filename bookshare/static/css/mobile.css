@@ -55,6 +55,14 @@ and (max-device-width : 480px) {
 	.rent-request-list-table-image{
 		display:none;
 	}
+	
+	.request-complete-main{
+		font-size:40px;
+	}
+	
+	.request-complete-sub{
+		font-size:25px;
+	}
 }
 
 /* Smartphones (landscape) ----------- */
