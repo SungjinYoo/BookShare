@@ -35,6 +35,10 @@ p {
     margin-right: 20px;
 }
 
+border-right-0{
+    border-right: 0px;
+}
+
 
 
 
@@ -218,10 +222,10 @@ p {
 }
 
 /* my page */
-.mypage-table img{
-	width:180px;
-	height:260px;
+.table tbody tr td {
+    vertical-align: middle;
 }
+
 
 /* mypage modify */
 .error-msg-p{
@@ -235,25 +239,35 @@ p {
 }
 
 .signin-error-msg{
-	font-size: 14px;
-color: red;
-text-align: center;
-}
-
-/* error screen */
-.error-screen{
-    background-color: #edeff1;
-    width: 100%;
-    min-height: 200px;
-    padding: 20px;
-    border-radius: 6px;   
-    word-wrap:break-word;
+    font-size: 14px;
+    color: red;
     text-align: center;
-    vertical-align: middle;
 }
 
-.error-message{
-    display:inline-block;
-    vertical-align:middle;
+
+/* book-list */
+#book-list{
+    position:relative;
 }
 
+.book-list-item {
+    display: inline-block;
+    width: calc(236px - 4px);
+    margin: 4px;
+    border: 2px;
+}
+
+div.image-wrapper .image{
+    width: 100%;
+}
+
+div.image-wrapper .out-of-stock-image{
+    position: absolute;
+    width: 100%;
+    opacity: 0.5;
+}
+
+div.title-wrapper > p{
+    font-size: 14px;
+    margin: 0px;
+}
