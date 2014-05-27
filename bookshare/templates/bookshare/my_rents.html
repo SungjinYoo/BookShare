@@ -29,6 +29,7 @@ $("#request-return-form").submit();
     <tr>
       <td class="rent-list-table-image">{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
       <td>{{ rent.book.title }}</td>
+      {{ rent.book.id }}
       <td>{{ rent.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
       <td>{{ rend.added_at|date:"SHORT_DATETIME_FORMAT" }}</td>
     </tr>
