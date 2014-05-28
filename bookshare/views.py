@@ -183,18 +183,19 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
                 if not user.check_password(password):
                     self.error_msg = u"* 비밀번호가 잘못되었습니다."
                     self.error_number = 0
+                    return render(request, self.template_name, {'error_msg':self.error_msg, 'error_num' : self.error_number})
             else:
                 self.error_msg = u"* 비밀번호가 잘못되었습니다."
                 self.error_number = 0
+                return render(request, self.template_name, {'error_msg':self.error_msg, 'error_num' : self.error_number})
                                 
             if password_modify != password_modify_confirm:
                 self.error_msg = u"* 비밀번호가 서로 다릅니다."
                 self.error_number = 1
-
-            if self.error_msg:
                 return render(request, self.template_name, {'error_msg':self.error_msg, 'error_num' : self.error_number})
 
-            user.password = password_modify
+
+            user.set_password(password_modify)
             user.email = email
             user.save();
             return render(request, self.template_name)            
