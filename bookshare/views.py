@@ -161,6 +161,7 @@ class ModifyValidationForm(forms.Form):
 class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
     template_name = 'bookshare/mypagemodify.html'
     error_msg = ""
+    error_number = ""
     
     def get(self, request):
         if request.user.is_anonymous() :
@@ -176,19 +177,22 @@ class MyPageViewModify(LoginRequiredViewMixin, TemplateView):
             password_modify_confirm = form.cleaned_data['password_modify_confirm']
             email = form.cleaned_data['email']
                             
-            user = authenticate(user_id=user_id, password=password)
+            user = authenticate(user_id=user_id, password = password)
             
             if user is not None:
                 if not user.check_password(password):
                     self.error_msg = u"* 비밀번호가 잘못되었습니다."
+                    self.error_number = 0
             else:
                 self.error_msg = u"* 비밀번호가 잘못되었습니다."
+                self.error_number = 0
                                 
             if password_modify != password_modify_confirm:
                 self.error_msg = u"* 비밀번호가 서로 다릅니다."
+                self.error_number = 1
 
             if self.error_msg:
-                return render(request, self.template_name, {'error_msg':self.error_msg})
+                return render(request, self.template_name, {'error_msg':self.error_msg, 'error_num' : self.error_number})
 
             user.password = password_modify
             user.email = email

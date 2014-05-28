@@ -17,8 +17,7 @@
                 <input type="text" class="form-control signup-field" value="{{ user.name }}" id="signup-name" name="user_name" readonly="readonly">
                     <label class="input-field-icon fui-lock" for="user_name"></label>
                     </div>
-            
-            <div class="form-group{% if errors.password %} has-error{% endif %}">
+            <div class="form-group{% if errors.password or error_num == 0 %} has-error{% endif %}">
                 <input type="password" class="form-control signup-field" value="" placeholder="Password Origin" id="password-before" name="password">
                     <label class="input-field-icon fui-user" for="password"></label>
                     </div>
