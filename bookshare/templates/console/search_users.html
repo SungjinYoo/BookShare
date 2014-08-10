@@ -1,0 +1,40 @@
+{% extends "console/base.html" %}
+
+{% block onload_script %}
+$("tr.user-info").click(function(){
+var pk = this.getAttribute("pk");
+$("#id_user_pk").val(pk);
+$("#user-stock-list-form").submit();
+});
+{% endblock %}
+
+{% block content %}
+<form id="user-stock-list-form" method="get" action="{% url 'console:user_stock_list' %}">
+  <input id="id_user_pk" type="hidden" name="user_pk">
+</form>
+<form method="post" action="{% url 'console:search_users' %}">
+  {% csrf_token %}
+  <input type="text" name="user_name">
+  <input type="submit" value="검색">
+</form>
+<table class="table table-striped table-border">
+  <tr>
+    <th>이름</th>
+    <th>아이디</th>
+    <th>이메일</th>
+  </tr>
+  {% if user_list %}
+  {% for user in user_list %}
+  <tr class="cursor user-info" pk="{{ user.pk }}">
+    <td>{{ user.name }}</td>
+    <td>{{ user.user_id }}</td>
+    <td>{{ user.email }}</td>
+  </tr>
+  {% endfor %}
+  {% else %}
+  <tr>
+    <td colspan=3>No result</td>
+  </tr>
+  {% endif %}
+</table>
+{% endblock %}

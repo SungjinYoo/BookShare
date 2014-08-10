@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" action="{% url 'core:request_rent'%}">
+{{ form }}
+{% csrf_token %}
+<input type="submit" value="send" />
+</form>
+{% endblock %}

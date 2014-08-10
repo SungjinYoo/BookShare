@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "books.course", "fields": {"department": "\ucef4\ud4e8\ud130\uacf5\ud559", "semester": "spring", "year": 2014, "title": "\uc6b4\uc601\uccb4\uc81c\ub860"}}, {"pk": 1, "model": "books.book", "fields": {"courses": [1], "isbn": "9780470233993", "title": "Operating System Concepts 8th edition"}}]

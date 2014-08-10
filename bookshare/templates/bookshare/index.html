@@ -3,39 +3,34 @@
 {% block title %}MainPage{% endblock %}
 
 {% block content %}
-<div id="myCarousel" class="carousel slide" data-interval="false">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class=""></li>
-    <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-  </ol>
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item">
-      <img src="/static/img/book.jpg" alt="">
-      <div class="carousel-caption">
-        <h3>Thumbnail label</h3>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec.</p>
-      </div>
+<header class="page-header">
+<p class="text-center mini-slogan">나눔의 실천</p>
+<h2 class="text-center main-slogan">책두레</h2>
+<div class="row">
+    <div class="col-md-12 text-center link-set">
+        <a href="{% url 'how-it-works' %}" class="btn btn-inverse btn-lg">이용안내 보기</a>
+		{% if not user.is_authenticated %}
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">가입하기</a>
+        {% endif %}
     </div>
-    <div class="item active">
-      <img src="/static/img/book.jpg" alt="">
-      <div class="carousel-caption">
-        <h3>Thumbnail label</h3>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec.</p>
-      </div>
-    </div>
-    <div class="item">
-      <img src="/static/img/book.jpg" alt="">
-      <div class="carousel-caption">
-        <h3>Thumbnail label</h3>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec.</p>
-      </div>
-    </div>
-  </div>
-  <!-- Controls -->
-  <a class="left carousel-control fui-arrow-left" href="#myCarousel" data-slide="prev"></a>
-  <a class="right carousel-control fui-arrow-right" href="#myCarousel" data-slide="next"></a>
 </div>
+</header>
+<section class="feature">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="text-center">공유</h3>
+            <p class="text-center">책두레를 통해 책을 공유하시면 도서 구입비를 크게 절감할 수 있어요.</p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center">책임</h3>
+            <p class="text-center">책임감을 가지고 책을 깨끗이 이용한 뒤 반납기한에 꼭 반납해주세요.</p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center">애정</h3>
+            <p class="text-center">오고가는 책 사이에 훈훈히 피어나는 한양인의 애정을 느껴보세요.</p>
+        </div>
+    </div>
+</section>
+
+
 {% endblock %}

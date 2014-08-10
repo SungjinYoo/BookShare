@@ -3,6 +3,7 @@
 import os
 from os.path import dirname
 
+from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
 from path import path
 
@@ -21,7 +22,7 @@ SECRET_KEY = get_env_variable('BOOKSHARE_SECRET_KEY')
 
 DEBUG = True
 TEMPLATE_DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 ADMINS = (
@@ -42,13 +43,14 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'django_extensions',
     'tastypie',
-    'south',
 ]
 
 BOOKSHARE_APPS = [
+    'bookshare',
     'bookshare.apps.core',
     'bookshare.apps.users',
     'bookshare.apps.books',
+    'bookshare.apps.console',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + BOOKSHARE_APPS
@@ -60,6 +62,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'bookshare.middleware.AssertionErrorMiddleware'
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.contrib.auth.context_processors.auth',
 )
 
 ROOT_URLCONF = 'bookshare.urls'
@@ -80,10 +87,21 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+LOGIN_URL = '/signin/'
+LOGOUT_URL = '/signout/'
+
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (
     PROJECT_ROOT / 'static',
 )
+
 TEMPLATE_DIRS = (
     PROJECT_ROOT / 'templates',
 )
+
+AUTH_USER_MODEL = 'users.User'
+
+MEDIA_ROOT = PROJECT_ROOT / 'media'
+
+MEDIA_URL = '/media/'

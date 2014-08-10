@@ -1,0 +1,103 @@
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+	
+	body{
+		background-color:#F8F8F8;
+	}
+	
+	#content-wrapper {
+		min-width: initial;
+		width: initial;
+	}
+
+	.col-md-how-to-use-img{
+		width : 100%;
+	}
+
+	#content-wrapper{
+	}
+
+	.feature{
+		display:none;
+	}
+	
+	.book-detail img.cover{
+		margin-bottom: 20px;
+	}
+	
+	div.col-md-12{
+		text-align:center;
+	}
+	
+	.col-md-class{
+		font-size:25px;
+	}
+	
+	.book-detail .courses li{
+		list-style: initial;
+	}
+	
+	.book-detail h2{
+		font-size:40px
+	}
+	
+	.book-detail img.cover{
+		float:initial;
+		margin-right : 0;
+	}
+	
+	.rent-list-table-image{
+		display:none;
+	}
+	
+	.rent-request-list-table-image{
+		display:none;
+	}
+	
+	.request-complete-main{
+		font-size:40px;
+	}
+	
+	.request-complete-sub{
+		font-size:25px;
+	}
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) {
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+}
+
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+}

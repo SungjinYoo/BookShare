@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="book-detail">
+  <div class="row">
+    <div class="col-md-12">
+      {% if object.image.url %}<img src="{{ object.image.url }}" class="cover"/>{% else %}<img src="http://placehold.it/300x400" class="cover"/>{% endif %}
+      <h2>{{ object.title }}</h2>
+      <p><p class="point-count">{{ object.point }}</p>&nbsp 포인트 소비</p>
+      {% if object.any_availiable_stock %}
+      <form method="post" action="{% url 'books:book-rent-request' %}">
+	{% csrf_token %}
+	{{ rent_request_form }}
+	<p>재고가 있습니다! <label><button class="btn btn-sm btn-primary">대여 요청하기</button> <input type="submit" /></label></p>
+      </form>
+      {% else %}
+      <p>재고가 없습니다.</p>
+      <p>나중에 다시 이용해주세요.</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="col-md-class">이 책을 사용하는 수업들</h3>
+      <div class="courses">
+	<ul>
+	  {% if object.courses.all %}
+	  {% for course in object.courses.all %}
+	  <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
+	  {% endfor %}
+	</ul>
+	{% else %}
+	<p>no course</p>
+	{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

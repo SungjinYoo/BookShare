@@ -7,12 +7,12 @@ from django.utils import timezone
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, user_id, password=None, **extra_fields):
+    def create_user(self, user_id, name, password=None, **extra_fields):
         """
         Creates and saves a User with the given email and password.
         """
         now = timezone.now()
-        user = self.model(user_id=user_id,
+        user = self.model(user_id = user_id, name = name,
                           is_staff=False, is_active=True, is_superuser=False,
                           last_login=now, date_joined=now, **extra_fields)
 
@@ -20,8 +20,8 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, user_id, password, **extra_fields):
-        u = self.create_user(user_id, password, **extra_fields)
+    def create_superuser(self, user_id, name, password, **extra_fields):
+        u = self.create_user(user_id, name, password, **extra_fields)
         u.is_staff = True
         u.is_active = True
         u.is_superuser = True
@@ -38,7 +38,7 @@ class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
         (FEMALE, u'여')
     )
 
-    username = models.CharField(_(u'아이디'), 
+    user_id = models.CharField(_(u'아이디'), 
                                max_length=15, 
                                help_text=_(u'사용자 아이디'),
                                unique=True,
@@ -71,7 +71,8 @@ class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
     age = models.IntegerField(_(u'나이'), blank=True, null=True)
     objects = UserManager()
     REQUIRED_FIELDS = ['name']
-
+    USERNAME_FIELD = 'user_id'
+    
     class Meta:
         verbose_name = _(u'사용자')
         verbose_name_plural = _(u'사용자')
@@ -91,3 +92,17 @@ class User(BookShareAbstractUser):
         verbose_name = _(u'서비스 유저')
         verbose_name_plural = _(u'서비스 유저들')
         swappable = 'AUTH_USER_MODEL'
+
+    points = models.IntegerField(default=0)
+
+    def ensure_points(self, points):
+        assert self.points >= points, "포인트가 부족합니다"
+
+    def get_points(self, points):
+        assert points > 0, "포인트는 0 이하로 떨어질 수 없습니다"
+        self.points += points
+
+    def lose_points(self, points):
+        assert points > 0, "포인트가 0 이하로 떨어질 수 없습니다"
+        self.ensure_points(points)
+        self.points -= points

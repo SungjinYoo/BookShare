@@ -1,0 +1,41 @@
+{% extends "bookshare/mypage_base.html" %}
+
+{% load templatetags %}
+
+{% block onload_script %}
+$("#rent-list-table").find("a.btn-request-return").click(function(){
+var pk = $(this).attr("id");
+$("#id_stock").val(pk);
+$("#request-return-form").submit();
+});
+{% endblock %}
+
+{% block title %}대여 현황 보기{% endblock %}
+
+{% block inner-content %}
+<form id="request-return-form" method="post" action="{% url 'books:book-return-request' %}">
+  {% csrf_token %}
+  {{ return_request_form }}
+</form>
+<table id="rent-list-table" class="table table-striped">
+  <thead>
+    <tr>
+      <th class="rent-list-table-image">표지</th>
+      <th>제목</th>
+      <th>대여일</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for rent in object_list %}
+    <tr>
+      <td class="rent-list-table-image">{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
+      <td>{{ rent.book.title }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan=3>No result</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

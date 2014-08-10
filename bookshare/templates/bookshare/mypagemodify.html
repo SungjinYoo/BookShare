@@ -1,0 +1,50 @@
+{% extends "bookshare/mypage_base.html" %}
+
+{% block title %}마이페이지{% endblock %}
+
+{% block inner-content %}
+<div class="signup-screen">
+    <h2 class="small-title">개인정보 수정</h2>
+    
+    <div class="signup-form">
+        <form action="/me/modify" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control signup-field" value="{{ user.user_id }}" id="signup-id" name="user_id" readonly="readonly">
+                    <label class="input-field-icon fui-lock" for="user_id"></label>
+                    </div>
+            
+            <div class="form-group">
+                <input type="text" class="form-control signup-field" value="{{ user.name }}" id="signup-name" name="user_name" readonly="readonly">
+                    <label class="input-field-icon fui-lock" for="user_name"></label>
+                    </div>
+            <div class="form-group{% if errors.password or error_num == 0 %} has-error{% endif %}">
+                <input type="password" class="form-control signup-field" value="" placeholder="Password Origin" id="password-before" name="password">
+                    <label class="input-field-icon fui-user" for="password"></label>
+                    </div>
+            
+            <div class="form-group{% if errors.password_modify %} has-error{% endif %}">
+                <input type="password" class="form-control signup-field" value="" placeholder="Password New ( 4자 이상 적어주세요 )" id="signup-password" name="password_modify">
+                    <label class="input-field-icon fui-user" for="password_modify"></label>
+                    </div>
+            
+            <div class="form-group{% if errors.password_modify_confirm %} has-error{% endif %}">
+                <input type="password" class="form-control signup-field" value="" placeholder="Password Confirm ( 패스워드를 한번 더 적어주세요 )" id="signup-password-confirm" name="password_modify_confirm" >
+                    <label class="input-field-icon fui-user" for="password_modify_confirm"></label>
+                    </div>
+            
+            <div class="form-group">
+                <input type="text" class="form-control signup-field" value="{{ user.sex }}" placeholder="sex" id="signup-sex" name="sex" readonly="readonly">
+                    <label class="input-field-icon fui-lock" for="sex"></label>
+                    </div>
+            
+            <div class="form-group{% if errors.email %} has-error{% endif %}">
+                <input type="text" class="form-control signup-field" value="{{ user.email }}" placeholder="Email" id="signup-email" name="email">
+                    <label class="input-field-icon fui-user" for="email"></label>
+                    </div>
+            
+            <button class="btn btn-primary btn-lg btn-block signup-button">Change</button> 
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
+{% endblock %}

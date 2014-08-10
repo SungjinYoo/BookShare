@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ book.title }}</h2>
+<h3>Information</h3>
+<dl>
+    <dt>ISBN</dt><dd>{{ book.isbn }}</dd>
+</dl>
+
+<h3>Courses</h3>
+{% if book.courses.all %}
+<ul>
+    {% for course in book.courses.all %}
+    <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>no course</p>
+{% endif %}
+
+<h3>Stock</h3>
+
+{% if book.available_stock %}
+<p>
+    Available! <a href="{% url 'core:request_rent' %}">Request Rent</a>
+</p>
+{% else %}
+<p>out of stock</p>
+{% endif %}
+
+<a href="{% url 'books:index' %}">list</a>
+{% endblock %}

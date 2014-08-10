@@ -1,0 +1,54 @@
+{% extends "bookshare/mypage_base.html" %}
+
+{% load templatetags %}
+
+{% block onload_script %}
+$("#rent-request-table").find("a.btn-cancel-rent-request").click(function(){
+var pk = $(this).attr("id");
+$("#id_rent_request").val(pk);
+$("#cancel-rent-request-form").submit();
+});
+{% endblock %}
+
+{% block title %}신청현황보기{% endblock %}
+
+{% block inner-content %}
+<form id="cancel-rent-request-form" method="post" action="{% url 'books:book-cancel-rent-request' %}">
+  {% csrf_token %}
+  {{ cancel_rent_request_form }}
+</form>
+
+<table id="rent-request-table" class="table table-striped">
+  <thead>
+    <tr>
+      <th class="rent-request-list-table-image">표지</th>
+      <th>제목</th>
+      <th>대여 신청일</th>
+      <th>대여신청철회</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if object_list %}
+    {% for rent in object_list %}
+    <tr>
+      <td class="rent-request-list-table-image">{% if rent.book.image %}<img class="book-cover" src="{{ rent.book.image.url}}" />{% else %}<img src="default.image.jpg" />{% endif %}</td>
+      <td>{{ rent.book.title }}</td>
+      <td>{{ rent.added_at|full_date }}</td>
+      
+      
+      {% if rent.status == "pending" %}
+      <td><a id="{{ rent.pk }}" class="btn btn-sm btn-danger btn-cancel-rent-request">철회</a></td>
+      {% else %}
+      <td><button class="btn btn-sm btn-success">대여완료</button></td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+      <td colspan=4>No result</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{{ objects }}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "console/base.html" %}
+
+{% block title %}대여요청 현황 보기{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>대여요청승인</h2>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>대여자</th>
+                    <th>책제목</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ rent_request.actor.name }}</td>
+                    <td>{{ rent_request.book }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="text-center">
+            <form method="post" action="{% url 'console:process_rent_req' rent_request.id %}">
+                {% csrf_token %}
+                {{ rent_request_form }}
+                <label><button class="btn btn-sm btn-primary">승인</button> <input type="submit" /></label>
+                <a href="javascript: history.go(-1);" class="btn btn-sm btn-default">취소</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

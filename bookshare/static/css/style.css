@@ -1,12 +1,126 @@
+﻿@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+
+/* common */
+.ellipsis { 
+    width: 150px; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden; 
+}
+
+.display-block{
+    display: block;
+}
+
+.cursor {
+    cursor:pointer;
+}
+
+label input[type="submit"] {
+    display: none;
+}
+
+section.feature {
+    margin-bottom: 2em;
+}
+
+html, body {
+	background: #F8F8F8;
+    height:100%;
+    font-family: 'Nanum Gothic';﻿
+}
+
+footer {
+    height:60px;
+}
+
+
+p {
+    font-family: 'Nanum Myeongjo';﻿
+}
+
 .horizontal-radio{
     display: inline-block;
     margin-right: 20px;
 }
 
+border-right-0{
+    border-right: 0px;
+}
 
+
+
+
+/* navigation bar */
+#navbar-wrapper {
+    max-width:960px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.navbar {
+    border-radius:0px;
+}
+
+.navbar-inverse .navbar-form .form-group .input-group .form-control {
+    color:#FFFFFF;
+    border-color:#FFFFFF;
+    border-width:1px;
+    background-color:#34495e;
+}
+
+.navbar-inverse .navbar-form .input-group-btn .btn {
+    border-color:#FFFFFF;
+    border-width:1px;
+    border-left-width:0px;
+    background-color:#34495e;
+    color:#FFFFFF;
+}
+
+.navbar-inverse .navbar-form .form-control::-webkit-input-placeholder { /* WebKit browsers */
+    color:#DDDDDD;
+}
+.navbar-inverse .navbar-form .form-control:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:#FFFFFF;
+    opacity:  1;
+}
+.navbar-inverse .navbar-form .form-control::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:#FFFFFF;
+    opacity:  1;
+}
+.navbar-inverse .navbar-form .form-control:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:#FFFFFF;
+}
+
+/* contents */
 #content-wrapper{
     min-width: 400px;
-    width: 100%;
+    max-width: 960px;
+    margin-left:auto;
+    margin-right:auto;
+    min-height:calc(100% - 83px);
+    padding-bottom:30px;
+    margin-bottom:-60px;
+}
+#content-wrapper:after{
+    content:"";
+    display:block;
+    height:60px;
+}
+
+
+
+
+/* main page */
+.mini-slogan {
+    font-size:20px;
+    margin:0px;
+}
+.main-slogan {
+    font-size:53px;
+    margin-top:0px;
 }
 
 
@@ -46,8 +160,178 @@
 /* signup */
 .signup-screen{
     background-color: #edeff1;
-    max-width: 500px;
+    max-width: 600px;
     padding: 20px;
     margin: auto;
     border-radius: 6px;
+}
+
+.book-detail h2 {
+    margin-top: 0;
+}
+
+.book-detail img.cover {
+    float: left;
+    margin-right: 15px;
+}
+
+.book-detail .courses li {
+    list-style: none;
+}
+
+.book-detail img {
+	width:300px;
+	height:400px;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    color:#777777;
+}
+
+/* book_search */
+.link-set {
+    margin-top:30px;
+    margin-bottom:15px;
+}
+
+#search-list img {
+	width:180px;
+	height:260px;
+}
+
+
+/* table */
+.table {
+    margin-bottom:0;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    padding:9px;
+    text-align:center;
+}
+
+.table > tbody > tr > td.table-head {
+    width:25%;
+}
+.table > tbody > tr > td.table-head,
+.table > tbody > tr > td.table-head + td {
+    padding:9px 20px;
+    text-align:left;
+}
+
+
+
+.small-title {
+    font-size:30px;
+    margin-top:0px;
+    margin-bottom:20px;
+}
+
+/* my page */
+.table tbody tr td {
+    vertical-align: middle;
+}
+
+
+/* mypage modify */
+.error-msg-p{
+	text-align: right;
+	color: red;
+	font-size: 12px;
+}
+.book-cover {
+    width: 180px;
+    height: 260px;
+}
+
+.signin-error-msg{
+    font-size: 14px;
+    color: red;
+    text-align: center;
+}
+
+
+/* book-list */
+#book-list{
+    position:relative;
+}
+
+.book-list-item {
+    display: inline-block;
+    width: 220px;
+    margin: 6px;
+    padding: 8px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 2px #ccc;
+}
+
+.book-list-item h4 {
+    font-size: 0.85em;
+    line-height: 1.2;
+    margin-bottom: 6px;
+}
+
+div.image-wrapper .image{
+    width: 100%;
+}
+
+div.image-wrapper .out-of-stock{
+    opacity: 0.3;
+}
+
+div.title-wrapper {
+    padding: 4px 0px 4px 0px;
+}
+
+div.title-wrapper > p{
+    text-align: center;
+    font-size: 14px;
+    margin: 0px;
+}
+
+div.course-wrapper .label{
+    font-size: 12px;
+}
+
+
+
+/* how it works */
+
+.how-it-works .step {
+    font-size: 1.1em;
+}
+
+.how-it-works .step h3 {
+    font-size: 1.5em;
+    font-weight: normal;
+    margin-bottom: 1.2em;
+}
+
+.how-it-works .step p {
+    font-size: 1em;
+}
+
+.how-it-works .row {
+    margin-bottom: 2em;
+}
+
+.how-it-works .row.final {
+    padding: 5em;
+    height: 15em;
+}
+
+.how-it-works img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.point-count{
+	display:inline;
+	color:red;
 }
