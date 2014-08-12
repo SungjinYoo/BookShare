@@ -6,8 +6,8 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', "isbn")
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'year', 'semester', 'department', )
-    list_filter = ('department', 'year', )
+    list_display = ('title', 'year', )
+    list_filter = ('year', )
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Course, CourseAdmin)
