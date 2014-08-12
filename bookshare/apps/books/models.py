@@ -14,7 +14,7 @@ class Course(models.Model):
     year = models.IntegerField()
     
     def __unicode__(self):
-        return u"{} - {} {}".format(self.title, self.year)
+        return u"{} - {}".format(self.title, self.year)
 
 class Book(models.Model):
     courses = models.ManyToManyField(Course)
