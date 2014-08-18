@@ -1,11 +1,10 @@
 {% extends "console/base.html" %}
 
 {% block content %}
-<h1>Admin Console</h1>
-<h2>Actions</h2>
+<h2>관리자 작업</h2>
 <ul>
-    <li><a href="{% url 'console:books' %}">Deliver stock</a></li>
-    <li><a href="{% url 'console:rent_request_list' %}">Process rent request</a></li>
-    <li><a href="{% url 'console:search_users' %}">Process Return</a></li>
+    <li><a href="{% url 'console:books' %}">재고 추가하기</a></li>
+    <li><a href="{% url 'console:rent_request_list' %}">도서 대여요청 승인</a></li>
+    <li><a href="{% url 'console:search_users' %}">도서 반납</a></li>
 </ul>
 {% endblock %}
