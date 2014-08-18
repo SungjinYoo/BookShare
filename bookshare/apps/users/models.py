@@ -85,7 +85,7 @@ class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
         return self.name
 
     def __unicode__(self):
-        return self.email
+        return u"{} ({})".format(self.name, self.phone_number)
 
 class User(BookShareAbstractUser):
     class Meta:

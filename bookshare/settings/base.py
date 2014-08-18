@@ -104,4 +104,6 @@ AUTH_USER_MODEL = 'users.User'
 
 MEDIA_ROOT = PROJECT_ROOT / 'media'
 
+STATIC_ROOT = PROJECT_ROOT / '..' / 'static'
+
 MEDIA_URL = '/media/'
