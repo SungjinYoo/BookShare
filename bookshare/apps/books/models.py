@@ -4,8 +4,10 @@ import itertools
 
 from django.db import models
 from django.conf import settings
+from django.core.files import File
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
+import requests
 
 isbn_validator = RegexValidator(regex='^\d{13}$', message='Length has to be 13', code='nomatch')
 
@@ -29,14 +31,14 @@ class Course(models.Model):
                                 blank=True,
                                 max_length=10,
                                 choices=SEMESTERS,
-                                default=FIRST)
+                                default=SECOND)
     
 
     def __unicode__(self):
         return u"{} - {} {}".format(self.title, self.year, self.semester)
 
 class Book(models.Model):
-    courses = models.ManyToManyField(Course)
+    courses = models.ManyToManyField(Course, blank=True)
     title = models.CharField(max_length=80)
     isbn = models.CharField(validators=[isbn_validator], max_length=13)
     
@@ -69,3 +71,10 @@ class Book(models.Model):
 
     def point(self):
         return 1
+
+def add_book(isbn, cover_url):
+    isbn_resp = requests.get()
+    cover_url_resp = requests.get()
+
+    Book(isbn=isbn, title=isbn.content.title, image=File(cover_url_resp.raw)).save()
+
