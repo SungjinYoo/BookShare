@@ -7,7 +7,6 @@
 \.#*
 .DS_Store
 pip-log.txt
-static/
 media/
 # Sphinx documentation
 docs/_build/
