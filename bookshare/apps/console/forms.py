@@ -1,3 +1,5 @@
+#encoding=utf8
+
 from django.contrib.auth import get_user_model
 from django import forms
 
@@ -21,3 +23,9 @@ class ReturnProcessForm(forms.Form):
     stock = forms.ModelChoiceField(widget=forms.HiddenInput(),
                                    queryset=models.Stock.objects.all())
     condition = forms.ChoiceField(choices=models.Stock.CONDITIONS)
+
+
+class BookAddForm(forms.Form):
+    isbn = forms.CharField(label="ISBN")
+    title = forms.CharField(label="제목")
+    cover_url = forms.URLField(label="표지 이미지 URL")

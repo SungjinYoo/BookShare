@@ -112,3 +112,21 @@ class RentRequestListView(ListView):
 class BookListView(ListView):
     template_name = 'console/deliver_stock.html'
     model = books_models.Book
+
+def add_book(request):
+    form = forms.BookAddForm(request.POST or None)
+
+    context = {
+        "form": form
+    }
+    if request.method == "GET":
+        return render(request, 'console/add_book.html', context)
+
+    if request.method == "POST":
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            isbn = form.cleaned_data["isbn"]
+            cover_url = form.cleaned_data["cover_url"]
+
+            books_models.add_book(title, isbn, cover_url)
+            return redirect(reverse('console:index'))

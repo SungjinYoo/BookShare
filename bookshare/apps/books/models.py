@@ -1,10 +1,12 @@
 #-*- coding:utf-8 -*-
 
 import itertools
+from urlparse import urlparse 
 
 from django.db import models
 from django.conf import settings
 from django.core.files import File
+from django.core.files.base import ContentFile
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 import requests
@@ -72,9 +74,14 @@ class Book(models.Model):
     def point(self):
         return 1
 
-def add_book(isbn, cover_url):
-    isbn_resp = requests.get()
-    cover_url_resp = requests.get()
+def add_book(title, isbn, cover_url):
+    cover_url_resp = requests.get(cover_url, stream=True)
+    if cover_url_resp.ok and "image" in cover_url_resp.headers["content-type"]:
+        book = Book(isbn=isbn, title=title)
 
-    Book(isbn=isbn, title=isbn.content.title, image=File(cover_url_resp.raw)).save()
+        o = urlparse(cover_url_resp.request.url)
+        filename = o.path.split("/")[-1]
+
+        book.image.save(filename, ContentFile(cover_url_resp.content))
+        book.save()
 
