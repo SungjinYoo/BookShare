@@ -1,14 +1,14 @@
 {% extends "console/base.html" %}
 {% load bootstrap3 %}
 
-{% block title %}재고 추가{% endblock %}
+{% block title %}도서 등록하기{% endblock %}
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="/static/css/console.book.css">
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <h2 class="text-center">도서 추가</h2>
+        <h2 class="text-center">도서 등록하기</h2>
         <div class="row">
             <div class="col-md-8">
                 <form method="post" action="{% url 'console:add_book' %}" class="add-book">
@@ -16,7 +16,7 @@
                     {% bootstrap_form form %}
                     {% buttons %}
                         <button type="submit" class="btn btn-primary">
-                            {% bootstrap_icon "plus" %} 도서 추가하기
+                            {% bootstrap_icon "plus" %} 등록하기
                         </button>
                         <a href="javascript: history.go(-1);" class="btn btn-default">취소</a>
                     {% endbuttons %}

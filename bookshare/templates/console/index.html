@@ -3,8 +3,8 @@
 {% block content %}
 <h2>관리자 작업</h2>
 <ul>
+    <li><a href="{% url 'console:add_book' %}">도서 등록하기</a></li>
     <li><a href="{% url 'console:books' %}">재고 추가하기</a></li>
-    <li><a href="{% url 'console:add_book' %}">도서 추가</a></li>
     <li><a href="{% url 'console:rent_request_list' %}">도서 대여요청 승인</a></li>
     <li><a href="{% url 'console:search_users' %}">도서 반납</a></li>
 </ul>
