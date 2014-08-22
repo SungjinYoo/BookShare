@@ -22,7 +22,7 @@ class UserValidationForm(forms.Form):
 
 def index(request):
     context = {
-        "recent_books": Book.objects.order_by("-id")[:6]
+        "recent_books": Book.objects.order_by("-id")[:4]
     }
     return render(request, 'bookshare/index.html', context)
 
