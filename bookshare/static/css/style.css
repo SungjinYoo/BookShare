@@ -269,6 +269,10 @@ border-right-0{
     box-shadow: 1px 1px 2px #ccc;
 }
 
+.books .book-wrapper {
+    height: 300px;
+}
+
 .masonry .book-list-item {
     width: 220px;
     margin: 6px;
