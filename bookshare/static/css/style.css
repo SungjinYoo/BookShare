@@ -263,12 +263,15 @@ border-right-0{
 
 .book-list-item {
     display: inline-block;
-    width: 220px;
-    margin: 6px;
     padding: 8px;
     border-radius: 2px;
     background-color: #ffffff;
     box-shadow: 1px 1px 2px #ccc;
+}
+
+.masonry .book-list-item {
+    width: 220px;
+    margin: 6px;
 }
 
 .book-list-item h4 {

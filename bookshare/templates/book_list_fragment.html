@@ -1,0 +1,17 @@
+<div id="{{ book.pk }}" class="book-list-item cursor">
+  <div class="image-wrapper">
+    <img class="image {% if not book.any_availiable_stock %}out-of-stock{% endif %}" src="{% if book.image %}{{ book.image.url}}{% else %}src-to-default{% endif %}" />
+    </div>
+  <h4>{{ book.title }}
+    {% if book.any_availiable_stock %}
+    <span class="label label-success">대출 가능</span>
+    {% else %}
+    <span class="label label-danger">재고 없음</span>
+    {% endif %}
+  </h4>
+  <div class="course-wrapper">
+    {% for course in book.courses.all %}
+    <span class="label label-default ellipsis display-block">{{ course.title }} - {{ course.year }} {{ course.semester }}</span>
+    {% endfor %}
+  </div>
+</div>

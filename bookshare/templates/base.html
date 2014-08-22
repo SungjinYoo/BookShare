@@ -52,7 +52,7 @@
                         <li><a href="{% url 'signin' %}">로그인</a></li>
                         {% endif %}
                     </ul>
-                    <form class="navbar-form navbar-right" action="/books/search/" role="search">
+                    <form class="navbar-form navbar-right" action="{% url 'books:book-list' %}" role="search">
                         <div class="form-group">
                             <div class="input-group">
                                 <input class="form-control" name="title" type="search" placeholder="교과서 찾기" />

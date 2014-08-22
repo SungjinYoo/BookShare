@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirec
 
 from django.contrib.auth import authenticate, login, logout
 from apps.users.models import User
+from apps.books.models import Book
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django import forms
@@ -20,7 +21,10 @@ class UserValidationForm(forms.Form):
 
 
 def index(request):
-    return render(request, 'bookshare/index.html')
+    context = {
+        "recent_books": Book.objects.order_by("-id")[:6]
+    }
+    return render(request, 'bookshare/index.html', context)
 
 def signout(request):
     logout(request)
