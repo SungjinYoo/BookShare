@@ -35,7 +35,7 @@
 <h4>최근에 등록된 책들 <a href="{% url 'books:book-list' %}"><span class="label label-default">더보기</span></a></h4>
 <section class="recent books row">
 {% for book in recent_books %}
-    <div class="col-md-3">
+    <div class="col-xs-6 col-sm-3">
     {% include 'book_list_fragment.html' %}
     </div>
 {% endfor %}
