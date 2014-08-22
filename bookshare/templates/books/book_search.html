@@ -9,11 +9,6 @@
 // add click event for each 
 var book_list_item = $(".book-list-item");
 
-book_list_item.click(function(){
-    var pk = $(this).attr('id');
-    location.href="/books/" + pk +"/";
-});
-
 if(book_list_item)
 {
     var column_width = book_list_item.outerWidth(true);

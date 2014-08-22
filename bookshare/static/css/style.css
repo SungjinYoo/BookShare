@@ -274,6 +274,10 @@ border-right-0{
     margin: 6px;
 }
 
+.book-list-item a {
+    color: inherit;
+}
+
 .book-list-item h4 {
     font-size: 0.85em;
     line-height: 1.2;
