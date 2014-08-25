@@ -15,11 +15,6 @@
                     <td>{{ user.name }}</td>
                 </tr>
                 <tr>
-                    <td class="table-head">성별(Gender)</td>
-                    <td>{% if user.sex == 'M' %}남{% else %}여{% endif %}</td>
-                </tr>
-                
-                <tr>
                     <td class="table-head">이메일(Email)</td>
                     <td>{% if user.email %}{{ user.email }}{% else %}없음{% endif %}</td>
                 </tr>
