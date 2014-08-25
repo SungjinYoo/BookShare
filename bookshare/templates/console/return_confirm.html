@@ -22,7 +22,7 @@
         <div class="text-center">
             <form method="post" action="{% url 'console:process_return_request' %}">
                 {% csrf_token %}
-		<label for="id_condition">Condition:</label>
+		<label for="id_condition">보관상태:</label>
 		<select id="id_condition" name="condition">
 		  {% for condition in conditions %}
 		  <option value="{{ condition.0 }}">{{ condition.1 }}</option>
