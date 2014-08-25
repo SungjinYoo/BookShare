@@ -113,6 +113,10 @@ class BookListView(ListView):
     template_name = 'console/deliver_stock.html'
     model = books_models.Book
 
+class RentBookListView(ListView):
+    template_name = 'console/rent_books.html'
+    queryset = books_models.Book.objects.available
+
 def add_book(request):
     form = forms.BookAddForm(request.POST or None)
 
@@ -129,4 +133,24 @@ def add_book(request):
             cover_url = form.cleaned_data["cover_url"]
 
             books_models.add_book(title, isbn, cover_url)
+            return redirect(reverse('console:index'))
+
+def rent_book(request, book=None):
+    form = forms.BookRentForm(request.POST or None, initial={"book" : book})
+
+    context = {
+        "form": form
+    }
+    if request.method == "GET":
+        book = books_models.Book.objects.get(id=book)
+        context["book"] = book
+        context["stock"] = book.any_availiable_stock()
+        return render(request, 'console/rent_book.html', context)
+
+    if request.method == "POST":
+        if form.is_valid():
+            book = form.cleaned_data["book"]
+            user = form.cleaned_data["user"]
+            
+            models.rent_book(user, book)
             return redirect(reverse('console:index'))

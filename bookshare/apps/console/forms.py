@@ -29,3 +29,9 @@ class BookAddForm(forms.Form):
     isbn = forms.CharField(label="ISBN")
     title = forms.CharField(label="제목")
     cover_url = forms.URLField(label="표지 이미지 URL")
+
+class BookRentForm(forms.Form):
+    book = forms.ModelChoiceField(widget=forms.HiddenInput(),
+                                  queryset=books.models.Book.objects.all())
+    user = forms.ModelChoiceField(label="대여자",
+                                  queryset=users_models.User.objects.all())

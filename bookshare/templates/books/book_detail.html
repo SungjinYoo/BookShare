@@ -6,16 +6,11 @@
     <div class="col-md-12">
       {% if object.image.url %}<img src="{{ object.image.url }}" class="cover"/>{% else %}<img src="http://placehold.it/300x400" class="cover"/>{% endif %}
       <h2>{{ object.title }}</h2>
-      <p><p class="point-count">{{ object.point }}</p>&nbsp 포인트 소비</p>
+      <p><span class="point-count">{{ object.point }}</span> 포인트 소비</p>
       {% if object.any_availiable_stock %}
-      <form method="post" action="{% url 'books:book-rent-request' %}">
-	{% csrf_token %}
-	{{ rent_request_form }}
-	<p>재고가 있습니다! <label><button class="btn btn-sm btn-primary">대여 요청하기</button> <input type="submit" /></label></p>
-      </form>
+    	<p>재고가 있습니다! </p>
       {% else %}
-      <p>재고가 없습니다.</p>
-      <p>나중에 다시 이용해주세요.</p>
+      <p>재고가 없습니다. 나중에 다시 이용해주세요.</p>
       {% endif %}
     </div>
   </div>

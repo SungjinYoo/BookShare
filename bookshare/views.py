@@ -28,7 +28,7 @@ def index(request):
 
 def signout(request):
     logout(request)
-    return render(request, 'bookshare/index.html')
+    return HttpResponseRedirect("/")
 
 class SignOutView(TemplateView) :
     def get(self, request):

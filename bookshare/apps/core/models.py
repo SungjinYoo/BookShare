@@ -139,26 +139,24 @@ class ReturnRequest(RequestMixin):
 class ReclaimRequest(RequestMixin):
     stock = models.ForeignKey(Stock)
 
-def make_rent_request(actor, book):
-    # check for user have multiple request for same book
-    assert not RentRequest.objects.pending().filter(actor=actor, book=book), "같은 책에 대해서는 한 번만 대여 신청을 할 수 있습니다"
+@transaction.atomic
+def rent_book(actor, book):
+    ### precondition
+    actor.ensure_points(book.point())
+    assert book.any_availiable_stock(), "대여 가능한 물품이 존재하지 않습니다"
 
-    RentRequest.objects.create(actor=actor, book=book).save()
+    stock = book.any_availiable_stock()
+    stock.renter = actor
+    stock.status = Stock.RENTED
+    stock.save()
 
-def cancel_rent_request(actor, rent_request):
-    assert rent_request.actor == actor, "신청자가 일치하지 않습니다"
-    assert rent_request.status == RentRequest.PENDING, "이미 처리되었습니다"
+    StockHistory.objects.create(actor=actor,
+                                stock=stock,
+                                action=StockHistory.RENT,
+                                condition=stock.condition).save()
 
-    rent_request.status = RentRequest.CANCELED
-    rent_request.save()
-
-def make_return_request(actor, stock):
-    assert not ReturnRequest.objects.pending().filter(actor=actor, stock=stock), "같은 책에 대해서는 한 번만 대여 신청을 할 수 있습니다"
-    ReturnRequest.objects.create(actor=actor, stock=stock).save()
-
-def cancel_return_request(actor, return_request):
-    assert return_request.actor == actor, "신청자가 일치하지 않습니다"
-    return_request.delete()
+    actor.lose_points(book.point())
+    actor.save()
 
 @transaction.atomic
 def process_rent_request(request):
@@ -195,6 +193,8 @@ def return_stock(actor, stock, condition):
                                 stock=stock,
                                 action=StockHistory.RETURN,
                                 condition=condition).save()
+    actor.get_points(stock.book.point())
+    actor.save()
 
 @transaction.atomic
 def deliver_stock(actor, book, condition):

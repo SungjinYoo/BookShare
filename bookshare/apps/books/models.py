@@ -39,6 +39,11 @@ class Course(models.Model):
     def __unicode__(self):
         return u"{} - {} {}".format(self.title, self.year, self.semester)
 
+class BookManager(models.Manager):
+    def available(self, *args, **kwargs):
+        qs = self.get_query_set().filter(*args, **kwargs)
+        return qs.exclude(stock=None)
+
 class Book(models.Model):
     courses = models.ManyToManyField(Course, blank=True)
     title = models.CharField(max_length=80)
@@ -47,15 +52,17 @@ class Book(models.Model):
     # set upload_to in initializer
     image = models.ImageField(upload_to='images/books/')
     
+    objects = BookManager()
+    
     def __unicode__(self):
         return self.title
 
     def available_stock(self):
-        return self.stock_set.available().order_by('condition').all()
+        return self.stock_set.available().order_by('condition')
 
     def any_availiable_stock(self):
         try:
-            return list(self.available_stock()).pop()
+            return self.available_stock()[0]
         except IndexError:
             return None
 

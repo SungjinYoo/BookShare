@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from bookshare.views import (MyPageView, MyPageViewModify, MyRentRequestListView, MyRentListView,
+from bookshare.views import (MyPageView, MyPageViewModify, MyRentListView,
                              MyDonateListView, SignInView, SignUpView, SignOutView, how_it_works)
 from bookshare.apps.core import urls
 from bookshare.apps.console import urls as console_urls
@@ -19,7 +19,6 @@ urlpatterns = patterns('',
    url(r'^signout/$', SignOutView.as_view(), name="signout"),
    url(r'^me/$', MyPageView.as_view(), name="mypage"),
    url(r'^me/modify$', MyPageViewModify.as_view(), name="mypage-modify"),
-   url(r'^my/rent\-requests/$', MyRentRequestListView.as_view(), name='my-rent-requests'),
    url(r'^my/rents/$', MyRentListView.as_view()),
    url(r'^my/donates/$', MyDonateListView.as_view()),
 
