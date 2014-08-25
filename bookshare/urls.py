@@ -27,7 +27,11 @@ urlpatterns = patterns('',
    url(r'^test/', include(urls.urlpatterns, namespace="core")),
    url(r'^books/', include('bookshare.apps.books.urls', namespace="books")),
    url(r'^how-it-works$', how_it_works, name="how-it-works"),
-   url(r'^console', include(console_urls.urlpatterns, namespace="console")),
-   url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+   url(r'^console', include(console_urls.urlpatterns, namespace="console"))
 )
+
+if settings.DEBUG:
+   urlpatterns += patterns('',
+      url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}), 
+   )
 
