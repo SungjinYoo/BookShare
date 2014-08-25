@@ -37,6 +37,21 @@ if(book_list_item)
         {% include 'book_list_fragment.html' %}
       {% endfor %}
     </div>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">이전</a>
+                {% endif %}
+                <span class="page-current">
+                    {{ page_obj.paginator.num_pages }} 페이지 중 {{ page_obj.number }} 1번째.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">다음</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

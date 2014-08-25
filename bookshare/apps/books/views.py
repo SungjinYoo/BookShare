@@ -30,6 +30,7 @@ class BookDetailView(DetailView):
 
 class BookSearchView(ListView):
     template_name = 'books/book_search.html'
+    paginate_by = 20  #and that's it !!
 
     def get_queryset(self):
         title = self.request.GET.get('title', '')
