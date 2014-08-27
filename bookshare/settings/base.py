@@ -44,6 +44,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'tastypie',
     'bootstrap3',
+    'south',
 ]
 
 BOOKSHARE_APPS = [
