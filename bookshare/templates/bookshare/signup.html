@@ -1,37 +1,21 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 
 {% block title %}회원가입{% endblock %}
 
 {% block content %} 
 <div class="signup-screen">
+  <h2>가입하기</h2>
   <div class="signup-form">
-    <form action="/signup/" method="post">
-      <div class="form-group{% if errors.user_id %} has-error{% endif %}">
-	<input type="text" class="form-control signup-field" value="" placeholder="Enter your id ( 최소  4자, 최대  15자 )" id="signup-id" name="user_id">
-	<label class="input-field-icon fui-user" for="user_id"></label>
-      </div>
-      <div class="form-group{% if errors.name %} has-error{% endif %}">
-	<input type="text" class="form-control signup-field" value="" placeholder="Enter your name ( 최소 1자, 최대 15자 )" id="signup-name" name="name">
-	<label class="input-field-icon fui-user" for="name"></label>
-      </div>
-      <div class="form-group{% if errors.password %} has-error{% endif %}">
-	<input type="password" class="form-control signup-field" value="" placeholder="Password ( 최소 4자 , 최대 128자 )" id="signup-password" name="password">
-	<label class="input-field-icon fui-lock" for="password"></label>
-      </div>
-      <div class="form-group{% if errors.password_confirm %} has-error{% endif %}">
-	<input type="password" class="form-control signup-field" value="" placeholder="Password Confirm" id="signup-password-confirm" name="password_confirm">
-	<label class="input-field-icon fui-lock" for="password-confirm"></label>
-      </div>
-      <div class="form-group{% if errors.email %} has-error{% endif %}">
-	<input type="text" class="form-control signup-field" value="" placeholder="Email" id="signup-email" name="email">
-	<label class="input-field-icon fui-mail" for="email"></label>
-	<!-- <label class="checkbox" for="mailing"> -->
-  <!--         <input type="checkbox" value="" id="mailing" data-toggle="checkbox" name="mailing"> -->
-	<!--   Join Mailing -->
-  <!--       </label> -->
-      </div>
-
-      <button class="btn btn-primary btn-lg btn-block signup-button">Signup</button>
+    <form method="post" action="{% url 'signup' %}">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+          <button type="submit" class="btn btn-primary">
+              {% bootstrap_icon "plus" %} 등록하기
+          </button>
+          <a href="javascript: history.go(-1);" class="btn btn-default">취소</a>
+      {% endbuttons %}
 			{{error_msg}}
       {% csrf_token %}
     </form>

@@ -69,11 +69,12 @@ class SignInView(TemplateView):
 
 
 class SignUpValidationForm(forms.Form):
-    user_id = forms.CharField(max_length=15, min_length=4)
-    name = forms.CharField(max_length=15, min_length=1)
-    password = forms.CharField(max_length=128, min_length=4)
-    password_confirm = forms.CharField(max_length=128, min_length=4)
-    email = forms.EmailField(max_length=255)
+    user_id = forms.CharField(label="학번", max_length=15, min_length=4)
+    name = forms.CharField(label="이름", max_length=15, min_length=1)
+    password = forms.CharField(label="비밀번호", max_length=128, min_length=4, widget=forms.PasswordInput())
+    password_confirm = forms.CharField(label="비밀번호 확인", max_length=128, min_length=4, widget=forms.PasswordInput())
+    email = forms.EmailField(label="이메일", max_length=255)
+    phone_number = forms.CharField(label="연락처", max_length=20)
 
     def clean(self):
         cleaned_data = super(SignUpValidationForm, self).clean()
@@ -101,7 +102,7 @@ class SignUpView(TemplateView):
     template_name = "bookshare/signup.html"
     error_msg = u"알수없는 오류가 발생하였습니다."
     def get(self, request):
-        return render(request, self.template_name)
+        return render(request, self.template_name, {'form': SignUpValidationForm()})
     def post(self, request, *args, **kwargs):
         form = SignUpValidationForm(request.POST)
         if form.is_valid():
@@ -115,7 +116,10 @@ class SignUpView(TemplateView):
                 self.error_msg = u"비밀번호가 서로 다릅니다."                
                 return render(request, self.template_name, {'error_msg':self.error_msg})
 
-            User.objects.create_user(user_id=user_id, name = name, email=email, password=password)
+            user_info = dict(**form.cleaned_data)
+            del user_info["password_confirm"]
+            User.objects.create_user(**user_info)
+
             user = authenticate(user_id=user_id, password=password)
             if user is not None:
                 if user.check_password(password):

@@ -19,12 +19,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
 
 def admin_register(model, user_admin):
-    try:
-        admin.site.register(model, user_admin)
-    except AlreadyRegistered:
-        admin.site.unregister(model)
-        admin.site.register(model, user_admin)
-
+    admin.site.register(model, user_admin)
+    
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -35,7 +31,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'user_id', 'sex') 
+        fields = ('email', 'user_id') 
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -83,13 +79,10 @@ class MyUserAdmin(UserAdmin):
 
     filter_horizontal = ()
     list_display = (
-        'user_id', 'name' ,'email', 'age', 'sex', 'date_joined', 'is_active' )
-    list_filter = ('sex',)
+        'user_id', 'name' ,'email', 'date_joined', 'is_active' )
 
     fieldsets = (
         (None, {'fields': ('email', 'user_id', 'password', 'phone_number',)}),
-        ('Personal info',
-         {'fields': ('sex', )}),
         ('Permissions', {'fields': ('is_active',)}),
         ('Important dates', {'fields': ('last_login', 'date_joined',)}),
         ('Points', {'fields': ('points',)}),

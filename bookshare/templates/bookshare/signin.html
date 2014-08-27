@@ -8,19 +8,18 @@
   <div class="signin-form">
     <form action="{% url 'signin' %}" method="post">
       <div class="form-group">
-	<input type="text" class="form-control signin-field" value="" placeholder="Enter your id" id="signin-name" name="user_id">
+	<input type="text" class="form-control signin-field" value="" placeholder="학번" id="signin-name" name="user_id">
 	<label class="input-field-icon fui-user" for="username"></label>
       </div>
       <div class="form-group">
-	<input type="password" class="form-control signin-field" value="" placeholder="Password" id="signin-password" name="password">
+	<input type="password" class="form-control signin-field" value="" placeholder="비밀번호" id="signin-password" name="password">
 	<label class="input-field-icon fui-lock" for="password"></label>
       </div>
 	  <p class="signin-error-msg">{{error_msg}}</p>
-      <button class="btn btn-primary btn-lg btn-block signin-button">Sign In</button>
-      <a class="signin-link btn btn-sm btn-block" href="/signup">Have not signed yet?</a>
-      <a class="signin-link btn btn-sm btn-block" href="/find">Lost your password?</a>
-      {% csrf_token %}
-      <input type="hidden" value="{{ next }}" name="next" />
+    <button class="btn btn-primary btn-lg btn-block signin-button">로그인</button>
+    <p class="text-center">여기를 눌러서 <a class="signin-link" href="/signup">가입하세요</a></p>
+    {% csrf_token %}
+    <input type="hidden" value="{{ next }}" name="next" />
     </form>
   </div>
 </div>

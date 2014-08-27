@@ -30,17 +30,9 @@ class UserManager(BaseUserManager):
 
 
 class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
-    MALE = 'M'
-    FEMALE = 'F'
-
-    MALE_FEMALE_CHOICES = (
-        (MALE, u'남'),
-        (FEMALE, u'여')
-    )
-
-    user_id = models.CharField(_(u'아이디'), 
-                               max_length=15, 
-                               help_text=_(u'사용자 아이디'),
+    user_id = models.CharField(_(u'학번'), 
+                               max_length=10, 
+                               help_text=_(u'학번'),
                                unique=True,
                                db_index=True)
     
@@ -48,7 +40,7 @@ class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
                                max_length=15, 
                                help_text=_(u'이름'))
     
-    email = models.EmailField(_('Email (ID)'),
+    email = models.EmailField(_('Email'),
                               max_length=255,
                               unique=True)
     
@@ -60,15 +52,9 @@ class BookShareAbstractUser(AbstractBaseUser, PermissionsMixin):
                                     help_text=_('Designates whether this user should be treated as'
                                                 'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    phone_number = models.CharField(_(u'전화번호'),
-                                    max_length=20,
-                                    null=True)
+    phone_number = models.CharField(_(u'연락처'),
+                                    max_length=20)
 
-    # detail profile
-    sex = models.CharField(_(u'성별'), max_length=1,
-                           choices=MALE_FEMALE_CHOICES,
-                           default='M')
-    age = models.IntegerField(_(u'나이'), blank=True, null=True)
     objects = UserManager()
     REQUIRED_FIELDS = ['name']
     USERNAME_FIELD = 'user_id'
