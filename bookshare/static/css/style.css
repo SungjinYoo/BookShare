@@ -3,11 +3,11 @@
 
 
 /* common */
-.ellipsis { 
-    width: 150px; 
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
-    overflow: hidden; 
+.ellipsis {
+    width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .display-block{
@@ -342,3 +342,8 @@ div.course-wrapper .label{
 	display:inline;
 	color:red;
 }
+
+.title {
+	font-size:24px;
+}
+

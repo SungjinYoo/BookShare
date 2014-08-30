@@ -198,3 +198,12 @@ def how_it_works(request):
     else :
         return HttpResponseForbidden()
 
+
+def faq(request):
+    if request.method == 'GET' :
+        return render(request, 'faq.html')
+    else :
+        return HttpResponseForbidden()
+
+
+    
