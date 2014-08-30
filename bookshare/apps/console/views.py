@@ -178,16 +178,11 @@ class SignUpView(TemplateView):
         if form.is_valid():
             user_id = form.cleaned_data['user_id']
             name = form.cleaned_data['name']
-            password = form.cleaned_data['password']
-            password_confirm = form.cleaned_data['password_confirm']
             email = form.cleaned_data['email']            
-
-            if password != password_confirm:
-                self.error_msg = u"비밀번호가 서로 다릅니다."                
-                return render(request, self.template_name, {'error_msg':self.error_msg})
-
+            
             user_info = dict(**form.cleaned_data)
             del user_info["password_confirm"]
+            user_info["password"] = user_id
             users_models.User.objects.create_user(**user_info)
 
             return redirect(reverse('console:index'))

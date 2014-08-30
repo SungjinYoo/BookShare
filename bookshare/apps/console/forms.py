@@ -39,8 +39,6 @@ class BookRentForm(forms.Form):
 class SignUpValidationForm(forms.Form):
     user_id = forms.CharField(label="학번", max_length=15, min_length=4)
     name = forms.CharField(label="이름", max_length=15, min_length=1)
-    password = forms.CharField(label="비밀번호", max_length=128, min_length=4, widget=forms.PasswordInput())
-    password_confirm = forms.CharField(label="비밀번호 확인", max_length=128, min_length=4, widget=forms.PasswordInput())
     email = forms.EmailField(label="이메일", max_length=255)
     phone_number = forms.CharField(label="연락처", max_length=20)
 
@@ -48,8 +46,6 @@ class SignUpValidationForm(forms.Form):
         cleaned_data = super(SignUpValidationForm, self).clean()
         user_id = cleaned_data.get("user_id")
         name = cleaned_data.get("name")
-        password = cleaned_data.get("password")
-        password_confirm = cleaned_data.get('password_confirm')
         email = cleaned_data.get('email')
             
         if not password:
