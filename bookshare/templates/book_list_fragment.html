@@ -5,7 +5,7 @@
     </div>
   <h4><a href="{% url 'books:book-detail' book.pk %}">{{ book.title }}</a>
     {% if book.any_availiable_stock %}
-    <span class="label label-success">대출 가능</span>
+    <span class="label label-success">재고 있음</span>
     {% else %}
     <span class="label label-danger">재고 없음</span>
     {% endif %}
