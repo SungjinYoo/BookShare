@@ -2,6 +2,7 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 from bookshare.apps.core import models
@@ -14,11 +15,12 @@ import forms
 import models as console_models
 
 
-# Create your views here.
+@staff_member_required
 def index(request):
     if request.method == "GET": 
         return render(request, "console/index.html")
 
+@staff_member_required
 def deliver_stock(request, book):
     if request.method == "GET":
         context = {
@@ -35,6 +37,7 @@ def deliver_stock(request, book):
                                  form.cleaned_data["condition"])
             return redirect('console:index')
 
+@staff_member_required
 def process_rent_request(request, rent_request):
     if request.method == "GET":
         context = {
@@ -49,7 +52,7 @@ def process_rent_request(request, rent_request):
             models.process_rent_request(form.cleaned_data["request"])
             return redirect('console:rent_request_list')
 
-
+@staff_member_required
 def search_users(request):    
     if request.method == "GET":
         context = dict(
@@ -68,6 +71,7 @@ def search_users(request):
 
     return HttpResponseForbidden()
 
+@staff_member_required
 def user_stock_list(request):
     if request.method == "GET":
         user_pk = request.GET.get('user_pk', None)
@@ -85,6 +89,7 @@ def user_stock_list(request):
     
         return render(request, 'console/user_stock_list.html', context)
 
+@staff_member_required
 def process_return_request(request):
     if request.method == "GET":
         user = users_models.User.objects.get(id=request.GET.get('user_pk'))
@@ -122,6 +127,7 @@ class RentBookListView(ListView):
     template_name = 'console/rent_books.html'
     queryset = books_models.Book.objects.available
 
+@staff_member_required
 def add_book(request):
     form = forms.BookAddForm(request.POST or None)
 
@@ -140,6 +146,7 @@ def add_book(request):
             books_models.add_book(title, isbn, cover_url)
             return redirect(reverse('console:index'))
 
+@staff_member_required
 def rent_book(request, book=None):
     form = forms.BookRentForm(request.POST or None, initial={"book" : book})
 
@@ -187,6 +194,7 @@ class SignUpView(TemplateView):
 
         return render(request, self.template_name, {'errors':form.errors })
 
+@staff_member_required
 def bulk_add(request):
     form = forms.BulkAddForm(request.POST or None, request.FILES or None)
 
