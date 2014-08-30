@@ -68,65 +68,6 @@ class SignInView(TemplateView):
         return render(request, self.template_name, context)
 
 
-class SignUpValidationForm(forms.Form):
-    user_id = forms.CharField(label="학번", max_length=15, min_length=4)
-    name = forms.CharField(label="이름", max_length=15, min_length=1)
-    password = forms.CharField(label="비밀번호", max_length=128, min_length=4, widget=forms.PasswordInput())
-    password_confirm = forms.CharField(label="비밀번호 확인", max_length=128, min_length=4, widget=forms.PasswordInput())
-    email = forms.EmailField(label="이메일", max_length=255)
-    phone_number = forms.CharField(label="연락처", max_length=20)
-
-    def clean(self):
-        cleaned_data = super(SignUpValidationForm, self).clean()
-        user_id = cleaned_data.get("user_id")
-        name = cleaned_data.get("name")
-        password = cleaned_data.get("password")
-        password_confirm = cleaned_data.get('password_confirm')
-        email = cleaned_data.get('email')
-            
-        if not password:
-            self._errors["msg"] = '* 패스워드 길이가 잘못되었습니다.'
-        elif not user_id : 
-            self._errors["msg"] = '* 유저 아이디 길이가 잘못되었습니다.'
-        elif not name : 
-            self._errors["msg"] = '* 이름 길이는 1자이상 15자 이하가 되어야 합니다.'
-        elif not password_confirm : 
-            self._errors["msg"] = '* 확인 패스워드 길이가 잘못되었습니다.'
-        elif not email : 
-            self._errors["msg"] = '* 이메일 형식이 잘못되었습니다.'
-    
-        return cleaned_data
-
-
-class SignUpView(TemplateView):
-    template_name = "bookshare/signup.html"
-    error_msg = u"알수없는 오류가 발생하였습니다."
-    def get(self, request):
-        return render(request, self.template_name, {'form': SignUpValidationForm()})
-    def post(self, request, *args, **kwargs):
-        form = SignUpValidationForm(request.POST)
-        if form.is_valid():
-            user_id = form.cleaned_data['user_id']
-            name = form.cleaned_data['name']
-            password = form.cleaned_data['password']
-            password_confirm = form.cleaned_data['password_confirm']
-            email = form.cleaned_data['email']            
-
-            if password != password_confirm:
-                self.error_msg = u"비밀번호가 서로 다릅니다."                
-                return render(request, self.template_name, {'error_msg':self.error_msg})
-
-            user_info = dict(**form.cleaned_data)
-            del user_info["password_confirm"]
-            User.objects.create_user(**user_info)
-
-            user = authenticate(user_id=user_id, password=password)
-            if user is not None:
-                if user.check_password(password):
-                    login(request, user)
-                    return HttpResponseRedirect('/')
-        return render(request, self.template_name, {'errors':form.errors })
-
 class LoginRequiredViewMixin(View):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

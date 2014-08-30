@@ -1,13 +1,13 @@
-{% extends "base.html" %}
+{% extends "console/base.html" %}
 {% load bootstrap3 %}
 
-{% block title %}회원가입{% endblock %}
+{% block title %}회원 등록하기{% endblock %}
 
 {% block content %} 
 <div class="signup-screen">
-  <h2>가입하기</h2>
+  <h2>회원 등록하기</h2>
   <div class="signup-form">
-    <form method="post" action="{% url 'signup' %}">
+    <form method="post" action="{% url 'console:user_add' %}">
       {% csrf_token %}
       {% bootstrap_form form %}
       {% buttons %}

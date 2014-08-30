@@ -3,9 +3,11 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import ListView
+from django.views.generic.base import TemplateView
 from bookshare.apps.core import models
 from bookshare.apps.books import models as books_models
 from bookshare.apps.users import models as users_models
+
 import forms
 
 
@@ -154,3 +156,30 @@ def rent_book(request, book=None):
             
             models.rent_book(user, book)
             return redirect(reverse('console:index'))
+
+
+class SignUpView(TemplateView):
+    template_name = "console/signup.html"
+    error_msg = u"알수없는 오류가 발생하였습니다."
+    def get(self, request):
+        return render(request, self.template_name, {'form': forms.SignUpValidationForm()})
+    def post(self, request, *args, **kwargs):
+        form = forms.SignUpValidationForm(request.POST)
+        if form.is_valid():
+            user_id = form.cleaned_data['user_id']
+            name = form.cleaned_data['name']
+            password = form.cleaned_data['password']
+            password_confirm = form.cleaned_data['password_confirm']
+            email = form.cleaned_data['email']            
+
+            if password != password_confirm:
+                self.error_msg = u"비밀번호가 서로 다릅니다."                
+                return render(request, self.template_name, {'error_msg':self.error_msg})
+
+            user_info = dict(**form.cleaned_data)
+            del user_info["password_confirm"]
+            users_models.User.objects.create_user(**user_info)
+
+            return redirect(reverse('console:index'))
+
+        return render(request, self.template_name, {'errors':form.errors })

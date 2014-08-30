@@ -35,3 +35,32 @@ class BookRentForm(forms.Form):
                                   queryset=books.models.Book.objects.all())
     user = forms.ModelChoiceField(label="대여자",
                                   queryset=users_models.User.objects.all())
+
+class SignUpValidationForm(forms.Form):
+    user_id = forms.CharField(label="학번", max_length=15, min_length=4)
+    name = forms.CharField(label="이름", max_length=15, min_length=1)
+    password = forms.CharField(label="비밀번호", max_length=128, min_length=4, widget=forms.PasswordInput())
+    password_confirm = forms.CharField(label="비밀번호 확인", max_length=128, min_length=4, widget=forms.PasswordInput())
+    email = forms.EmailField(label="이메일", max_length=255)
+    phone_number = forms.CharField(label="연락처", max_length=20)
+
+    def clean(self):
+        cleaned_data = super(SignUpValidationForm, self).clean()
+        user_id = cleaned_data.get("user_id")
+        name = cleaned_data.get("name")
+        password = cleaned_data.get("password")
+        password_confirm = cleaned_data.get('password_confirm')
+        email = cleaned_data.get('email')
+            
+        if not password:
+            self._errors["msg"] = '* 패스워드 길이가 잘못되었습니다.'
+        elif not user_id : 
+            self._errors["msg"] = '* 유저 아이디 길이가 잘못되었습니다.'
+        elif not name : 
+            self._errors["msg"] = '* 이름 길이는 1자이상 15자 이하가 되어야 합니다.'
+        elif not password_confirm : 
+            self._errors["msg"] = '* 확인 패스워드 길이가 잘못되었습니다.'
+        elif not email : 
+            self._errors["msg"] = '* 이메일 형식이 잘못되었습니다.'
+    
+        return cleaned_data
