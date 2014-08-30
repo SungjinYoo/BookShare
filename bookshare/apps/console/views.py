@@ -181,7 +181,6 @@ class SignUpView(TemplateView):
             email = form.cleaned_data['email']            
             
             user_info = dict(**form.cleaned_data)
-            del user_info["password_confirm"]
             user_info["password"] = user_id
             users_models.User.objects.create_user(**user_info)
 

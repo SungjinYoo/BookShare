@@ -48,14 +48,10 @@ class SignUpValidationForm(forms.Form):
         name = cleaned_data.get("name")
         email = cleaned_data.get('email')
             
-        if not password:
-            self._errors["msg"] = '* 패스워드 길이가 잘못되었습니다.'
-        elif not user_id : 
+        if not user_id : 
             self._errors["msg"] = '* 유저 아이디 길이가 잘못되었습니다.'
         elif not name : 
             self._errors["msg"] = '* 이름 길이는 1자이상 15자 이하가 되어야 합니다.'
-        elif not password_confirm : 
-            self._errors["msg"] = '* 확인 패스워드 길이가 잘못되었습니다.'
         elif not email : 
             self._errors["msg"] = '* 이메일 형식이 잘못되었습니다.'
     
