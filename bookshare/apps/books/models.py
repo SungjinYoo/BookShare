@@ -60,6 +60,9 @@ class Book(models.Model):
     def available_stock(self):
         return self.stock_set.available().order_by('condition')
 
+    def num_available_stocks(self):
+        return len(self.stock_set.available())
+
     def any_availiable_stock(self):
         try:
             return self.available_stock()[0]
