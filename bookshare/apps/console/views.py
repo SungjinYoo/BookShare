@@ -8,7 +8,10 @@ from bookshare.apps.core import models
 from bookshare.apps.books import models as books_models
 from bookshare.apps.users import models as users_models
 
+import tablib
+
 import forms
+import models as console_models
 
 
 # Create your views here.
@@ -183,3 +186,25 @@ class SignUpView(TemplateView):
             return redirect(reverse('console:index'))
 
         return render(request, self.template_name, {'errors':form.errors })
+
+def bulk_add(request):
+    form = forms.BulkAddForm(request.POST or None, request.FILES or None)
+
+    context = {
+        "form": form
+    }
+    if request.method == "GET":
+        return render(request, 'console/bulk_add.html', context)
+
+    if request.method == "POST":
+        if form.is_valid():
+            file = form.cleaned_data["file"]
+            
+            data = tablib.Dataset()
+            data.csv = file.read()
+            for row in data:
+                isbn, condition = row
+                print(request.user, isbn, condition)
+                console_models.add_book_and_stock(request.user, isbn, condition)
+
+            return redirect(reverse('console:index'))

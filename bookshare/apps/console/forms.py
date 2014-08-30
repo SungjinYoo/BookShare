@@ -64,3 +64,6 @@ class SignUpValidationForm(forms.Form):
             self._errors["msg"] = '* 이메일 형식이 잘못되었습니다.'
     
         return cleaned_data
+
+class BulkAddForm(forms.Form):
+    file = forms.FileField()

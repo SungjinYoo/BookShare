@@ -15,5 +15,6 @@ urlpatterns = patterns('',
     url(r'^/user-stock-list/$', views.user_stock_list, name='user_stock_list'),
     url(r'^/return-request/$', views.process_return_request, name='process_return_request'),
     url(r'^/user/add$', views.SignUpView.as_view(), name='user_add'),
+    url(r'^/bulk$', views.bulk_add, name='bulk_add'),
 )
 
