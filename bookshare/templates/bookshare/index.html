@@ -29,7 +29,7 @@
     </div>
 </section>
 
-<h4>최근에 등록된 책들 <a href="{% url 'books:book-list' %}"><span class="label label-default">더보기</span></a></h4>
+<h4>최근에 등록된 책들 <a href="{% url 'books:book-list' %}"><span class="label label-primary">더보기</span></a></h4>
 <section class="recent books row">
 {% for book in recent_books %}
     <div class="col-sm-3 book-wrapper">

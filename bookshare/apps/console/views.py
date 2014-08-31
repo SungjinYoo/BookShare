@@ -2,20 +2,25 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 from bookshare.apps.core import models
 from bookshare.apps.books import models as books_models
 from bookshare.apps.users import models as users_models
 
+import tablib
+
 import forms
+import models as console_models
 
 
-# Create your views here.
+@staff_member_required
 def index(request):
     if request.method == "GET": 
         return render(request, "console/index.html")
 
+@staff_member_required
 def deliver_stock(request, book):
     if request.method == "GET":
         context = {
@@ -32,6 +37,7 @@ def deliver_stock(request, book):
                                  form.cleaned_data["condition"])
             return redirect('console:index')
 
+@staff_member_required
 def process_rent_request(request, rent_request):
     if request.method == "GET":
         context = {
@@ -46,7 +52,7 @@ def process_rent_request(request, rent_request):
             models.process_rent_request(form.cleaned_data["request"])
             return redirect('console:rent_request_list')
 
-
+@staff_member_required
 def search_users(request):    
     if request.method == "GET":
         context = dict(
@@ -65,6 +71,7 @@ def search_users(request):
 
     return HttpResponseForbidden()
 
+@staff_member_required
 def user_stock_list(request):
     if request.method == "GET":
         user_pk = request.GET.get('user_pk', None)
@@ -82,6 +89,7 @@ def user_stock_list(request):
     
         return render(request, 'console/user_stock_list.html', context)
 
+@staff_member_required
 def process_return_request(request):
     if request.method == "GET":
         user = users_models.User.objects.get(id=request.GET.get('user_pk'))
@@ -119,6 +127,7 @@ class RentBookListView(ListView):
     template_name = 'console/rent_books.html'
     queryset = books_models.Book.objects.available
 
+@staff_member_required
 def add_book(request):
     form = forms.BookAddForm(request.POST or None)
 
@@ -137,6 +146,7 @@ def add_book(request):
             books_models.add_book(title, isbn, cover_url)
             return redirect(reverse('console:index'))
 
+@staff_member_required
 def rent_book(request, book=None):
     form = forms.BookRentForm(request.POST or None, initial={"book" : book})
 
@@ -168,18 +178,35 @@ class SignUpView(TemplateView):
         if form.is_valid():
             user_id = form.cleaned_data['user_id']
             name = form.cleaned_data['name']
-            password = form.cleaned_data['password']
-            password_confirm = form.cleaned_data['password_confirm']
             email = form.cleaned_data['email']            
-
-            if password != password_confirm:
-                self.error_msg = u"비밀번호가 서로 다릅니다."                
-                return render(request, self.template_name, {'error_msg':self.error_msg})
-
+            
             user_info = dict(**form.cleaned_data)
-            del user_info["password_confirm"]
+            user_info["password"] = user_id
             users_models.User.objects.create_user(**user_info)
 
             return redirect(reverse('console:index'))
 
         return render(request, self.template_name, {'errors':form.errors })
+
+@staff_member_required
+def bulk_add(request):
+    form = forms.BulkAddForm(request.POST or None, request.FILES or None)
+
+    context = {
+        "form": form
+    }
+    if request.method == "GET":
+        return render(request, 'console/bulk_add.html', context)
+
+    if request.method == "POST":
+        if form.is_valid():
+            file = form.cleaned_data["file"]
+            
+            data = tablib.Dataset()
+            data.csv = file.read()
+            for row in data:
+                isbn, condition = row
+                print(request.user, isbn, condition)
+                console_models.add_book_and_stock(request.user, isbn, condition)
+
+            return redirect(reverse('console:index'))

@@ -9,4 +9,5 @@ python-dateutil==2.2
 python-mimeparse==0.1.4
 requests==2.3.0
 six==1.6.1
+tablib==0.10.0
 wsgiref==0.1.2
