@@ -32,11 +32,6 @@ html, body {
     font-family: 'Nanum Gothic';﻿
 }
 
-footer {
-    height:60px;
-}
-
-
 p {
     font-family: 'Nanum Myeongjo';﻿
 }
@@ -347,3 +342,12 @@ div.course-wrapper .label{
 	font-size:24px;
 }
 
+footer {
+    padding: 1em;
+    font-weight: normal;;
+}
+
+footer p {
+    font-family: sans-serif;
+    margin: 0;
+}
