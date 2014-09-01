@@ -205,7 +205,7 @@ def deliver_stock(actor, book, condition):
                                 action=StockHistory.DELIVER,
                                 condition=condition).save()
 
-    actor.get_points(book.point())
+    actor.get_points(2 * book.point())
     actor.save()
 
 def request_reclaim(actor, stock):
