@@ -2,6 +2,7 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
@@ -35,6 +36,8 @@ def deliver_stock(request, book):
             models.deliver_stock(form.cleaned_data["actor"],
                                  form.cleaned_data["book"],
                                  form.cleaned_data["condition"])
+            messages.add_message(request, messages.SUCCESS, '재고를 추가했습니다.')
+
             return redirect('console:index')
 
 @staff_member_required
@@ -184,6 +187,8 @@ class SignUpView(TemplateView):
             user_info["password"] = user_id
             users_models.User.objects.create_user(**user_info)
 
+            messages.add_message(request, messages.SUCCESS, '회원을 등록했습니다.')
+
             return redirect(reverse('console:index'))
 
         return render(request, self.template_name, {'errors':form.errors })
@@ -208,5 +213,32 @@ def bulk_add(request):
                 isbn, condition = row
                 print(request.user, isbn, condition)
                 console_models.add_book_and_stock(request.user, isbn, condition)
+
+            return redirect(reverse('console:index'))
+
+@staff_member_required
+def add_book_and_stock(request):
+    form = forms.BookAndStockAddForm(request.POST or None)
+
+    context = {
+        "form": form
+    }
+    if request.method == "GET":
+        return render(request, 'console/add_book_and_stock.html', context)
+
+    if request.method == "POST":
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            isbn = form.cleaned_data["isbn"]
+            cover_url = form.cleaned_data["cover_url"]
+            
+            try:
+                book = books_models.Book.objects.filter(isbn=isbn.strip())[0]
+            except:
+                book = books_models.add_book(title, isbn, cover_url)
+                messages.add_message(request, messages.SUCCESS, '도서를 등록했습니다.')
+                
+            models.deliver_stock(request.user, book, form.cleaned_data["condition"])
+            messages.add_message(request, messages.SUCCESS, '재고를 추가했습니다.')
 
             return redirect(reverse('console:index'))

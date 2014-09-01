@@ -69,6 +69,7 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages'
 )
 
 ROOT_URLCONF = 'bookshare.urls'

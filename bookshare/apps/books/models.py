@@ -95,3 +95,5 @@ def add_book(title, isbn, cover_url):
         book.image.save(filename, ContentFile(cover_url_resp.content))
         book.save()
 
+        return book
+

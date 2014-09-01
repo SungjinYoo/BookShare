@@ -59,3 +59,9 @@ class SignUpValidationForm(forms.Form):
 
 class BulkAddForm(forms.Form):
     file = forms.FileField()
+
+class BookAndStockAddForm(forms.Form):
+    isbn = forms.CharField(label="ISBN")
+    title = forms.CharField(label="제목")
+    cover_url = forms.URLField(label="표지 이미지 URL")
+    condition = forms.ChoiceField(label="보관상태", choices=models.Stock.CONDITIONS)

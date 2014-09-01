@@ -1,0 +1,38 @@
+{% extends "console/base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}도서 등록하기{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/css/console.book.css">
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h2 class="text-center">도서 등록하기</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <form method="post" action="{% url 'console:add_book_and_stock' %}" class="add-book">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                        <button type="submit" class="btn btn-primary">
+                            {% bootstrap_icon "plus" %} 등록하기
+                        </button>
+                        <a href="javascript: history.go(-1);" class="btn btn-default">취소</a>
+                    {% endbuttons %}
+                </form>
+            </div>
+            <div class="col-md-4 cover">
+                <img src="http://placehold.it/300x400&text=%20"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/js/console.book.js"></script>
+{% endblock %}
