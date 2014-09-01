@@ -218,7 +218,7 @@ def bulk_add(request):
 
 @staff_member_required
 def add_book_and_stock(request):
-    form = forms.BookAndStockAddForm(request.POST or None)
+    form = forms.BookAndStockAddForm(request.POST or None, initial={"actor" : request.user})
 
     context = {
         "form": form
@@ -238,7 +238,7 @@ def add_book_and_stock(request):
                 book = books_models.add_book(title, isbn, cover_url)
                 messages.add_message(request, messages.SUCCESS, '도서를 등록했습니다.')
                 
-            models.deliver_stock(request.user, book, form.cleaned_data["condition"])
+            models.deliver_stock(form.cleaned_data["actor"], book, form.cleaned_data["condition"])
             messages.add_message(request, messages.SUCCESS, '재고를 추가했습니다.')
 
             return redirect(reverse('console:index'))
