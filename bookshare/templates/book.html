@@ -11,7 +11,7 @@
 {% if book.courses.all %}
 <ul>
     {% for course in book.courses.all %}
-    <li>{{ course.title }} - {{ course.year }} {{ course.semester }}</li>
+    <li>{{ course.title }}</li>
     {% endfor %}
 </ul>
 {% else %}
