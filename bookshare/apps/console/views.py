@@ -231,14 +231,21 @@ def add_book_and_stock(request):
             title = form.cleaned_data["title"]
             isbn = form.cleaned_data["isbn"]
             cover_url = form.cleaned_data["cover_url"]
-            
+            course_title = form.cleaned_data["course_title"]
             try:
                 book = books_models.Book.objects.filter(isbn=isbn.strip())[0]
             except:
                 book = books_models.add_book(title, isbn, cover_url)
                 messages.add_message(request, messages.SUCCESS, '도서를 등록했습니다.')
+
                 
             models.deliver_stock(form.cleaned_data["actor"], book, form.cleaned_data["condition"])
             messages.add_message(request, messages.SUCCESS, '재고를 추가했습니다.')
+                
+            try:
+                course = books_models.Course.objects.get(title=course_title.strip())
+                book.courses.add(course)
+            except:
+                messages.add_message(request, messages.ERROR, '수업명을 잘못 입력하셨습니다.')
 
             return redirect(reverse('console:index'))
