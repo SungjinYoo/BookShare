@@ -242,10 +242,9 @@ def add_book_and_stock(request):
             models.deliver_stock(form.cleaned_data["actor"], book, form.cleaned_data["condition"])
             messages.add_message(request, messages.SUCCESS, '재고를 추가했습니다.')
                 
-            try:
-                course = books_models.Course.objects.get(title=course_title.strip())
-                book.courses.add(course)
-            except:
-                messages.add_message(request, messages.ERROR, '수업명을 잘못 입력하셨습니다.')
+            
+            course, created = books_models.Course.objects.get_or_create(title=course_title.strip())
+            book.courses.add(course)
+            messages.add_message(request, messages.ERROR, '도서에 수업을 추가했습니다.')
 
             return redirect(reverse('console:index'))

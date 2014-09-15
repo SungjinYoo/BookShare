@@ -14,30 +14,10 @@ import requests
 isbn_validator = RegexValidator(regex='^\d{13}$', message='Length has to be 13', code='nomatch')
 
 class Course(models.Model):
-    FIRST = u'first'
-    SUMMER = u'summer'
-    SECOND = u'second'
-    WINTER = u'winter'
-
-    SEMESTERS = (
-        (FIRST, u'1학기'),
-        (SUMMER, u'여름'),
-        (SECOND, u'2학기'),
-        (WINTER, u'겨울')
-    )
-
-    title = models.CharField(max_length=20)
-    department = models.CharField(blank=True, max_length=20)
-    year = models.IntegerField(default=2014)
-    semester = models.CharField(_(u'학기'),
-                                blank=True,
-                                max_length=10,
-                                choices=SEMESTERS,
-                                default=SECOND)
-    
+    title = models.CharField(max_length=20)    
 
     def __unicode__(self):
-        return u"{} - {} {}".format(self.title, self.year, self.semester)
+        return self.title
 
 class BookManager(models.Manager):
     def available(self, *args, **kwargs):
