@@ -245,6 +245,6 @@ def add_book_and_stock(request):
             
             course, created = books_models.Course.objects.get_or_create(title=course_title.strip())
             book.courses.add(course)
-            messages.add_message(request, messages.ERROR, '도서에 수업을 추가했습니다.')
+            messages.add_message(request, messages.SUCCESS, '도서에 수업을 추가했습니다.')
 
             return redirect(reverse('console:index'))
