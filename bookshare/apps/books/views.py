@@ -40,6 +40,7 @@ class BookSearchView(ListView):
         
         if title :
             query |= Q(title__icontains=title)
+            query |= Q(courses__title__icontains=title)            
         if department :
             query |= Q(courses__department__icontains=department)
 
