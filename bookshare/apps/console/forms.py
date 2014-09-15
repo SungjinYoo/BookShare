@@ -63,7 +63,6 @@ class BulkAddForm(forms.Form):
 class BookAndStockAddForm(forms.Form):
     isbn = forms.CharField(label="ISBN")
     title = forms.CharField(label="제목")
-    course_title = forms.CharField(label="수업명")
     cover_url = forms.URLField(label="표지 이미지 URL")
     actor = forms.ModelChoiceField(label="기부자", queryset=get_user_model().objects.all())
     condition = forms.ChoiceField(label="보관상태", choices=models.Stock.CONDITIONS)
