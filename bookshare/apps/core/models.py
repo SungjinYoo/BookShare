@@ -67,6 +67,11 @@ class Stock(ConditionMixin):
     def ensure_status(self, status):
         assert self.status == status, "invalid status"
 
+    class Meta:
+        verbose_name = _(u'대여현황')
+        verbose_name_plural = _(u'대여현황')
+
+        
 class StockHistory(ConditionMixin):
     RENT = u'rent'
     RETURN = u'return'
@@ -85,7 +90,11 @@ class StockHistory(ConditionMixin):
     added_at = models.DateTimeField(auto_now_add=True)
     action = models.CharField(_(u'행동'), max_length=10, choices=ACTION)
 
+    class Meta:
+        verbose_name = _(u'대여이력')
+        verbose_name_plural = _(u'대여이력')
 
+        
 class RequestManager(models.Manager):
     def pending(self, *args, **kwargs):
         qs = self.get_query_set().filter(*args, **kwargs)

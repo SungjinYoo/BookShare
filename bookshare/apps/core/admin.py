@@ -3,8 +3,8 @@ from models import Stock, RentRequest, ReclaimRequest, StockHistory
 
 # Register your models here.
 class StockAdmin(admin.ModelAdmin):
-    list_display = ('book', 'status', 'owner', 'changed_at', 'condition', )
-    list_filter = ('status', 'owner', )
+    list_display = ('book', 'status', 'renter', 'owner', 'changed_at', 'condition')
+    list_filter = ('status',)
 
 class RentRequestAdmin(admin.ModelAdmin):
     list_display = ('book', 'actor', 'status', 'changed_at')
@@ -16,7 +16,7 @@ class ReclaimRequestAdmin(admin.ModelAdmin):
 
 class StockHistoryAdmin(admin.ModelAdmin):
     list_display = ('actor', 'stock', 'action', 'added_at', 'condition',)
-    list_filter = ('actor', 'action', )
+    list_filter = ('action', )
 
 
 admin.site.register(Stock, StockAdmin)
