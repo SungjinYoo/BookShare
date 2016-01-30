@@ -79,7 +79,7 @@ class MyUserAdmin(UserAdmin):
 
     filter_horizontal = ()
     list_display = (
-        'user_id', 'name' ,'email', 'date_joined', 'is_active', "is_staff" )
+        'user_id', 'name' ,'email', 'date_joined', 'is_active', "is_staff" , 'points')
 
     fieldsets = (
         (None, {'fields': ('email', 'user_id', 'password', 'phone_number',)}),

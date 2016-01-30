@@ -1,0 +1,30 @@
+{% extends "console/base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}미반납 현황{% endblock %}
+{% block content %}
+<table class="table table-bordered table-striped">
+  <tr>
+    <th>대여일시</th>
+    <th>대여자</th>
+    <th>기부자</th>
+    <th>책이름</th>
+    <th>보관상태</th>
+  </tr>
+  {% for stock in stocks %}
+  <tr class="cursor">
+    <td>{{ stock.changed_at }}</td>
+    <td>{{ stock.renter }}</td>
+    <td>{{ stock.owner }}</td>
+    <td>{{ stock.book.title }}</td>
+    <td>{{ stock.condition }}</td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan=5>No result</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+{% endblock %}

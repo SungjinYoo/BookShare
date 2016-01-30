@@ -250,3 +250,29 @@ def add_book_and_stock(request):
             return redirect(reverse('console:index'))
         else:
             return render(request, 'console/add_book_and_stock.html', context)
+
+@staff_member_required
+def stocks(request):
+    if request.method == "GET":
+        context = {
+            "stocks": models.Stock.objects.filter(status='rented')
+        }
+        return render(request, "console/stocks.html", context)
+
+
+# @staff_member_required
+# def get_user(request):
+#     if request.method == "GET":
+#         name = request.POST.get('name', None)
+#         result = []
+#         if name:
+#             users = users_models.User.objects.filter(name__icontains=name)
+#             for user in users:
+#                 each = dict()
+#                 each['id'] = user.id
+#                 each['name'] = user.name
+#                 each['user_id'] = user.user_id
+#                 result.append(each)
+            
+#         return JsonResponse(result)
+

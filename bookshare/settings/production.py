@@ -22,7 +22,7 @@ SECRET_KEY = get_env_variable('BOOKSHARE_SECRET_KEY')
 
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['*']
-
+DEBUG = True
 
 ADMINS = (
     ('TaeYun Lee', 'ok7217@gmail.com'),

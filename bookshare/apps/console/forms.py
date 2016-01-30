@@ -64,6 +64,6 @@ class BookAndStockAddForm(forms.Form):
     isbn = forms.CharField(label="ISBN")
     title = forms.CharField(label="제목")
     cover_url = forms.URLField(label="표지 이미지 URL")
-    actor = forms.ModelChoiceField(label="기부자", queryset=get_user_model().objects.all(), required=True)
+    actor = forms.ModelChoiceField(label="기부자", queryset=get_user_model().objects.filter(is_staff=False), required=True)
     condition = forms.ChoiceField(label="보관상태", choices=models.Stock.CONDITIONS)
     course_title = forms.CharField(required=False, label="수업명 (선택사항)")

@@ -46,10 +46,10 @@ class BookSearchView(ListView):
 
         # need pagination?        
         if query :
-            return Book.objects.filter(query)
+            return Book.objects.filter(query).order_by('-id')
         else :
             # just empty list? or all the books?
-            return Book.objects.all()
+            return Book.objects.all().order_by('-id')
 
 
 #login required is in the code explicitly

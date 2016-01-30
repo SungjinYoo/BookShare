@@ -14,6 +14,9 @@
                 <form method="post" action="{% url 'console:add_book_and_stock' %}" class="add-book">
                     {% csrf_token %}
                     {% bootstrap_form form %}
+		    <!-- <label>기부자 -->
+		    <!-- <input class="form-control" type="text" disabled="disabled" /></label> -->
+		    <!-- <button data-toggle="modal" data-target="#search-owner" type="button" style="margin-top:20px;margin-bottom:20px;" class="btn btn-success">기부자 찾기</button> -->
                     {% buttons %}
                         <button type="submit" class="btn btn-primary">
                             {% bootstrap_icon "plus" %} 등록하기
@@ -30,9 +33,20 @@
 </div>
 
 
+<!-- <div class="modal fade" id="search-owner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
+<!--   <div class="modal-dialog" style="margin:20% auto;"> -->
+<!--     <div class="modal-content"> -->
+<!--       <div class="modal-body"> -->
+<!-- 	<label>기부자 -->
+<!-- 	  <input class="form-control" type="text"/></label> -->
+<!-- 	<button id="search-button" type="button" style="margin-top:20px;margin-bottom:20px;" class="btn btn-success" placeholder="검색을 해주세요">찾기</button> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
 
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript" src="/static/js/console.book.js"></script>
 {% endblock %}
+
